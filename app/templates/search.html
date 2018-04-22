@@ -72,19 +72,44 @@
                 </script>
               </div>
               <div class="form-group col-md-6">
-                <label class="tags center">Genres (separated by semicolons):</label>
-                <input id="select_genres" class="form-control center" list="genre_list" name="genres" class="form-control" placeholder="e.g. Action; History; etc." value="{{old_genres}}">
-                <datalist id="genre_list">
-                    {% if genre_list %}
-                        {% for g in genre_list %}
-                            <option value='{{g}}'>
-                        {% endfor %}
-                    {% endif %}
+                <label class="tags center">Genres:</label>
+                <input id="select_genres" data-role="tagsinput" type="text" name="genres" placeholder="e.g. Action; History; etc." value="{{old_genres}}">
+                <script>
+                    var genres_lst = new Bloodhound({
+                      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                      queryTokenizer: Bloodhound.tokenizers.whitespace,
+                      prefetch: {
+                        url: 'static/data/genres.json',
+                        transform: function (response) {
+                            return response.genres;
+                        },
+                        cache: false
+                      }
+                    });
+                    genres_lst.initialize();
+                    $('#select_genres').tagsinput({
+                        typeaheadjs: {
+                            name: 'genres_lst',
+                            displayKey: 'name',
+                            valueKey: 'name',
+                            source: genres_lst.ttAdapter(),
+                            hint: true,
+                            highlight: true,
+                            minLength: 1
+                        },
+                        confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                        maxTags: 5, //limit the number of tags
+                        freeInput: false, //don't allow the user to submit free text
+                        // itemValue: 'title',
+                        // tagClass: 'label label-primary' //tag colors
+                     // focusClass: 'bootstrap-tagsinput:focus',
+                    });
+                </script>
               </div>
             </div><br><br><br><br><br><br>
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label class="tags center">Cast/Crew (separated by semicolons):</label>
+                <label class="tags center">Cast/Crew:</label>
                 <input id="cast_crew" type="text" name="castCrew" placeholder="Name 1; Name 2; etc." value="{{old_castCrew}}" data-role="tagsinput">
                 <script>
                     var cast_lst = new Bloodhound({
@@ -115,8 +140,8 @@
                 </script>
               </div>
               <div class="form-group col-md-6">
-                <label class="tags center">Keywords (separated by semicolons):</label>
-                <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="Keyword 1; Keyword 2; etc." value="{{old_keywords}}">
+                <label class="tags center">Keywords:</label>
+                <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. Keyword 1; Keyword 2; etc." value="{{old_keywords}}">
                 <span></span>
                 <script>
                     var keywords_lst = new Bloodhound({
@@ -151,7 +176,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                   <label class="tags center">Duration (in minutes):</label>
-                  <input id="duration_time" type="text" class="form-control center" name="duration" class="form-control" placeholder="range (e.g. 90-200) or single number (e.g. 90)" value="{{old_duration}}">
+                  <input id="duration_time" type="text" class="form-control center" name="duration" class="form-control" placeholder="Range (e.g. 90-200) or Single Number (e.g. 90)" value="{{old_duration}}">
               </div>
               <div class="form-group col-md-6 center tags">
                 <div class="form-row">
@@ -176,8 +201,8 @@
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
-                  <label class="tags center">Ratings (separated by semicolons):</label>
-                  <input id="ratings_list" type="text" data-role="tagsinput" name="ratings" placeholder="PG-13; PG; etc." value="{{old_ratings}}">
+                  <label class="tags center">Ratings:</label>
+                  <input id="ratings_list" type="text" data-role="tagsinput" name="ratings" placeholder="e.g. PG-13; PG; etc." value="{{old_ratings}}">
                    <script>
                     var ratings = new Bloodhound({
                       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -207,8 +232,8 @@
                 </script>
               </div>
               <div class="form-group col-md-6">
-                  <label class="tags center">Languages (separated by semicolons):</label>
-                  <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="en; etc." value="{{old_languages}}">
+                  <label class="tags center">Languages:</label>
+                  <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="e.g. En; etc." value="{{old_languages}}">
                    <script>
                     var langs = new Bloodhound({
                       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
