@@ -163,7 +163,7 @@ input::placeholder,
   padding-left: 5%;
   padding-right: 5%;
   margin-top: 1.75%;
-  margin-left: -1%;
+  margin-left: -1.5%;
   color: rgba(255,255,255,0.8);;
 }
 .tt-input {
@@ -281,5 +281,3 @@ span.twitter-typeahead .tt-suggestion:focus {
 .mov_title {
   font-size: 25px;
 }
-
-/*Known issues: tags overlap, focus*/

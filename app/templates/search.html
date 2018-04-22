@@ -35,7 +35,7 @@
             <div class="form-row ">
               <div class="form-group col-md-6">
                 <label class="tags animated-label center">Similar Movies:</label>
-                <input id="similar_movies" data-role="tagsinput" type="text" name="similar" placeholder="e.g. Black Panther; Jumanji; etc." style="width:75%" value="{{old_similar}}">
+                <input id="similar_movies" data-role="tagsinput" type="text" name="similar" placeholder="e.g. Black Panther, Jumanji, etc." style="width:75%" value="{{old_similar}}">
                 <script>
                     var movies = new Bloodhound({
                       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('title'),
@@ -73,7 +73,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label class="tags center">Genres:</label>
-                <input id="select_genres" data-role="tagsinput" type="text" name="genres" placeholder="e.g. Action; History; etc." value="{{old_genres}}">
+                <input id="select_genres" data-role="tagsinput" type="text" name="genres" placeholder="e.g. Action, History, etc." value="{{old_genres}}">
                 <script>
                     var genres_lst = new Bloodhound({
                       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -110,7 +110,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label class="tags center">Cast/Crew:</label>
-                <input id="cast_crew" type="text" name="castCrew" placeholder="Name 1; Name 2; etc." value="{{old_castCrew}}" data-role="tagsinput">
+                <input id="cast_crew" type="text" name="castCrew" placeholder="Name 1, Name 2, etc." value="{{old_castCrew}}" data-role="tagsinput">
                 <script>
                     var cast_lst = new Bloodhound({
                       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -141,7 +141,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label class="tags center">Keywords:</label>
-                <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. Keyword 1; Keyword 2; etc." value="{{old_keywords}}">
+                <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. Keyword 1, Keyword 2, etc." value="{{old_keywords}}">
                 <span></span>
                 <script>
                     var keywords_lst = new Bloodhound({
@@ -202,7 +202,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                   <label class="tags center">Ratings:</label>
-                  <input id="ratings_list" type="text" data-role="tagsinput" name="ratings" placeholder="e.g. PG-13; PG; etc." value="{{old_ratings}}">
+                  <input id="ratings_list" type="text" data-role="tagsinput" name="ratings" placeholder="e.g. PG-13, PG, etc." value="{{old_ratings}}">
                    <script>
                     var ratings = new Bloodhound({
                       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -233,7 +233,7 @@
               </div>
               <div class="form-group col-md-6">
                   <label class="tags center">Languages:</label>
-                  <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="e.g. En; etc." value="{{old_languages}}">
+                  <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="e.g. En, etc." value="{{old_languages}}">
                    <script>
                     var langs = new Bloodhound({
                       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -283,7 +283,7 @@
             </div>
             <br>
             <div class="form-group tags center">
-              <button type="submit" class="btn btn-info"> Get Recommendations </button>
+              <button class="btn btn-info"> Get Recommendations </button>
             </div>
           </form>
         </div>
