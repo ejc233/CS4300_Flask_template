@@ -186,6 +186,7 @@ span.twitter-typeahead .tt-suggestion:focus {
   color: rgba(255,255,255,0.65);
 }
 
+/* Carasoul Display */
   .poster {
     padding: 30px;
     -webkit-transition: padding 0.25s; /* Safari */
@@ -256,6 +257,7 @@ span.twitter-typeahead .tt-suggestion:focus {
     margin-bottom: 10px;
   }
 
+/* Modal pop-up */
   .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
