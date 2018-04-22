@@ -263,15 +263,17 @@ span.twitter-typeahead .tt-suggestion:focus {
     position: fixed; /* Stay in place */
     z-index: 100; /* Sit on top */
     padding-top: 2%; /* Location of the box */
+    padding-bottom: 2%;
     left: 0;
     top: 0;
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    overflow: auto;
   }
 
   /* Modal Content */
 .modal-content {
-    background-color: #474e63;
+    background-color: rgba(71, 78, 99, 0.95);
     color: white;
     margin: auto;
     padding: 20px;

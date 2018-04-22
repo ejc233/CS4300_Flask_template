@@ -12,7 +12,7 @@ $(document).ready(function() {
 
     // mod.detach().appendTo($('body'));
 
-    mod.show("medium");
+    mod.fadeIn(425);
     // console.log(mod);
   });
 
@@ -23,14 +23,14 @@ $(document).ready(function() {
 
     // mod.detach().appendTo($('body'));
 
-    mod.show(400);
+    mod.fadeIn(425);
     // console.log(mod);
   });
 
   window.onclick = function(event) {
     console.log(event.target);
     if (event.target.className == "modal") {
-        $(event.target).hide(400);
+        $(event.target).fadeOut(400);
     }
   }
 
