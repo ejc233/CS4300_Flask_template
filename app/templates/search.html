@@ -109,84 +109,11 @@
                 </script>
               </div>
             </div><br><br><br><br><br><br>
-<!-- <<<<<<< HEAD -->
             <div class="advanced">
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label class="tags center">Cast/Crew:</label>
-                <input id="cast_crew" type="text" name="castCrew" placeholder="Name 1, Name 2, etc." value="{{old_castCrew}}" data-role="tagsinput">
-                <script>
-                    var cast_lst = new Bloodhound({
-                      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-                      queryTokenizer: Bloodhound.tokenizers.whitespace,
-                      prefetch: {
-                        url: 'static/data/cast.json'
-                      }
-                    });
-                    cast_lst.initialize();
-                    $('#cast_crew').tagsinput({
-                        typeaheadjs: {
-                            name: 'cast_lst',
-                            displayKey: 'name',
-                            valueKey: 'name',
-                            source: cast_lst.ttAdapter(),
-                            hint: true,
-                            minLength: 1
-                        },
-                        confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
-                        maxTags: 5, //limit the number of tags
-                        freeInput: false, //don't allow the user to submit free text
-                        // itemValue: 'title',
-                        // tagClass: 'label label-primary' //tag colors
-                        // focusClass: 'bootstrap-tagsinput:focus',
-                        delimiter: ';'
-                    });
-                </script>
-              </div>
-              <div class="form-group col-md-6">
-                <label class="tags center">Keywords:</label>
-                <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. Keyword 1, Keyword 2, etc." value="{{old_keywords}}">
-                <span></span>
-                <script>
-                    var keywords_lst = new Bloodhound({
-                      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-                      queryTokenizer: Bloodhound.tokenizers.whitespace,
-                      prefetch: {
-                        url: 'static/data/keywords.json'
-                      }
-                    });
-                    keywords_lst.initialize();
-                    $('#keywords_list').tagsinput({
-                        typeaheadjs: {
-                            name: 'keywords_lst',
-                            displayKey: 'name',
-                            valueKey: 'name',
-                            source: keywords_lst.ttAdapter(),
-                            hint: true,
-                            minLength: 1
-                        },
-                        confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
-                        maxTags: 5, //limit the number of tags
-                        freeInput: false, //don't allow the user to submit free text
-                        // itemValue: 'title',
-                        // tagClass: 'label label-primary' //tag colors
-                        // focusClass: 'bootstrap-tagsinput:focus',
-                        delimiter: ';'
-                    });
-                </script>
-              </div>
-            </div>
-            <br>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                  <label class="tags center">Duration (in minutes):</label>
-                  <input id="duration_time" type="text" class="form-control center" name="duration" class="form-control" placeholder="Range (e.g. 90-200) or Single Number (e.g. 90)" value="{{old_duration}}">
-<!-- ======= -->
-            <!-- <div class="advanced">
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label class="tags center">Cast/Crew:</label>
-                  <input id="cast_crew" type="text" name="castCrew" placeholder="Name 1; Name 2; etc." value="{{old_castCrew}}" data-role="tagsinput">
+                  <input id="cast_crew" type="text" name="castCrew" placeholder="e.g. Name 1, Name 2, etc." value="{{old_castCrew}}" data-role="tagsinput">
                   <script>
                       var cast_lst = new Bloodhound({
                         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -217,7 +144,7 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label class="tags center">Keywords:</label>
-                  <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. Keyword 1; Keyword 2; etc." value="{{old_keywords}}">
+                  <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. Keyword 1, Keyword 2, etc." value="{{old_keywords}}">
                   <span></span>
                   <script>
                       var keywords_lst = new Bloodhound({
@@ -246,8 +173,7 @@
                           delimiter: ';'
                       });
                   </script>
-                </div> -->
-<!-- >>>>>>> 92f20719fad88d65cb6912609a933247db251bb8 -->
+                </div>
               </div>
               <br>
               <div class="form-row">
@@ -276,88 +202,79 @@
                     {% endif %}
                 </datalist>
               </div>
-<!-- <<<<<<< HEAD -->
-              <datalist id="year_list">
-                  {% if year_list %}
-                      {% for m in year_list %}
-                          <option value='{{m}}'>
-                      {% endfor %}
-                  {% endif %}
-              </datalist>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                  <label class="tags center">Ratings:</label>
-                  <input id="ratings_list" type="text" data-role="tagsinput" name="ratings" placeholder="e.g. PG-13, PG, etc." value="{{old_ratings}}">
-                   <script>
-                    var ratings = new Bloodhound({
-                      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-                      queryTokenizer: Bloodhound.tokenizers.whitespace,
-                      prefetch: {
-                        url: 'static/data/ratings.json'
-                      }
-                    });
-                    ratings.initialize();
-                    $('#ratings_list').tagsinput({
-                        typeaheadjs: {
-                            name: 'ratings',
-                            displayKey: 'name',
-                            valueKey: 'name',
-                            source: ratings.ttAdapter(),
-                            hint: true,
-                            minLength: 1
-                        },
-                        confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
-                        maxTags: 5, //limit the number of tags
-                        freeInput: false, //don't allow the user to submit free text
-                        // itemValue: 'title',
-                        // tagClass: 'label label-primary' //tag colors
-                        // focusClass: 'bootstrap-tagsinput:focus',
-                        delimiter: ';'
-                    });
-                </script>
-              </div>
-              <div class="form-group col-md-6">
-                  <label class="tags center">Languages:</label>
-                  <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="e.g. En, etc." value="{{old_languages}}">
-                   <script>
-                    var langs = new Bloodhound({
-                      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-                      queryTokenizer: Bloodhound.tokenizers.whitespace,
-                      prefetch: {
-                        url: 'static/data/languages.json'
-                      }
-                    });
-                    langs.initialize();
-                    $('#language_lst').tagsinput({
-                        typeaheadjs: {
-                            name: 'langs',
-                            displayKey: 'name',
-                            valueKey: 'name',
-                            source: langs.ttAdapter(),
-                            hint: true,
-                            minLength: 1
-                        },
-                        confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
-                        maxTags: 5, //limit the number of tags
-                        freeInput: false, //don't allow the user to submit free text
-                        // itemValue: 'title',
-                        // tagClass: 'label label-primary' //tag colors
-                        // focusClass: 'bootstrap-tagsinput:focus',
-                        delimiter: ';'
-                    });
-                </script>
-              </div>
-            </div>
-            <div class="form-row">
-              <label class="tags center">Do user scores matter to you?</label>
-              <div class="form-check tags center" style="height: 10px;">
-                  <input class="tags form-check-input" type="radio" name="acclaim" value="yes" checked> Yes<br>
-              </div>
-              <div class="form-check tags center">
-                <input class="form-check-input" type="radio" name="acclaim" value="no"> No<br>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="tags center">Ratings:</label>
+                    <input id="ratings_list" type="text" data-role="tagsinput" name="ratings" placeholder="e.g. PG-13, PG, etc." value="{{old_ratings}}">
+                     <script>
+                      var ratings = new Bloodhound({
+                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                        queryTokenizer: Bloodhound.tokenizers.whitespace,
+                        prefetch: {
+                          url: 'static/data/ratings.json'
+                        }
+                      });
+                      ratings.initialize();
+                      $('#ratings_list').tagsinput({
+                          typeaheadjs: {
+                              name: 'ratings',
+                              displayKey: 'name',
+                              valueKey: 'name',
+                              source: ratings.ttAdapter(),
+                              hint: true,
+                              minLength: 1
+                          },
+                          confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                          maxTags: 5, //limit the number of tags
+                          freeInput: false, //don't allow the user to submit free text
+                          // itemValue: 'title',
+                          // tagClass: 'label label-primary' //tag colors
+                          // focusClass: 'bootstrap-tagsinput:focus',
+                          delimiter: ';'
+                      });
+                  </script>
                 </div>
-            </div>
+                <div class="form-group col-md-6">
+                    <label class="tags center">Languages:</label>
+                    <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="e.g. En, etc." value="{{old_languages}}">
+                     <script>
+                      var langs = new Bloodhound({
+                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                        queryTokenizer: Bloodhound.tokenizers.whitespace,
+                        prefetch: {
+                          url: 'static/data/languages.json'
+                        }
+                      });
+                      langs.initialize();
+                      $('#language_lst').tagsinput({
+                          typeaheadjs: {
+                              name: 'langs',
+                              displayKey: 'name',
+                              valueKey: 'name',
+                              source: langs.ttAdapter(),
+                              hint: true,
+                              minLength: 1
+                          },
+                          confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                          maxTags: 5, //limit the number of tags
+                          freeInput: false, //don't allow the user to submit free text
+                          // itemValue: 'title',
+                          // tagClass: 'label label-primary' //tag colors
+                          // focusClass: 'bootstrap-tagsinput:focus',
+                          delimiter: ';'
+                      });
+                  </script>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="tags center">Do user scores matter to you?</label>
+                <div class="form-check tags center" style="height: 10px;">
+                    <input class="tags form-check-input" type="radio" name="acclaim" value="yes" checked> Yes<br>
+                </div>
+                <div class="form-check tags center">
+                  <input class="form-check-input" type="radio" name="acclaim" value="no"> No<br>
+                </div>
+              </div>
               <div class="form-row">
                 <div class="form-row">
                   <label class="tags center">Does the popularity of the movie matter to you?</label>
