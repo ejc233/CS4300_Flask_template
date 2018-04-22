@@ -67,7 +67,7 @@ def search():
     acclaim = request.args.get('acclaim')
     popularity = request.args.get('popularity')
 
-    if not similar and not genres and not duration and not acclaim and not castCrew and not keywords and not release_start and not release_end:
+    if not acclaim and not popularity:
         data = []
         output_message = ''
     else:
@@ -90,6 +90,7 @@ def search():
             max_score += similar_score
         if genres:
             selected_genres = parse_lst_str(genres)
+            print selected_genres
             output_message += "Genres: " + genres + "\n"
             genres_score = 10.0
             max_score += genres_score
