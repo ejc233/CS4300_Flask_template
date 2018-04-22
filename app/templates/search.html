@@ -16,6 +16,7 @@
         <style>
           body {
             background-image: url("/static/film_background_3.png");
+            font-family: 'Play', sans-serif;
           }
           </style>
     </head>
@@ -44,13 +45,14 @@
                       }
                     });
                     movies.initialize();
-                    $('#similar_movies').tagsinput({
+                    $('input').tagsinput({
                         typeaheadjs: {
                             name: 'movies',
                             displayKey: 'title',
                             valueKey: 'title',
                             source: movies.ttAdapter(),
                             hint: true,
+                            higlight: true,
                             minLength: 1
                         },
                         confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
@@ -71,38 +73,13 @@
               </div>
               <div class="form-group col-md-6">
                 <label class="tags center">Genres (separated by semicolons):</label>
-                <input id="select_genres" data-role="tagsinput" type="text" name="genres" placeholder="e.g. Action; History; etc." value="{{old_genres}}">
-                <script>
-                    var genres_lst = new Bloodhound({
-                      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-                      queryTokenizer: Bloodhound.tokenizers.whitespace,
-                      prefetch: {
-                        url: 'static/data/genres.json',
-                        transform: function (response) {
-                            return response.genres;
-                        },
-                        cache: false
-                      }
-                    });
-                    genres_lst.initialize();
-                    $('#select_genres').tagsinput({
-                        typeaheadjs: {
-                            name: 'genres_lst',
-                            displayKey: 'name',
-                            valueKey: 'name',
-                            source: genres_lst.ttAdapter(),
-                            hint: true,
-                            highlight: true,
-                            minLength: 1
-                        },
-                        confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
-                        maxTags: 5, //limit the number of tags
-                        freeInput: false, //don't allow the user to submit free text
-                        // itemValue: 'title',
-                        // tagClass: 'label label-primary' //tag colors
-                     // focusClass: 'bootstrap-tagsinput:focus',
-                    });
-                </script>
+                <input id="select_genres" class="form-control center" list="genre_list" name="genres" class="form-control" placeholder="e.g. Action; History; etc." value="{{old_genres}}">
+                <datalist id="genre_list">
+                    {% if genre_list %}
+                        {% for g in genre_list %}
+                            <option value='{{g}}'>
+                        {% endfor %}
+                    {% endif %}
               </div>
             </div><br><br><br><br><br><br>
             <div class="form-row">
@@ -263,39 +240,21 @@
             </div>
             <div class="form-row">
               <label class="tags center">Do user scores matter to you?</label>
-              {% if old_acclaim == 'no': %}
-                <div class="form-check tags center" style="height: 10px;">
-                    <input class="tags form-check-input" type="radio" name="acclaim" value="yes"> Yes<br>
-                </div>
-                <div class="form-check tags center">
-                  <input class="form-check-input" type="radio" name="acclaim" value="no" checked> No<br>
-                </div>
-              {% else: %}
-                <div class="form-check tags center" style="height: 10px;">
+              <div class="form-check tags center" style="height: 10px;">
                   <input class="tags form-check-input" type="radio" name="acclaim" value="yes" checked> Yes<br>
-                </div>
-                <div class="form-check tags center">
-                  <input class="form-check-input" type="radio" name="acclaim" value="no"> No<br>
-                </div>
-              {% endif %}
+              </div>
+              <div class="form-check tags center">
+                <input class="form-check-input" type="radio" name="acclaim" value="no"> No<br>
+              </div>
             </div>
             <div class="form-row">
               <label class="tags center">Does the popularity of the movie matter to you?</label>
-              {% if old_popularity == 'no': %}
-                <div class="form-check tags center" style="height: 10px;">
-                    <input class="tags form-check-input" type="radio" name="popularity" value="yes"> Yes<br>
-                </div>
-                <div class="form-check tags center">
-                  <input class="form-check-input" type="radio" name="popularity" value="no" checked> No<br>
-                </div>
-              {% else: %}
-                <div class="form-check tags center" style="height: 10px;">
-                    <input class="tags form-check-input" type="radio" name="popularity" value="yes" checked> Yes<br>
-                </div>
-                <div class="form-check tags center">
-                  <input class="form-check-input" type="radio" name="popularity" value="no"> No<br>
-                </div>
-              {% endif %}
+              <div class="form-check tags center" style="height: 10px;">
+                  <input class="tags form-check-input" type="radio" name="popularity" value="yes" checked> Yes<br>
+              </div>
+              <div class="form-check tags center">
+                <input class="form-check-input" type="radio" name="popularity" value="no"> No<br>
+              </div>
             </div>
             <br>
             <div class="form-group tags center">
@@ -323,11 +282,58 @@
               <div class="row">
               {% for d in lst %}
                 <div class="col-md-3 container">
-                  <img class="center poster" src="static/data/posters/{{d['id']}}.jpg" style="height:400px;" alt="">
-                  <div class="post_title" display="none">
+                  <img class="center poster" data-movie="{{ d['id'] }}" src="static/data/posters/{{d['id']}}.jpg" style="height:400px;" alt="">
+                  <div class="post_title" data-movie="{{ d['id'] }}" display="none">
                     <p><strong style="font-size: 20px;">{{d['title']}}</strong></p>
                     <p>{{d['release_date']}} </p>
                     <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
+                  </div>
+                </div>
+                <div id="{{ d['id'] }}" class="modal">
+                  <div class="modal-content">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <img src="static/data/posters/{{d['id']}}.jpg" style="height:450px" alt="">
+                      </div>
+                      <div class="col-md-8">
+                        <p><strong class="mov_title">{{d['title']}}</strong></p>
+                        <p>Genres:
+                        {% for g in d['genres'][:-1] %}
+                            {{g}},
+                        {% endfor %}
+                        {{d['genres'][-1]}}
+                        </p>
+                        <p>Duration: {{d['runtime']}} min</p>
+                        <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
+                        <p>{{d['release_date']}} </p>
+                        <p>Synopsis: {{d['summary']}}</p>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p>Cast:<br>
+                            <small>
+                            {% for c in d['cast'][:10] %}
+                                {{c['name']}} as {{c['character']}}
+                                <br>
+                            {% endfor %}
+                            </small>
+                            </p>
+                          </div>
+                          <div class="col-md-6">
+                            <p>Crew:
+                            <br>
+                            <small>
+                            {% for c in d['crew'][:10] %}
+                                {{c['job']}}: {{c['name']}}
+                                <br>
+                            {% endfor %}
+                            </small>
+                            </p>
+                          </div>
+                        </div>
+                        <p>IMDb Page: <a href ="http://www.imdb.com/title/{{d['id']}}">Link</a></p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               {% endfor %}
