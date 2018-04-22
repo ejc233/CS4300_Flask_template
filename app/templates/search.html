@@ -187,11 +187,25 @@
               <div class="row">
               {% for d in lst %}
                 <div class="col-md-3 container">
-                  <img class="center poster" src="static/data/posters/{{d['id']}}.jpg" style="height:400px;" alt="">
-                  <div class="post_title" display="none">
+                  <img class="center poster" data-movie="{{ d['id'] }}" src="static/data/posters/{{d['id']}}.jpg" style="height:400px;" alt="">
+                  <div class="post_title" data-movie="{{ d['id'] }}" display="none">
                     <p><strong style="font-size: 20px;">{{d['title']}}</strong></p>
                     <p>{{d['release_date']}} </p>
                     <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
+                  </div>
+                </div>
+                <div id="{{ d['id'] }}" class="modal">
+                  <div class="modal-content">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <img src="static/data/posters/{{d['id']}}.jpg" style="height:450px" alt="">
+                      </div>
+                      <div class="col-md-8">
+                        <p><strong style="font-size: 20px;">{{d['title']}}</strong></p>
+                        <p>{{d['release_date']}} </p>
+                        <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               {% endfor %}
