@@ -108,33 +108,73 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label class="tags center">Cast/Crew (separated by semicolons):</label>
-                <input id="input" type="text" class="form-control center" list="castCrew_list" name="castCrew" class="form-control" placeholder="Name 1; Name 2; etc." value="{{old_castCrew}}">
-                <datalist id="castCrew_list"">
-                    {% if castCrew_list %}
-                        {% for c in castCrew_list %}
-                            <option value='{{c}}'>
-                        {% endfor %}
-                    {% endif %}
-                </datalist>
+                <input id="cast_crew" type="text" name="castCrew" placeholder="Name 1; Name 2; etc." value="{{old_castCrew}}" data-role="tagsinput">
+                <script>
+                    var cast_lst = new Bloodhound({
+                      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                      queryTokenizer: Bloodhound.tokenizers.whitespace,
+                      prefetch: {
+                        url: 'static/data/cast.json'
+                      }
+                    });
+                    cast_lst.initialize();
+                    $('#cast_crew').tagsinput({
+                        typeaheadjs: {
+                            name: 'cast_lst',
+                            displayKey: 'name',
+                            valueKey: 'name',
+                            source: cast_lst.ttAdapter(),
+                            hint: true,
+                            minLength: 1
+                        },
+                        confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                        maxTags: 5, //limit the number of tags
+                        freeInput: false, //don't allow the user to submit free text
+                        // itemValue: 'title',
+                        // tagClass: 'label label-primary' //tag colors
+                        // focusClass: 'bootstrap-tagsinput:focus',
+                        delimiter: ';'
+                    });
+                </script>
               </div>
               <div class="form-group col-md-6">
                 <label class="tags center">Keywords (separated by semicolons):</label>
-                <input id="input" type="text" class="form-control center highlight" list="keywords_list" name="keywords" class="form-control" placeholder="Keyword 1; Keyword 2; etc." value="{{old_keywords}}">
+                <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="Keyword 1; Keyword 2; etc." value="{{old_keywords}}">
                 <span></span>
-                <datalist id="keywords_list">
-                    {% if keywords_list %}
-                        {% for k in keywords_list %}
-                            <option value='{{k}}'>
-                        {% endfor %}
-                    {% endif %}
-                </datalist>
+                <script>
+                    var keywords_lst = new Bloodhound({
+                      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                      queryTokenizer: Bloodhound.tokenizers.whitespace,
+                      prefetch: {
+                        url: 'static/data/keywords.json'
+                      }
+                    });
+                    keywords_lst.initialize();
+                    $('#keywords_list').tagsinput({
+                        typeaheadjs: {
+                            name: 'keywords_lst',
+                            displayKey: 'name',
+                            valueKey: 'name',
+                            source: keywords_lst.ttAdapter(),
+                            hint: true,
+                            minLength: 1
+                        },
+                        confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                        maxTags: 5, //limit the number of tags
+                        freeInput: false, //don't allow the user to submit free text
+                        // itemValue: 'title',
+                        // tagClass: 'label label-primary' //tag colors
+                        // focusClass: 'bootstrap-tagsinput:focus',
+                        delimiter: ';'
+                    });
+                </script>
               </div>
             </div>
             <br>
             <div class="form-row">
               <div class="form-group col-md-6">
                   <label class="tags center">Duration (in minutes):</label>
-                  <input id="input" type="text" class="form-control center" name="duration" class="form-control" placeholder="range (e.g. 90-200) or single number (e.g. 90)" value="{{old_duration}}">
+                  <input id="duration_time" type="text" class="form-control center" name="duration" class="form-control" placeholder="range (e.g. 90-200) or single number (e.g. 90)" value="{{old_duration}}">
               </div>
               <div class="form-group col-md-6 center tags">
                 <div class="form-row">
@@ -160,11 +200,65 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                   <label class="tags center">Ratings (separated by semicolons):</label>
-                  <input id="input" type="text" class="form-control center" name="ratings" class="form-control" placeholder="PG-13; PG; etc." value="{{old_ratings}}">
+                  <input id="ratings_list" type="text" data-role="tagsinput" name="ratings" placeholder="PG-13; PG; etc." value="{{old_ratings}}">
+                   <script>
+                    var ratings = new Bloodhound({
+                      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                      queryTokenizer: Bloodhound.tokenizers.whitespace,
+                      prefetch: {
+                        url: 'static/data/ratings.json'
+                      }
+                    });
+                    ratings.initialize();
+                    $('#ratings_list').tagsinput({
+                        typeaheadjs: {
+                            name: 'ratings',
+                            displayKey: 'name',
+                            valueKey: 'name',
+                            source: ratings.ttAdapter(),
+                            hint: true,
+                            minLength: 1
+                        },
+                        confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                        maxTags: 5, //limit the number of tags
+                        freeInput: false, //don't allow the user to submit free text
+                        // itemValue: 'title',
+                        // tagClass: 'label label-primary' //tag colors
+                        // focusClass: 'bootstrap-tagsinput:focus',
+                        delimiter: ';'
+                    });
+                </script>
               </div>
               <div class="form-group col-md-6">
                   <label class="tags center">Languages (separated by semicolons):</label>
-                  <input id="input" type="text" class="form-control center" name="languages" class="form-control" placeholder="en; etc." value="{{old_languages}}">
+                  <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="en; etc." value="{{old_languages}}">
+                   <script>
+                    var langs = new Bloodhound({
+                      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                      queryTokenizer: Bloodhound.tokenizers.whitespace,
+                      prefetch: {
+                        url: 'static/data/languages.json'
+                      }
+                    });
+                    langs.initialize();
+                    $('#language_lst').tagsinput({
+                        typeaheadjs: {
+                            name: 'langs',
+                            displayKey: 'name',
+                            valueKey: 'name',
+                            source: langs.ttAdapter(),
+                            hint: true,
+                            minLength: 1
+                        },
+                        confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                        maxTags: 5, //limit the number of tags
+                        freeInput: false, //don't allow the user to submit free text
+                        // itemValue: 'title',
+                        // tagClass: 'label label-primary' //tag colors
+                        // focusClass: 'bootstrap-tagsinput:focus',
+                        delimiter: ';'
+                    });
+                </script>
               </div>
             </div>
             <div class="form-row">
