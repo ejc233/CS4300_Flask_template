@@ -281,3 +281,14 @@ span.twitter-typeahead .tt-suggestion:focus {
 .mov_title {
   font-size: 25px;
 }
+
+.advanced {
+  display: none;
+}
+
+.advanced_button {
+  background: none;
+  color: #82c4ff;
+  border-style: none;
+  text-decoration: underline;
+}

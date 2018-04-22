@@ -17,6 +17,8 @@
           body {
             background-image: url("/static/film_background_3.png");
             font-family: 'Play', sans-serif;
+            background-attachment: fixed;
+            background-size: cover;
           }
           </style>
     </head>
@@ -107,6 +109,8 @@
                 </script>
               </div>
             </div><br><br><br><br><br><br>
+<!-- <<<<<<< HEAD -->
+            <div class="advanced">
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label class="tags center">Cast/Crew:</label>
@@ -177,20 +181,102 @@
               <div class="form-group col-md-6">
                   <label class="tags center">Duration (in minutes):</label>
                   <input id="duration_time" type="text" class="form-control center" name="duration" class="form-control" placeholder="Range (e.g. 90-200) or Single Number (e.g. 90)" value="{{old_duration}}">
-              </div>
-              <div class="form-group col-md-6 center tags">
-                <div class="form-row">
-                  <label class="center">Range of Release Years:</label>
+<!-- ======= -->
+            <!-- <div class="advanced">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label class="tags center">Cast/Crew:</label>
+                  <input id="cast_crew" type="text" name="castCrew" placeholder="Name 1; Name 2; etc." value="{{old_castCrew}}" data-role="tagsinput">
+                  <script>
+                      var cast_lst = new Bloodhound({
+                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                        queryTokenizer: Bloodhound.tokenizers.whitespace,
+                        prefetch: {
+                          url: 'static/data/cast.json'
+                        }
+                      });
+                      cast_lst.initialize();
+                      $('#cast_crew').tagsinput({
+                          typeaheadjs: {
+                              name: 'cast_lst',
+                              displayKey: 'name',
+                              valueKey: 'name',
+                              source: cast_lst.ttAdapter(),
+                              hint: true,
+                              minLength: 1
+                          },
+                          confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                          maxTags: 5, //limit the number of tags
+                          freeInput: false, //don't allow the user to submit free text
+                          // itemValue: 'title',
+                          // tagClass: 'label label-primary' //tag colors
+                          // focusClass: 'bootstrap-tagsinput:focus',
+                          delimiter: ';'
+                      });
+                  </script>
                 </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <input name="release_start" id="input" class="form-control center form-inline" type="text" list= "year_list" class="form-control" placeholder="Start" style="width:75%" maxlength="4" value="{{old_release_start}}">
+                <div class="form-group col-md-6">
+                  <label class="tags center">Keywords:</label>
+                  <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. Keyword 1; Keyword 2; etc." value="{{old_keywords}}">
+                  <span></span>
+                  <script>
+                      var keywords_lst = new Bloodhound({
+                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                        queryTokenizer: Bloodhound.tokenizers.whitespace,
+                        prefetch: {
+                          url: 'static/data/keywords.json'
+                        }
+                      });
+                      keywords_lst.initialize();
+                      $('#keywords_list').tagsinput({
+                          typeaheadjs: {
+                              name: 'keywords_lst',
+                              displayKey: 'name',
+                              valueKey: 'name',
+                              source: keywords_lst.ttAdapter(),
+                              hint: true,
+                              minLength: 1
+                          },
+                          confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                          maxTags: 5, //limit the number of tags
+                          freeInput: false, //don't allow the user to submit free text
+                          // itemValue: 'title',
+                          // tagClass: 'label label-primary' //tag colors
+                          // focusClass: 'bootstrap-tagsinput:focus',
+                          delimiter: ';'
+                      });
+                  </script>
+                </div> -->
+<!-- >>>>>>> 92f20719fad88d65cb6912609a933247db251bb8 -->
+              </div>
+              <br>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="tags center">Duration (in minutes):</label>
+                    <input id="duration_time" type="text" class="form-control center" name="duration" class="form-control" placeholder="Range (e.g. 90-200) or Single Number (e.g. 90)" value="{{old_duration}}">
+                </div>
+                <div class="form-group col-md-6 center tags">
+                  <div class="form-row">
+                    <label class="center">Range of Release Years:</label>
                   </div>
-                  <div class="form-group col-md-6">
-                    <input name= "release_end" id="input" class="form-control center form-inline" type="text" list= "year_list" class="form-control" placeholder="End" style="width:75%" maxlength="4" value="{{old_release_end}}">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <input name="release_start" id="input" class="form-control center form-inline" type="text" list= "year_list" class="form-control" placeholder="Start" style="width:75%" maxlength="4" value="{{old_release_start}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input name= "release_end" id="input" class="form-control center form-inline" type="text" list= "year_list" class="form-control" placeholder="End" style="width:75%" maxlength="4" value="{{old_release_end}}">
+                    </div>
                   </div>
                 </div>
+                <datalist id="year_list">
+                    {% if year_list %}
+                        {% for m in year_list %}
+                            <option value='{{m}}'>
+                        {% endfor %}
+                    {% endif %}
+                </datalist>
               </div>
+<!-- <<<<<<< HEAD -->
               <datalist id="year_list">
                   {% if year_list %}
                       {% for m in year_list %}
@@ -270,17 +356,22 @@
               </div>
               <div class="form-check tags center">
                 <input class="form-check-input" type="radio" name="acclaim" value="no"> No<br>
+                </div>
+            </div>
+              <div class="form-row">
+                <div class="form-row">
+                  <label class="tags center">Does the popularity of the movie matter to you?</label>
+                  <div class="form-check tags center" style="height: 10px;">
+                      <input class="tags form-check-input" type="radio" name="popularity" value="yes" checked> Yes<br>
+                  </div>
+                  <div class="form-check tags center">
+                    <input class="form-check-input" type="radio" name="popularity" value="no"> No<br>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="form-row">
-              <label class="tags center">Does the popularity of the movie matter to you?</label>
-              <div class="form-check tags center" style="height: 10px;">
-                  <input class="tags form-check-input" type="radio" name="popularity" value="yes" checked> Yes<br>
-              </div>
-              <div class="form-check tags center">
-                <input class="form-check-input" type="radio" name="popularity" value="no"> No<br>
-              </div>
-            </div>
+            <br>
+            <button type=button class="center advanced_button"> Advanced Search </button>
             <br>
             <div class="form-group tags center">
               <button class="btn btn-info"> Get Recommendations </button>

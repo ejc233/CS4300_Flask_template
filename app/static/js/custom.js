@@ -33,4 +33,9 @@ $(document).ready(function() {
         $(event.target).hide(400);
     }
   }
+
+  $(".advanced_button").click(function () {
+    var search = $(this).parent().find(".advanced");
+    search.slideToggle(400);
+  })
 });
