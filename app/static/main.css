@@ -259,7 +259,7 @@ span.twitter-typeahead .tt-suggestion:focus {
   .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 100; /* Sit on top */
     padding-top: 2%; /* Location of the box */
     left: 0;
     top: 0;
@@ -269,10 +269,15 @@ span.twitter-typeahead .tt-suggestion:focus {
 
   /* Modal Content */
 .modal-content {
-    background-color: #fefefe;
+    background-color: #474e63;
+    color: white;
     margin: auto;
     padding: 20px;
     width: 80%;
+}
+
+.mov_title {
+  font-size: 25px;
 }
 
 /*Known issues: tags overlap, focus*/
