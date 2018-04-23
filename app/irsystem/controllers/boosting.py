@@ -1,34 +1,45 @@
 import numpy as np
 import scipy.stats
 
-
 # use the attribues of the similar movies to boost the parameters of our "query movie"
-def boost_query(query_dict,sim_movies,movie_dict):
-	selected_movies = set(sim_movies)
-	for movie in movie_dict:
-		if movie_dict[movie]['title'].lower() in selected_movies:
-			query_dict['genres'] |= movie_dict[movie]['genres']
-			query_dict['castCrew'] |= (movie_dict[movie]['cast'] + movie_dict[movie]['crew'])
-	return query_dict
+def boost_query(query_dict,sim_movies,movie_dict,reverse_dict):
+    selected_movies = set(sim_movies)
+    for selected_movie in selected_movies:
+        selected_id = reverse_dict[selected_movie]
+        if 'genres' in query_dict:
+            query_dict['genres'] += movie_dict[selected_id]['genres']
+        else:
+            query_dict['genres'] = movie_dict[selected_id]['genres']
+
+        if 'castCrew' in query_dict:
+            query_dict['castCrew'] += [member['name'] for member in movie_dict[selected_id]['cast']] + [member['name'] for member in movie_dict[selected_id]['crew']]
+        else:
+            query_dict['castCrew'] = [member['name'] for member in movie_dict[selected_id]['cast']] + [member['name'] for member in movie_dict[selected_id]['crew']]
+
+        if 'keywords' in query_dict:
+            query_dict['keywords'] += movie_dict[selected_id]['keywords']
+        else:
+            query_dict['keywords'] = movie_dict[selected_id]['keywords']        
+    return query_dict
 
 # vectorize the movies in terms of the query
 def vectorize_movies(query_dict,movie_dict):
-	mod_movie_dict = {}
-	mod_movie_lst = []
-	movie_lookup = []
+    mod_movie_dict = {}
+    mod_movie_lst = []
+    movie_lookup = []
 
-	duration_score = gaussian_score_duration(movie_dict,query_dict['duration'],1,0)
-	release_score = gaussian_score_release(movie_dict,query_dict['release_date'],1,0)
+    duration_score = gaussian_score_duration(movie_dict,query_dict['duration'],1,0)
+    release_score = gaussian_score_release(movie_dict,query_dict['release_date'],1,0)
 
-	for movie in movie_dict:
-		tmp = []
+    for movie in movie_dict:
+        tmp = []
 
-		# list of genres for movie m -> jaccard sim with query
-		mod_movie_dict[movie]['genres'] = get_set_overlap(query_dic['genres'],movie_dict[movie]['genres'])
-		tmp.append(get_set_overlap(query_dic['genres'],movie_dict[movie]['genres']))
+        # list of genres for movie m -> jaccard sim with query
+        mod_movie_dict[movie]['genres'] = get_set_overlap(query_dic['genres'],movie_dict[movie]['genres'])
+        tmp.append(get_set_overlap(query_dic['genres'],movie_dict[movie]['genres']))
 
-		# list of cast and crew for movie m -> jaccard sim with the query
-		cast = [member['name'] for member in movie_dict[movie]['cast']]
+        # list of cast and crew for movie m -> jaccard sim with the query
+        cast = [member['name'] for member in movie_dict[movie]['cast']]
         crew = [member['name'] for member in movie_dict[movie]['crew']]
         mod_movie_dict[movie]['castCrew'] = get_set_overlap(selected_crew, cast + crew)
         tmp.append(get_set_overlap(selected_crew, cast + crew))
@@ -50,29 +61,29 @@ def vectorize_movies(query_dict,movie_dict):
         return mod_movie_dict, mod_movie_mat 
 
 def knn_algo(mod_movie_mat,movie_lookup):
-	n,d = mod_movie_mat.shape
-	query = np.ones(d)
-	dists = np.linalg.norm(Mod_movie_mat - query,axis=1,ord=2)
-	top_ten = np.argsort(dists)[:10]
-	return movie_lookup[top_ten]
+    n,d = mod_movie_mat.shape
+    query = np.ones(d)
+    dists = np.linalg.norm(Mod_movie_mat - query,axis=1,ord=2)
+    top_ten = np.argsort(dists)[:10]
+    return movie_lookup[top_ten]
 
 
 ########### HELPER FUNCTIONS ###########
 def gaussian_score_duration(movie_dict,mean,high_val,low_val):
-	score_dict = {}
-	for movie in movie_dict:
-		if movie_dict[movie]['runtime'] is None:
-			movie_dict[movie]['runtime'] = 0
+    score_dict = {}
+    for movie in movie_dict:
+        if movie_dict[movie]['runtime'] is None:
+            movie_dict[movie]['runtime'] = 0
 
-	dist = scipy.stats.norm(mean,10)
-	movie_to_weight = {k:dist.pdf(v['runtime']) for k,v in movie_dict.iteritems()}
-	max_val,min_val = max(movie_to_weight.values()), min(movie_to_weight.values())
-	movie_to_weight = {k:((v - min_val)/(max_val - min_val)) for k,v in movie_to_weight.iteritems()}
+    dist = scipy.stats.norm(mean,10)
+    movie_to_weight = {k:dist.pdf(v['runtime']) for k,v in movie_dict.iteritems()}
+    max_val,min_val = max(movie_to_weight.values()), min(movie_to_weight.values())
+    movie_to_weight = {k:((v - min_val)/(max_val - min_val)) for k,v in movie_to_weight.iteritems()}
 
-	for movie in movie_dict:
-		score_dict[movie] = movie_to_weight[movie]*(high_val + low_val) - low_val
+    for movie in movie_dict:
+        score_dict[movie] = movie_to_weight[movie]*(high_val + low_val) - low_val
 
-	return score_dict
+    return score_dict
 
 # get the fraction of items in list1 available in list2
 def get_set_overlap(list1, list2):

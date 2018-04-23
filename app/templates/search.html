@@ -16,6 +16,9 @@
         <style>
           body {
             background-image: url("/static/film_background_3.png");
+            font-family: 'Play', sans-serif;
+            background-attachment: fixed;
+            background-size: cover;
           }
           </style>
     </head>
@@ -34,7 +37,7 @@
             <div class="form-row ">
               <div class="form-group col-md-6">
                 <label class="tags animated-label center">Similar Movies:</label>
-                <input id="similar_movies" data-role="tagsinput" type="text" name="similar" placeholder="e.g. Black Panther; Jumanji; etc." style="width:75%" value="{{old_similar}}">
+                <input id="similar_movies" data-role="tagsinput" type="text" name="similar" placeholder="e.g. Black Panther, Jumanji, etc." style="width:75%" value="{{old_similar}}">
                 <script>
                     var movies = new Bloodhound({
                       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('title'),
@@ -44,13 +47,14 @@
                       }
                     });
                     movies.initialize();
-                    $('#similar_movies').tagsinput({
+                    $('input').tagsinput({
                         typeaheadjs: {
                             name: 'movies',
                             displayKey: 'title',
                             valueKey: 'title',
                             source: movies.ttAdapter(),
                             hint: true,
+                            higlight: true,
                             minLength: 1
                         },
                         confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
@@ -70,8 +74,8 @@
                 </script>
               </div>
               <div class="form-group col-md-6">
-                <label class="tags center">Genres (separated by semicolons):</label>
-                <input id="select_genres" data-role="tagsinput" type="text" name="genres" placeholder="e.g. Action; History; etc." value="{{old_genres}}">
+                <label class="tags center">Genres:</label>
+                <input id="select_genres" data-role="tagsinput" type="text" name="genres" placeholder="e.g. Action, History, etc." value="{{old_genres}}">
                 <script>
                     var genres_lst = new Bloodhound({
                       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -100,112 +104,195 @@
                         freeInput: false, //don't allow the user to submit free text
                         // itemValue: 'title',
                         // tagClass: 'label label-primary' //tag colors
-                     // focusClass: 'bootstrap-tagsinput:focus',
+                        // focusClass: 'bootstrap-tagsinput:focus',
+                        delimiter: ';'
                     });
                 </script>
               </div>
             </div><br><br><br><br><br><br>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label class="tags center">Cast/Crew (separated by semicolons):</label>
-                <input id="input" type="text" class="form-control center" list="castCrew_list" name="castCrew" class="form-control" placeholder="Name 1; Name 2; etc." value="{{old_castCrew}}">
-                <datalist id="castCrew_list"">
-                    {% if castCrew_list %}
-                        {% for c in castCrew_list %}
-                            <option value='{{c}}'>
+            <div class="advanced">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label class="tags center">Cast/Crew:</label>
+                  <input id="cast_crew" type="text" name="castCrew" placeholder="e.g. Name 1, Name 2, etc." value="{{old_castCrew}}" data-role="tagsinput">
+                  <script>
+                      var cast_lst = new Bloodhound({
+                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                        queryTokenizer: Bloodhound.tokenizers.whitespace,
+                        prefetch: {
+                          url: 'static/data/cast.json'
+                        }
+                      });
+                      cast_lst.initialize();
+                      $('#cast_crew').tagsinput({
+                          typeaheadjs: {
+                              name: 'cast_lst',
+                              displayKey: 'name',
+                              valueKey: 'name',
+                              source: cast_lst.ttAdapter(),
+                              hint: true,
+                              minLength: 1
+                          },
+                          confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                          maxTags: 5, //limit the number of tags
+                          freeInput: false, //don't allow the user to submit free text
+                          // itemValue: 'title',
+                          // tagClass: 'label label-primary' //tag colors
+                          // focusClass: 'bootstrap-tagsinput:focus',
+                          delimiter: ';'
+                      });
+                  </script>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="tags center">Keywords:</label>
+                  <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. Keyword 1, Keyword 2, etc." value="{{old_keywords}}">
+                  <span></span>
+                  <script>
+                      var keywords_lst = new Bloodhound({
+                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                        queryTokenizer: Bloodhound.tokenizers.whitespace,
+                        prefetch: {
+                          url: 'static/data/keywords.json'
+                        }
+                      });
+                      keywords_lst.initialize();
+                      $('#keywords_list').tagsinput({
+                          typeaheadjs: {
+                              name: 'keywords_lst',
+                              displayKey: 'name',
+                              valueKey: 'name',
+                              source: keywords_lst.ttAdapter(),
+                              hint: true,
+                              minLength: 1
+                          },
+                          confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                          maxTags: 5, //limit the number of tags
+                          freeInput: false, //don't allow the user to submit free text
+                          // itemValue: 'title',
+                          // tagClass: 'label label-primary' //tag colors
+                          // focusClass: 'bootstrap-tagsinput:focus',
+                          delimiter: ';'
+                      });
+                  </script>
+                </div>
+              </div>
+              <br>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="tags center">Duration (in minutes):</label>
+                    <input id="duration_time" type="text" class="form-control center" name="duration" class="form-control" placeholder="Range (e.g. 90-200) or Single Number (e.g. 90)" value="{{old_duration}}">
+                </div>
+                <div class="form-group col-md-6 center tags">
+                  <div class="form-row">
+                    <label class="center">Range of Release Years:</label>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <input name="release_start" id="input" class="form-control center form-inline" type="text" list= "year_list" class="form-control" placeholder="Start" style="width:75%" maxlength="4" value="{{old_release_start}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input name= "release_end" id="input" class="form-control center form-inline" type="text" list= "year_list" class="form-control" placeholder="End" style="width:75%" maxlength="4" value="{{old_release_end}}">
+                    </div>
+                  </div>
+                </div>
+                <datalist id="year_list">
+                    {% if year_list %}
+                        {% for m in year_list %}
+                            <option value='{{m}}'>
                         {% endfor %}
                     {% endif %}
                 </datalist>
               </div>
-              <div class="form-group col-md-6">
-                <label class="tags center">Keywords (separated by semicolons):</label>
-                <input id="input" type="text" class="form-control center highlight" list="keywords_list" name="keywords" class="form-control" placeholder="Keyword 1; Keyword 2; etc." value="{{old_keywords}}">
-                <span></span>
-                <datalist id="keywords_list">
-                    {% if keywords_list %}
-                        {% for k in keywords_list %}
-                            <option value='{{k}}'>
-                        {% endfor %}
-                    {% endif %}
-                </datalist>
-              </div>
-            </div>
-            <br>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                  <label class="tags center">Duration (in minutes):</label>
-                  <input id="input" type="text" class="form-control center" name="duration" class="form-control" placeholder="range (e.g. 90-200) or single number (e.g. 90)" value="{{old_duration}}">
-              </div>
-              <div class="form-group col-md-6 center tags">
-                <div class="form-row">
-                  <label class="center">Range of Release Years:</label>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="tags center">Ratings:</label>
+                    <input id="ratings_list" type="text" data-role="tagsinput" name="ratings" placeholder="e.g. PG-13, PG, etc." value="{{old_ratings}}">
+                     <script>
+                      var ratings = new Bloodhound({
+                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                        queryTokenizer: Bloodhound.tokenizers.whitespace,
+                        prefetch: {
+                          url: 'static/data/ratings.json'
+                        }
+                      });
+                      ratings.initialize();
+                      $('#ratings_list').tagsinput({
+                          typeaheadjs: {
+                              name: 'ratings',
+                              displayKey: 'name',
+                              valueKey: 'name',
+                              source: ratings.ttAdapter(),
+                              hint: true,
+                              minLength: 1
+                          },
+                          confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                          maxTags: 5, //limit the number of tags
+                          freeInput: false, //don't allow the user to submit free text
+                          // itemValue: 'title',
+                          // tagClass: 'label label-primary' //tag colors
+                          // focusClass: 'bootstrap-tagsinput:focus',
+                          delimiter: ';'
+                      });
+                  </script>
                 </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <input name="release_start" id="input" class="form-control center form-inline" type="text" list= "year_list" class="form-control" placeholder="Start" style="width:75%" maxlength="4" value="{{old_release_start}}">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <input name= "release_end" id="input" class="form-control center form-inline" type="text" list= "year_list" class="form-control" placeholder="End" style="width:75%" maxlength="4" value="{{old_release_end}}">
-                  </div>
+                <div class="form-group col-md-6">
+                    <label class="tags center">Languages:</label>
+                    <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="e.g. En, etc." value="{{old_languages}}">
+                     <script>
+                      var langs = new Bloodhound({
+                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                        queryTokenizer: Bloodhound.tokenizers.whitespace,
+                        prefetch: {
+                          url: 'static/data/languages.json'
+                        }
+                      });
+                      langs.initialize();
+                      $('#language_lst').tagsinput({
+                          typeaheadjs: {
+                              name: 'langs',
+                              displayKey: 'name',
+                              valueKey: 'name',
+                              source: langs.ttAdapter(),
+                              hint: true,
+                              minLength: 1
+                          },
+                          confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
+                          maxTags: 5, //limit the number of tags
+                          freeInput: false, //don't allow the user to submit free text
+                          // itemValue: 'title',
+                          // tagClass: 'label label-primary' //tag colors
+                          // focusClass: 'bootstrap-tagsinput:focus',
+                          delimiter: ';'
+                      });
+                  </script>
                 </div>
               </div>
-              <datalist id="year_list">
-                  {% if year_list %}
-                      {% for m in year_list %}
-                          <option value='{{m}}'>
-                      {% endfor %}
-                  {% endif %}
-              </datalist>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                  <label class="tags center">Ratings (separated by semicolons):</label>
-                  <input id="input" type="text" class="form-control center" name="ratings" class="form-control" placeholder="PG-13; PG; etc." value="{{old_ratings}}">
-              </div>
-              <div class="form-group col-md-6">
-                  <label class="tags center">Languages (separated by semicolons):</label>
-                  <input id="input" type="text" class="form-control center" name="languages" class="form-control" placeholder="en; etc." value="{{old_languages}}">
-              </div>
-            </div>
-            <div class="form-row">
-              <label class="tags center">Do user scores matter to you?</label>
-              {% if old_acclaim == 'no': %}
+              <div class="form-row">
+                <label class="tags center">Do user scores matter to you?</label>
                 <div class="form-check tags center" style="height: 10px;">
-                    <input class="tags form-check-input" type="radio" name="acclaim" value="yes"> Yes<br>
-                </div>
-                <div class="form-check tags center">
-                  <input class="form-check-input" type="radio" name="acclaim" value="no" checked> No<br>
-                </div>
-              {% else: %}
-                <div class="form-check tags center" style="height: 10px;">
-                  <input class="tags form-check-input" type="radio" name="acclaim" value="yes" checked> Yes<br>
+                    <input class="tags form-check-input" type="radio" name="acclaim" value="yes" checked> Yes<br>
                 </div>
                 <div class="form-check tags center">
                   <input class="form-check-input" type="radio" name="acclaim" value="no"> No<br>
                 </div>
-              {% endif %}
-            </div>
-            <div class="form-row">
-              <label class="tags center">Does the popularity of the movie matter to you?</label>
-              {% if old_popularity == 'no': %}
-                <div class="form-check tags center" style="height: 10px;">
-                    <input class="tags form-check-input" type="radio" name="popularity" value="yes"> Yes<br>
+              </div>
+              <div class="form-row">
+                <div class="form-row">
+                  <label class="tags center">Does the popularity of the movie matter to you?</label>
+                  <div class="form-check tags center" style="height: 10px;">
+                      <input class="tags form-check-input" type="radio" name="popularity" value="yes" checked> Yes<br>
+                  </div>
+                  <div class="form-check tags center">
+                    <input class="form-check-input" type="radio" name="popularity" value="no"> No<br>
+                  </div>
                 </div>
-                <div class="form-check tags center">
-                  <input class="form-check-input" type="radio" name="popularity" value="no" checked> No<br>
-                </div>
-              {% else: %}
-                <div class="form-check tags center" style="height: 10px;">
-                    <input class="tags form-check-input" type="radio" name="popularity" value="yes" checked> Yes<br>
-                </div>
-                <div class="form-check tags center">
-                  <input class="form-check-input" type="radio" name="popularity" value="no"> No<br>
-                </div>
-              {% endif %}
+              </div>
             </div>
             <br>
+            <button type=button class="center advanced_button"> Advanced Search </button>
+            <br>
             <div class="form-group tags center">
-              <button type="submit" class="btn btn-info"> Get Recommendations </button>
+              <button class="btn btn-info"> Get Recommendations </button>
             </div>
           </form>
         </div>
@@ -229,11 +316,59 @@
               <div class="row">
               {% for d in lst %}
                 <div class="col-md-3 container">
-                  <img class="center poster" src="static/data/posters/{{d['id']}}.jpg" style="height:400px;" alt="">
-                  <div class="post_title" display="none">
+                  <img class="center poster" data-movie="{{ d['id'] }}" src="static/data/posters/{{d['id']}}.jpg" style="height:400px;" alt="">
+                  <div class="post_title" data-movie="{{ d['id'] }}" display="none">
                     <p><strong style="font-size: 20px;">{{d['title']}}</strong></p>
                     <p>{{d['release_date']}} </p>
                     <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
+                  </div>
+                </div>
+                <!-- Modal pop-up -->
+                <div id="{{ d['id'] }}" class="modal">
+                  <div class="modal-content">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <img src="static/data/posters/{{d['id']}}.jpg" style="height:450px" alt="{{d['title']}}">
+                      </div>
+                      <div class="col-md-8">
+                        <p><strong class="mov_title">{{d['title']}}</strong></p>
+                        <p>Genres:
+                        {% for g in d['genres'][:-1] %}
+                            {{g}},
+                        {% endfor %}
+                        {{d['genres'][-1]}}
+                        </p>
+                        <p>Duration: {{d['runtime']}} min</p>
+                        <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
+                        <p>{{d['release_date']}} </p>
+                        <p>Synopsis: {{d['summary']}}</p>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p>Cast:<br>
+                            <small>
+                            {% for c in d['cast'][:10] %}
+                                {{c['name']}} as {{c['character']}}
+                                <br>
+                            {% endfor %}
+                            </small>
+                            </p>
+                          </div>
+                          <div class="col-md-6">
+                            <p>Crew:
+                            <br>
+                            <small>
+                            {% for c in d['crew'][:10] %}
+                                {{c['job']}}: {{c['name']}}
+                                <br>
+                            {% endfor %}
+                            </small>
+                            </p>
+                          </div>
+                        </div>
+                        <p>IMDb Page: <a href ="http://www.imdb.com/title/{{d['id']}}">Link</a></p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               {% endfor %}
