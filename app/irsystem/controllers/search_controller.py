@@ -9,26 +9,55 @@ import boosting
 import utilities
 import scipy.stats
 from random import *
+import os
+import os.path
 
 movies_json = json.load(open('app/static/data/movies.json'))
 
 # map each movie id to the movie's information
 movie_dict = dict()
+# new_json = []
 for movie in movies_json:
     movie_dict[movie['id']] = json.load(open('app/static/data/movies/' + movie['id'] + '.json'))
+
+# for movie in movies_json:
+#     if os.path.exists('app/static/data/movies/' + movie['id'] + '.json'):
+#         movie_dict[movie['id']] = json.load(open('app/static/data/movies/' + movie['id'] + '.json'))
+#         new_json.append(movie)
+
+# print len(new_json)
+# with open('app/static/data/movies.json', 'w') as outfile:
+#         json.dump(new_json, outfile)
 
 # build other lists from movie_dict
 max_tmdb_count = 0.0
 max_imdb_count = 0.0
 max_meta_count = 0.0
 
+# count = 0
+# to_remove = []
 for movie in movie_dict:
+    # if movie_dict[movie]['imdb_score_count'] < 250:
+        # to_remove.append(movie)
+        # os.remove('app/static/data/movies/' + movie + '.json')
+        # print 'app/static/data/movies/' + movie + '.json'
     if movie_dict[movie]['tmdb_score_count'] > max_tmdb_count:
         max_tmdb_count = movie_dict[movie]['tmdb_score_count']
     if movie_dict[movie]['imdb_score_count'] > max_imdb_count:
         max_imdb_count = movie_dict[movie]['imdb_score_count']
     if movie_dict[movie]['meta_score_count'] > max_meta_count:
         max_meta_count = movie_dict[movie]['meta_score_count']
+
+# set_to_remove = set(to_remove)
+# print len(movies_json)
+# new_json = []
+# for movie in movies_json:
+#     if movie['id'] not in set_to_remove:
+#         new_json.append(movie)
+# print len(new_json)
+# print movies_json
+# print to_remove
+
 
 # get list of years
 year_list = range(1900, 2019)

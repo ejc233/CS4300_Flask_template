@@ -13,6 +13,8 @@ Jinja2==2.10
 Mako==1.0.7
 MarkupSafe==1.0
 marshmallow==2.15.0
+marshmallow-sqlalchemy==0.13.2
+nltk==3.2.5
 numpy==1.14.1
 opencv-python==3.4.0.12
 python-dateutil==2.7.2
@@ -21,4 +23,5 @@ python-engineio==2.0.4
 python-socketio==1.9.0
 scipy==1.0.0
 six==1.11.0
+SQLAlchemy==1.2.6
 Werkzeug==0.14.1
