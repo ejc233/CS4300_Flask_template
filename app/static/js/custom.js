@@ -13,7 +13,6 @@ $(document).ready(function() {
     // mod.detach().appendTo($('body'));
 
     mod.fadeIn(425);
-    // console.log(mod);
   });
 
   $(".post_title").click(function(){
@@ -24,7 +23,6 @@ $(document).ready(function() {
     // mod.detach().appendTo($('body'));
 
     mod.fadeIn(425);
-    // console.log(mod);
   });
 
   window.onclick = function(event) {

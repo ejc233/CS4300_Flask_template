@@ -331,7 +331,7 @@
                         <img src="static/data/posters/{{d['id']}}.jpg" style="height:450px" alt="{{d['title']}}">
                       </div>
                       <div class="col-md-8">
-                        <p><strong class="mov_title">{{d['title']}}</strong></p>
+                        <div><strong class="mov_title">{{d['title']}}   </strong> <span class="mov_year">({{d['release_date'][-4:]}})</span></div>
                         <p>Genres:
                         {% for g in d['genres'][:-1] %}
                             {{g}},
@@ -340,7 +340,6 @@
                         </p>
                         <p>Duration: {{d['runtime']}} min</p>
                         <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
-                        <p>{{d['release_date']}} </p>
                         <p>Synopsis: {{d['summary']}}</p>
                         <br>
                         <div class="row">
