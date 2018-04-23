@@ -22,7 +22,7 @@ def filter_languages(movie_dict,score_dict, inp, high_val):
             rtn_score[movie] = score_dict[movie] + high_val
     return rtn_movie, rtn_score
 
-def filter_similar(movie_dict,score_dict,similar_movies):
+def filter_similar(movie_dict, score_dict, similar_movies):
     rtn_movie = {}
     rtn_score = {}
     similar_movies = set(similar_movies)
