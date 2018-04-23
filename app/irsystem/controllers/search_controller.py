@@ -17,10 +17,6 @@ movie_dict = dict()
 for movie in movies_json:
     movie_dict[movie['id']] = json.load(open('app/static/data/movies/' + movie['id'] + '.json'))
 
-# get list of movie titles
-movie_list = [movie['title'] for movie in movies_json]
-movie_list.sort()
-
 # build other lists from movie_dict
 max_tmdb_count = 0.0
 max_imdb_count = 0.0
@@ -125,7 +121,7 @@ def search():
                 features_lst.append(get_set_overlap(query_dict['keywords'], movie_dict[movie]['keywords']))
 
             # list of genres for movie m -> jaccard sim with query
-            if genres or similar:
+            if genres:
                 features_lst.append(get_set_overlap(query_dict['genres'],movie_dict[movie]['genres']))
 
             # list of cast and crew for movie m -> jaccard sim with the query
@@ -202,7 +198,6 @@ def search():
         old_acclaim = xstr(acclaim),
         old_popularity = xstr(popularity),
         data = data[:6],
-        movie_list = movie_list,
         year_list = year_list)
 
 def parse_lst_str(lst_str):
@@ -225,6 +220,7 @@ def get_set_overlap(list1, list2):
     den = len(set1)
     return num / den
 
+# set string to empty string if string is None type
 def xstr(s):
     return '' if s is None else str(s)
 
