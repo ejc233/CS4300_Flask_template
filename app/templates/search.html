@@ -237,7 +237,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label class="tags center">Languages:</label>
-                    <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="e.g. En, etc." value="{{old_languages}}">
+                    <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="e.g. English, etc." value="{{old_languages}}">
                      <script>
                       var langs = new Bloodhound({
                         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -359,6 +359,8 @@
                         <p>Duration: {{d['runtime']}} min</p>
                         <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
                         <p>Synopsis: {{d['summary']}}</p>
+                        <p>Rating: {{d['rating']}}</p>
+                        <p>Language: {{d['original_language']}}</p>
                         <br>
                         <div class="row">
                           <div class="col-md-6">
