@@ -1,0 +1,4 @@
+marshmallow-sqlalchemy==0.13.2
+nltk==3.2.5
+opencv-python==3.4.0.12
+SQLAlchemy==1.2.6

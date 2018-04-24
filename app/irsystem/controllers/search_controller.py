@@ -9,8 +9,8 @@ import boosting
 import utilities
 import scipy.stats
 from random import *
-import os
-import os.path
+# import os
+# import os.path
 
 movies_json = json.load(open('app/static/data/movies.json'))
 
