@@ -9,8 +9,8 @@ import boosting
 import utilities
 import scipy.stats
 from random import *
-# import os
-# import os.path
+import os
+import os.path
 
 movies_json = json.load(open('app/static/data/movies.json'))
 
@@ -23,7 +23,10 @@ for movie in movies_json:
 # for movie in movies_json:
 #     if os.path.exists('app/static/data/movies/' + movie['id'] + '.json'):
 #         movie_dict[movie['id']] = json.load(open('app/static/data/movies/' + movie['id'] + '.json'))
-#         new_json.append(movie)
+#         # new_json.append(movie)
+#     else:
+#         os.remove('app/static/data/posters/' + movie['id'] + '.jpg')
+#         print 'app/static/data/posters/' + movie['id'] + '.jpg'
 
 # print len(new_json)
 # with open('app/static/data/movies.json', 'w') as outfile:
