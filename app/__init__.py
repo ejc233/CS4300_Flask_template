@@ -5,7 +5,7 @@ monkey.patch_all()
 # Imports
 import os
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
 
 # Configure app
@@ -15,7 +15,7 @@ app.config.from_object(os.environ["APP_SETTINGS"])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 # DB
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
 # Import + Register Blueprints
 from app.accounts import accounts as accounts
