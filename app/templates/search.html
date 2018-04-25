@@ -54,7 +54,7 @@
             <div class="form-row ">
               <div class="form-group col-md-6">
                 <label class="tags animated-label center">Similar Movies:</label>
-                <input id="similar_movies" data-role="tagsinput" type="text" name="similar" placeholder="e.g. Black Panther, Jumanji, etc." style="width:75%" value="{{old_similar}}">
+                <input id="similar_movies" data-role="tagsinput" type="text" name="similar" placeholder="e.g. Black Panther, Star Wars, etc." style="width:75%" value="{{old_similar}}">
                 <script>
                     var movies = new Bloodhound({
                       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('title'),
@@ -162,7 +162,7 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label class="tags center">Keywords:</label>
-                  <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. Keyword 1, Keyword 2, etc." value="{{old_keywords}}">
+                  <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. Marvel cinematic universe, Robot, Racism, etc." value="{{old_keywords}}">
                   <span></span>
                   <script>
                       var keywords_lst = new Bloodhound({
@@ -254,7 +254,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label class="tags center">Languages:</label>
-                    <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="e.g. En, etc." value="{{old_languages}}">
+                    <input id="language_lst" type="text" data-role="tagsinput" name="languages" placeholder="e.g. English, Japanese, etc." value="{{old_languages}}">
                      <script>
                       var langs = new Bloodhound({
                         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),

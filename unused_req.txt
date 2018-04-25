@@ -1,0 +1,6 @@
+alembic==0.9.9
+Flask-Migrate==2.1.1
+marshmallow-sqlalchemy==0.13.2
+nltk==3.2.5
+opencv-python==3.4.0.12
+SQLAlchemy==1.2.6
