@@ -28,7 +28,14 @@ $(document).ready(function() {
   window.onclick = function(event) {
     if (event.target.className == "modal") {
         $(event.target).fadeOut(400);
+        //Remove whatever settings you left off on
+        $(".current").removeClass("current");
+        $(".active").css("display","none");
+        $(".active").removeClass("active");
+        //Reset back to original
         $("a[href='#overview']").addClass("current");
+        $("a[href='#overview']").addClass("active");
+        $("#overview_details").css("display","inline-block");
     }
   }
 
@@ -37,27 +44,28 @@ $(document).ready(function() {
     search.slideToggle(400);
   });
 
-  $("#slide1").click(function () { console.log('hello');});
-
-  $("#slide2").click(function () { console.log('hello??');});
-
   // Action listeners for modal menu bar
   $("a[href='#overview']").click(function () {
     // Change menu bar css
     $(".current").removeClass("current");
+    $(".active").css("display","none");
+    $(".active").removeClass("active");
     $(this).addClass("current");
+    $(this).addClass("active");
     // Display content
-    $("#overview_details").css("display","inline-block");
-    $("#show_details").css("display","none");
+    $(".overview_details").css("display","inline-block");
+    $(".show_details").css("display","none");
   });
 
   $("a[href='#show']").click(function () {
+    console.log("hello");
     // Change css for menu bar
     $(".current").removeClass("current");
     $(this).addClass("current");
     // Display content
-    $("#show_details").css("display","inline-block");
-    $("#overview_details").css("display","none");
+    $(".show_details").css("display","inline-block");
+    $(".overview_details").css("display","none");
+    console.log("goodbye");
   });
 
   $("a[href='#search']").click(function () {
