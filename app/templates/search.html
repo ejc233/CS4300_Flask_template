@@ -6,6 +6,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Play|Ubuntu" rel="stylesheet">
         <link rel="stylesheet" href="/static/bootstrap-tagsinput/dist/bootstrap-tagsinput.css"/>
@@ -28,9 +29,25 @@
       font-family: BeautySchool;
       src: url('static/beautyschooldropout.ttf');
     }
+    /*div.scrollmenu {
+    background-color: #333;
+    overflow: auto;
+    white-space: nowrap;
+    }
+    div.scrollmenu a {
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 14px;
+        text-decoration: none;
+    }
+    div.scrollmenu a:hover {
+        background-color: #777;
+    }*/
     </style>
 
     <body>
+       
         <div class="logo_band">
           <img class="logo" src= "/static/logo_white.png" alt="CinemaPop"></img>
           <form class="global-search custom-form" style="width: 100%">
@@ -47,7 +64,7 @@
                       }
                     });
                     movies.initialize();
-                    $('input').tagsinput({
+                    $('#similar_movies').tagsinput({
                         typeaheadjs: {
                             name: 'movies',
                             displayKey: 'title',
@@ -350,6 +367,52 @@
                       </div>
                       <div class="col-md-8">
                         <div><strong class="mov_title">{{d['title']}}   </strong> <span class="mov_year">({{d['release_date'][-4:]}})</span></div>
+                        <div class="scrollmenu">
+                          <a href="#overview" class="current">Overview</a>
+                          <a href="#show">Show Details</a>
+                          <a href="#search">Search Details</a>
+                        </div>
+                        <!-- <div id="containertest">
+                        <div id="overview" class="red">Text 1</div>
+                        <div id="details" class="green">Text 2</div>
+                        </div>
+                        <script>
+                            var divturn = 1;
+                          $('#slide2').click(function() {
+                            console.log(divturn);
+                            if (divturn == 1) {
+                                $("#overview").animate({
+                                    left: '150%'
+                                }, 500, function() {
+                                    $(this).css('left', '150%');
+                                    $(this).appendTo('#containertest');
+                              });
+
+                              $('#overview').next().animate({
+                                  left: '0'
+                              }, 500);
+                              
+                              divturn = 0;
+                            }
+                          });
+
+                          $('#slide1').click(function() {
+                             console.log(divturn);
+                            if (divturn == 0){
+                                $("#details").animate({
+                                    left: '-150%'
+                                }, 500, function() {
+                                    $(this).css('left', '-150%');
+                                    $(this).appendTo('#containertest');
+                              });
+
+                              $('#details').next().animate({
+                                  left: '0'
+                              }, 500);
+                              divturn = 1;
+                              }
+                          });
+                        </script> -->
                         <p>Genres:
                         {% for g in d['genres'][:-1] %}
                             {{g}},

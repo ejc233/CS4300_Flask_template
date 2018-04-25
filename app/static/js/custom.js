@@ -26,7 +26,6 @@ $(document).ready(function() {
   });
 
   window.onclick = function(event) {
-    console.log(event.target);
     if (event.target.className == "modal") {
         $(event.target).fadeOut(400);
     }
@@ -35,5 +34,25 @@ $(document).ready(function() {
   $(".advanced_button").click(function () {
     var search = $(this).parent().find(".advanced");
     search.slideToggle(400);
-  })
+  });
+
+  $("#slide1").click(function () { console.log('hello');});
+
+  $("#slide2").click(function () { console.log('hello??');});
+
+  // Action listeners for modal menu bar
+  $("a[href='#overview']").click(function () {
+    $(".current").removeClass("current");
+    $(this).addClass("current");
+  });
+
+  $("a[href='#show']").click(function () {
+    $(".current").removeClass("current");
+    $(this).addClass("current");
+  });
+
+  $("a[href='#search']").click(function () {
+    $(".current").removeClass("current");
+    $(this).addClass("current");
+  });
 });
