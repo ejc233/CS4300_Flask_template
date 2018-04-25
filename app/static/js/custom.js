@@ -28,6 +28,7 @@ $(document).ready(function() {
   window.onclick = function(event) {
     if (event.target.className == "modal") {
         $(event.target).fadeOut(400);
+        $("a[href='#overview']").addClass("current");
     }
   }
 
