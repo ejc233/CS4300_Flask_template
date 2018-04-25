@@ -301,7 +301,7 @@ span.twitter-typeahead .tt-suggestion:focus {
   color: white;
   margin: auto;
   padding: 20px;
-  width: 80%; 
+  width: 80%;
 }
 
 .mov_title {
@@ -361,11 +361,28 @@ div.scrollmenu a.current {
   border-bottom-color: rgba(255,255,255,0.5);
 }
 div.content_details {
-  margin-top: 1%; 
-  margin-left: 1.5%; 
+  margin-top: 1%;
+  margin-left: 1.5%;
   margin-right: 4.5%;
 }
 div.scrollmenu a.overview_details a.show_details a.search_details a.active_modal{}
+
+.background_img {
+  background-image: url("/static/film_background_3.png");
+  position: fixed;
+  left: 0;
+  right: 0;
+  width:100%;
+  height:100%;
+  background-attachment: fixed;
+  background-size: cover;
+  z-index: -100;
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+}
 
 /* Test 1 */
 /*a {
@@ -377,7 +394,7 @@ div.scrollmenu a.overview_details a.show_details a.search_details a.active_modal
       padding: 0px;
       width: 100%;
       height: 100%;
-      overflow: hidden;  
+      overflow: hidden;
   }
   .red {
     display:inline-block;
