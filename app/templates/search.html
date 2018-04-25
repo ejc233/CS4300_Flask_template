@@ -373,7 +373,7 @@
                           <a href="#search">Search Details</a>
                         </div>
                         <!-- Div for overview -->
-                        <div id="overview_details" style="margin-top: 1%">
+                        <div id="overview_details" class="content_details">
                             <p>Genres:
                             {% for g in d['genres'][:-1] %}
                                 {{g}},
@@ -386,7 +386,7 @@
                             <p>IMDb Page: <a href ="http://www.imdb.com/title/{{d['id']}}">Link</a></p>
                         </div>
                         <!-- Div for show -->
-                        <div id="show_details" style="margin-top: 1%; display: none">
+                        <div id="show_details" class="content_details" style="display: none">
                         <div class="row">
                           <div class="col-md-6">
                             <p>Cast:<br>
