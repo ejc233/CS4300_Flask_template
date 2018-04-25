@@ -365,7 +365,7 @@ div.content_details {
   margin-left: 1.5%; 
   margin-right: 4.5%;
 }
-div.scrollmenu a.overview_details a.show_details a.active{}
+div.scrollmenu a.overview_details a.show_details a.search_details a.active_modal{}
 
 /* Test 1 */
 /*a {

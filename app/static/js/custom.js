@@ -7,21 +7,13 @@ $(document).ready(function() {
 
   $(".poster").click(function(){
     var id = this.getAttribute("data-movie");
-    // var row = $(this).parent().parent();
     var mod = $('body').find("#"+id);
-
-    // mod.detach().appendTo($('body'));
-
     mod.fadeIn(425);
   });
 
   $(".post_title").click(function(){
     var id = this.getAttribute("data-movie");
-    // var row = $(this).parent().parent();
     var mod = $('body').find("#"+id);
-
-    // mod.detach().appendTo($('body'));
-
     mod.fadeIn(425);
   });
 
@@ -30,12 +22,12 @@ $(document).ready(function() {
         $(event.target).fadeOut(400);
         //Remove whatever settings you left off on
         $(".current").removeClass("current");
-        $(".active").css("display","none");
-        $(".active").removeClass("active");
+        $(".active_modal").css("display","none");
+        $(".active_modal").removeClass("active_modal");
         //Reset back to original
         $("a[href='#overview']").addClass("current");
-        $("a[href='#overview']").addClass("active");
-        $("#overview_details").css("display","inline-block");
+        $(".overview_details").addClass("active_modal");
+        $(".overview_details").css("display","inline-block");
     }
   }
 
@@ -46,30 +38,35 @@ $(document).ready(function() {
 
   // Action listeners for modal menu bar
   $("a[href='#overview']").click(function () {
-    // Change menu bar css
+    // Remove old content
     $(".current").removeClass("current");
-    $(".active").css("display","none");
-    $(".active").removeClass("active");
+    $(".active_modal").css("display","none");
+    $(".active_modal").removeClass("active_modal");
+    // Display new content
     $(this).addClass("current");
-    $(this).addClass("active");
-    // Display content
+    $(".overview_details").addClass("active_modal");
     $(".overview_details").css("display","inline-block");
-    $(".show_details").css("display","none");
   });
 
   $("a[href='#show']").click(function () {
-    console.log("hello");
-    // Change css for menu bar
+    // Remove old content
     $(".current").removeClass("current");
+    $(".active_modal").css("display","none");
+    $(".active_modal").removeClass("active_modal");
+    // Display new content
     $(this).addClass("current");
-    // Display content
+    $(".show_details").addClass("active_modal");
     $(".show_details").css("display","inline-block");
-    $(".overview_details").css("display","none");
-    console.log("goodbye");
   });
 
   $("a[href='#search']").click(function () {
+    // Remove old content
     $(".current").removeClass("current");
+    $(".active_modal").css("display","none");
+    $(".active_modal").removeClass("active_modal");
+    // Display new content
     $(this).addClass("current");
+    // $().addClass("active"); //for later
+    // $(".overview_details").css("display","inline-block");
   });
 });
