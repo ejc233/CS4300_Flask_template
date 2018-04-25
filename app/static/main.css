@@ -262,27 +262,27 @@ span.twitter-typeahead .tt-suggestion:focus {
   }
 
 /* Modal pop-up */
-  .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 100; /* Sit on top */
-    padding-top: 2%; /* Location of the box */
-    padding-bottom: 2%;
-    left: 0;
-    top: 0;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
-    overflow: auto;
-  }
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 100; /* Sit on top */
+  padding-top: 2%; /* Location of the box */
+  padding-bottom: 2%;
+  left: 0;
+  top: 0;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+  overflow: auto;
+}
 
   /* Modal Content */
 .modal-content {
-    /*background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(71,78,99,1));*/
-    background-color: rgba(71, 78, 99, 0.95);
-    color: white;
-    margin: auto;
-    padding: 20px;
-    width: 80%; 
+  /*background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(71,78,99,1));*/
+  background-color: rgba(71, 78, 99, 0.95);
+  color: white;
+  margin: auto;
+  padding: 20px;
+  width: 80%; 
 }
 
 .mov_title {
@@ -317,7 +317,8 @@ div.scrollmenu {
     border-bottom-style: solid !important;
     border-bottom-width: 0.5px !important;
     border-bottom-color: rgba(255,255,255,0.3);
-    width: 50%;
+    width: 95%;
+    margin-top: 1%;
 }
 div.scrollmenu a {
     display: inline-block;

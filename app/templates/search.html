@@ -372,47 +372,7 @@
                           <a href="#show">Show Details</a>
                           <a href="#search">Search Details</a>
                         </div>
-                        <!-- <div id="containertest">
-                        <div id="overview" class="red">Text 1</div>
-                        <div id="details" class="green">Text 2</div>
-                        </div>
-                        <script>
-                            var divturn = 1;
-                          $('#slide2').click(function() {
-                            console.log(divturn);
-                            if (divturn == 1) {
-                                $("#overview").animate({
-                                    left: '150%'
-                                }, 500, function() {
-                                    $(this).css('left', '150%');
-                                    $(this).appendTo('#containertest');
-                              });
-
-                              $('#overview').next().animate({
-                                  left: '0'
-                              }, 500);
-                              
-                              divturn = 0;
-                            }
-                          });
-
-                          $('#slide1').click(function() {
-                             console.log(divturn);
-                            if (divturn == 0){
-                                $("#details").animate({
-                                    left: '-150%'
-                                }, 500, function() {
-                                    $(this).css('left', '-150%');
-                                    $(this).appendTo('#containertest');
-                              });
-
-                              $('#details').next().animate({
-                                  left: '0'
-                              }, 500);
-                              divturn = 1;
-                              }
-                          });
-                        </script> -->
+                        <div style="margin-top: 1%">
                         <p>Genres:
                         {% for g in d['genres'][:-1] %}
                             {{g}},
@@ -445,6 +405,7 @@
                             </small>
                             </p>
                           </div>
+                        </div>
                         </div>
                         <p>IMDb Page: <a href ="http://www.imdb.com/title/{{d['id']}}">Link</a></p>
                       </div>
