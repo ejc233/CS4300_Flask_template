@@ -53,8 +53,8 @@ $(document).ready(function() {
     $(this).addClass("current");
     $(this).addClass("active");
     // Display content
-    $(".overview_details").css("display","inline-block");
-    $(".show_details").css("display","none");
+    $(".overview_details").show("slide", { direction: "right"  }, 500);
+    $(".show_details").hide("slide", { direction: "right"  }, 500 );
   });
 
   $("a[href='#show']").click(function () {
@@ -63,8 +63,8 @@ $(document).ready(function() {
     $(".current").removeClass("current");
     $(this).addClass("current");
     // Display content
-    $(".show_details").css("display","inline-block");
-    $(".overview_details").css("display","none");
+    $(".show_details").show("slide", { direction: "left"  }, 500);
+    $(".overview_details").hide("slide", { direction: "left"  }, 500 );
     console.log("goodbye");
   });
 
