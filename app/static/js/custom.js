@@ -42,13 +42,21 @@ $(document).ready(function() {
 
   // Action listeners for modal menu bar
   $("a[href='#overview']").click(function () {
+    // Change menu bar css
     $(".current").removeClass("current");
     $(this).addClass("current");
+    // Display content
+    $("#overview_details").css("display","inline-block");
+    $("#show_details").css("display","none");
   });
 
   $("a[href='#show']").click(function () {
+    // Change css for menu bar
     $(".current").removeClass("current");
     $(this).addClass("current");
+    // Display content
+    $("#show_details").css("display","inline-block");
+    $("#overview_details").css("display","none");
   });
 
   $("a[href='#search']").click(function () {

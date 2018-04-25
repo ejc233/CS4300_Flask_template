@@ -372,17 +372,21 @@
                           <a href="#show">Show Details</a>
                           <a href="#search">Search Details</a>
                         </div>
-                        <div style="margin-top: 1%">
-                        <p>Genres:
-                        {% for g in d['genres'][:-1] %}
-                            {{g}},
-                        {% endfor %}
-                        {{d['genres'][-1]}}
-                        </p>
-                        <p>Duration: {{d['runtime']}} min</p>
-                        <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
-                        <p>Synopsis: {{d['summary']}}</p>
-                        <br>
+                        <!-- Div for overview -->
+                        <div id="overview_details" style="margin-top: 1%">
+                            <p>Genres:
+                            {% for g in d['genres'][:-1] %}
+                                {{g}},
+                            {% endfor %}
+                            {{d['genres'][-1]}}
+                            </p>
+                            <p>Duration: {{d['runtime']}} min</p>
+                            <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
+                            <p>Synopsis: {{d['summary']}}</p>
+                            <p>IMDb Page: <a href ="http://www.imdb.com/title/{{d['id']}}">Link</a></p>
+                        </div>
+                        <!-- Div for show -->
+                        <div id="show_details" style="margin-top: 1%; display: none">
                         <div class="row">
                           <div class="col-md-6">
                             <p>Cast:<br>
@@ -407,7 +411,6 @@
                           </div>
                         </div>
                         </div>
-                        <p>IMDb Page: <a href ="http://www.imdb.com/title/{{d['id']}}">Link</a></p>
                       </div>
                     </div>
                   </div>
