@@ -328,9 +328,9 @@
                       <div class="col-md-8" style="width: 60%">
                         <div><strong class="mov_title">{{d['title']}}   </strong> <span class="mov_year">({{d['release_date'][-4:]}})</span></div>
                         <div class="scrollmenu">
-                          <a href="#overview" class="current">Overview</a>
-                          <a href="#show">Show Details</a>
-                          <a href="#search">Search Details</a>
+                          <a href="#overview" class="current"><span class="glyphicon glyphicon-film" aria-hidden="true"></span>&nbsp;&nbsp;Movie Overview</a>
+                          <a href="#show"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;Cast and Crew</a>
+                          <a href="#search"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Similarity Score</a>
                         </div>
                         <!-- Div for overview -->
                         <div class="content_details overview_details active_modal">
@@ -350,23 +350,19 @@
                         <div class="row">
                           <div class="col-md-6">
                             <p>Cast:<br>
-                            <small>
                             {% for c in d['cast'][:10] %}
                                 {{c['name']}} as {{c['character']}}
                                 <br>
                             {% endfor %}
-                            </small>
                             </p>
                           </div>
                           <div class="col-md-6">
                             <p>Crew:
                             <br>
-                            <small>
                             {% for c in d['crew'][:10] %}
                                 {{c['job']}}: {{c['name']}}
                                 <br>
                             {% endfor %}
-                            </small>
                             </p>
                           </div>
                         </div>
