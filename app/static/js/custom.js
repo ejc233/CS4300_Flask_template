@@ -39,30 +39,30 @@ $(document).ready(function() {
   // Action listeners for modal menu bar
   $("a[href='#overview']").click(function () {
     // Remove old content
-    $(".current").removeClass("current");
-    $(".active_modal").css("display","none");
+    $(".current").removeClass("current", 300);
+    $(".active_modal").hide(300);
     $(".active_modal").removeClass("active_modal");
     // Display new content
-    $(this).addClass("current");
+    $(this).addClass("current", 300);
     $(".overview_details").addClass("active_modal");
-    $(".overview_details").css("display","inline-block");
+    $(".overview_details").show(300);
   });
 
   $("a[href='#show']").click(function () {
     // Remove old content
     $(".current").removeClass("current");
-    $(".active_modal").css("display","none");
+    $(".active_modal").hide(300);
     $(".active_modal").removeClass("active_modal");
     // Display new content
     $(this).addClass("current");
     $(".show_details").addClass("active_modal");
-    $(".show_details").css("display","inline-block");
+    $(".show_details").show(300);
   });
 
   $("a[href='#search']").click(function () {
     // Remove old content
     $(".current").removeClass("current");
-    $(".active_modal").css("display","none");
+    $(".active_modal").hide(300);
     $(".active_modal").removeClass("active_modal");
     // Display new content
     $(this).addClass("current");
