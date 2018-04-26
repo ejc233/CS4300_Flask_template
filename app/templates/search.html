@@ -6,6 +6,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Play|Ubuntu" rel="stylesheet">
         <link rel="stylesheet" href="/static/bootstrap-tagsinput/dist/bootstrap-tagsinput.css"/>
@@ -15,22 +16,21 @@
         <script src="/static/js/custom.js"></script>
         <style>
           body {
-            background-image: url("/static/film_background_3.png");
             font-family: 'Play', sans-serif;
-            background-attachment: fixed;
-            background-size: cover;
           }
           </style>
     </head>
 
     <style>
-    @font-face {
-      font-family: BeautySchool;
-      src: url('static/beautyschooldropout.ttf');
-    }
+        @font-face {
+          font-family: BeautySchool;
+          src: url('static/beautyschooldropout.ttf');
+        }
     </style>
 
     <body>
+        <div class="background_img"></div>
+        <div class="contents">
         <div class="logo_band">
           <img class="logo" src= "/static/logo_white.png" alt="CinemaPop"></img>
           <form class="global-search custom-form" style="width: 100%">
@@ -47,7 +47,7 @@
                       }
                     });
                     movies.initialize();
-                    $('input').tagsinput({
+                    $('#similar_movies').tagsinput({
                         typeaheadjs: {
                             name: 'movies',
                             displayKey: 'title',
@@ -60,17 +60,8 @@
                         confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
                         maxTags: 5, //limit the number of tags
                         freeInput: false, //don't allow the user to submit free text
-                        // itemValue: 'title',
-                        // tagClass: 'label label-primary' //tag colors
-                        // focusClass: 'bootstrap-tagsinput:focus',
                         delimiter: ';'
                     });
-                    // $('.bootstrap-tagsinput').focusin(function() {
-                    //     $(this).addClass('focus');
-                    // });
-                    // $('.bootstrap-tagsinput').focusout(function() {
-                    //     $(this).removeClass('focus');
-                    // });
                 </script>
               </div>
               <div class="form-group col-md-6">
@@ -102,9 +93,6 @@
                         confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
                         maxTags: 5, //limit the number of tags
                         freeInput: false, //don't allow the user to submit free text
-                        // itemValue: 'title',
-                        // tagClass: 'label label-primary' //tag colors
-                        // focusClass: 'bootstrap-tagsinput:focus',
                         delimiter: ';'
                     });
                 </script>
@@ -136,16 +124,13 @@
                           confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
                           maxTags: 5, //limit the number of tags
                           freeInput: false, //don't allow the user to submit free text
-                          // itemValue: 'title',
-                          // tagClass: 'label label-primary' //tag colors
-                          // focusClass: 'bootstrap-tagsinput:focus',
                           delimiter: ';'
                       });
                   </script>
                 </div>
                 <div class="form-group col-md-6">
                   <label class="tags center">Keywords:</label>
-                  <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. marvel cinematic universe, robot, racism, etc." value="{{old_keywords}}">
+                  <input id="keywords_list" type="text" data-role="tagsinput" name="keywords" placeholder="e.g. Marvel cinematic universe, Robot, Racism, etc." value="{{old_keywords}}">
                   <span></span>
                   <script>
                       var keywords_lst = new Bloodhound({
@@ -168,9 +153,6 @@
                           confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
                           maxTags: 5, //limit the number of tags
                           freeInput: false, //don't allow the user to submit free text
-                          // itemValue: 'title',
-                          // tagClass: 'label label-primary' //tag colors
-                          // focusClass: 'bootstrap-tagsinput:focus',
                           delimiter: ';'
                       });
                   </script>
@@ -228,9 +210,6 @@
                           confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
                           maxTags: 5, //limit the number of tags
                           freeInput: false, //don't allow the user to submit free text
-                          // itemValue: 'title',
-                          // tagClass: 'label label-primary' //tag colors
-                          // focusClass: 'bootstrap-tagsinput:focus',
                           delimiter: ';'
                       });
                   </script>
@@ -259,9 +238,6 @@
                           confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
                           maxTags: 5, //limit the number of tags
                           freeInput: false, //don't allow the user to submit free text
-                          // itemValue: 'title',
-                          // tagClass: 'label label-primary' //tag colors
-                          // focusClass: 'bootstrap-tagsinput:focus',
                           delimiter: ';'
                       });
                   </script>
@@ -343,25 +319,34 @@
                 </div>
                 <!-- Modal pop-up -->
                 <div id="{{ d['id'] }}" class="modal">
+                  <!-- <div class="modal_blur_content"></div> -->
                   <div class="modal-content">
                     <div class="row">
-                      <div class="col-md-4">
-                        <img src="static/data/posters/{{d['id']}}.jpg" style="height:450px" alt="{{d['title']}}">
+                      <div class="col-md-4" style="height:100%; width:37%">
+                        <img src="static/data/posters/{{d['id']}}.jpg" alt="{{d['title']}}" style="height: 95%; width: 100%; object-fit: fill;">
                       </div>
-                      <div class="col-md-8">
+                      <div class="col-md-8" style="width: 60%">
                         <div><strong class="mov_title">{{d['title']}}   </strong> <span class="mov_year">({{d['release_date'][-4:]}})</span></div>
-                        <p>Genres:
-                        {% for g in d['genres'][:-1] %}
-                            {{g}},
-                        {% endfor %}
-                        {{d['genres'][-1]}}
-                        </p>
-                        <p>Duration: {{d['runtime']}} min</p>
-                        <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
-                        <p>Synopsis: {{d['summary']}}</p>
-                        <p>Rating: {{d['rating']}}</p>
-                        <p>Language: {{d['original_language']}}</p>
-                        <br>
+                        <div class="scrollmenu">
+                          <a href="#overview" class="current">Overview</a>
+                          <a href="#show">Show Details</a>
+                          <a href="#search">Search Details</a>
+                        </div>
+                        <!-- Div for overview -->
+                        <div class="content_details overview_details active_modal">
+                            <p>Genres:
+                            {% for g in d['genres'][:-1] %}
+                                {{g}},
+                            {% endfor %}
+                            {{d['genres'][-1]}}
+                            </p>
+                            <p>Duration: {{d['runtime']}} min</p>
+                            <p>TMDb User Score: {{d['tmdb_score_value']}}/10.0</p>
+                            <p>Synopsis: {{d['summary']}}</p>
+                            <p>IMDb Page: <a href ="http://www.imdb.com/title/{{d['id']}}">Link</a></p>
+                        </div>
+                        <!-- Div for show -->
+                        <div class="content_details show_details" style="display: none">
                         <div class="row">
                           <div class="col-md-6">
                             <p>Cast:<br>
@@ -385,7 +370,8 @@
                             </p>
                           </div>
                         </div>
-                        <p>IMDb Page: <a href ="http://www.imdb.com/title/{{d['id']}}">Link</a></p>
+                        </div>
+                        <div class="content_details search_details"></div>
                       </div>
                     </div>
                   </div>
@@ -411,6 +397,6 @@
         <div class="footer">
             <p>&copy; 2018 | Angela Zhang: az337, Chris Fifty: cjf92, Newton Ni: cn279, Erik Chan: ejc233, Xinyu Zhao: xz29</p>
         </div>
+    </div>
     </body>
-
 </html>
