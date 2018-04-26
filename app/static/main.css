@@ -337,7 +337,7 @@ div.scrollmenu {
     border-bottom-width: 0.5px !important;
     border-bottom-color: rgba(255,255,255,0.3);
     width: 95%;
-    margin-top: 1%;
+    margin-top: 1.5%;
 }
 div.scrollmenu a {
     display: inline-block;
