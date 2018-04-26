@@ -9,17 +9,20 @@ $(document).ready(function() {
     var id = this.getAttribute("data-movie");
     var mod = $('body').find("#"+id);
     mod.fadeIn(425);
+    $(".contents").addClass("blur_overlay");
   });
 
   $(".post_title").click(function(){
     var id = this.getAttribute("data-movie");
     var mod = $('body').find("#"+id);
     mod.fadeIn(425);
+    $(".contents").addClass("blur_overlay");
   });
 
   window.onclick = function(event) {
     if (event.target.className == "modal") {
         $(event.target).fadeOut(400);
+        $(".contents").removeClass("blur_overlay");
         //Remove whatever settings you left off on
         $(".current").removeClass("current");
         $(".active_modal").css("display","none");
