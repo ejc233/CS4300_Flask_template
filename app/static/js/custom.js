@@ -39,11 +39,11 @@ $(document).ready(function() {
   // Action listeners for modal menu bar
   $("a[href='#overview']").click(function () {
     // Remove old content
-    $(".current").removeClass("current", 300);
+    $(".current").removeClass("current");
     $(".active_modal").hide(300);
     $(".active_modal").removeClass("active_modal");
     // Display new content
-    $(this).addClass("current", 300);
+    $(this).addClass("current");
     $(".overview_details").addClass("active_modal");
     $(".overview_details").show(300);
   });
