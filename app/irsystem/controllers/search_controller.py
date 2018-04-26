@@ -9,6 +9,7 @@ import boosting
 import utilities
 import scipy.stats
 from random import *
+import datetime
 
 movies_json = json.load(open('app/static/data/movies.json'))
 
