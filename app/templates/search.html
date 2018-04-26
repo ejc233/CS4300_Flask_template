@@ -343,6 +343,8 @@
                             <p>Duration: {{d['runtime']}} min</p>
                             <p>TMDb User Score: {{d['tmdb_score_value']}}/10.0</p>
                             <p>Synopsis: {{d['summary']}}</p>
+                            <p>Rating: {{d['rating']}}</p>
+                            <p>Original Language: {{d['original_language']}}</p>
                             <p>IMDb Page: <a href ="http://www.imdb.com/title/{{d['id']}}">Link</a></p>
                         </div>
                         <!-- Div for show -->
@@ -350,7 +352,7 @@
                         <div class="row">
                           <div class="col-md-6">
                             <p>Cast:<br>
-                            {% for c in d['cast'][:10] %}
+                            {% for c in d['cast'] %}
                                 {{c['name']}} as {{c['character']}}
                                 <br>
                             {% endfor %}
@@ -359,7 +361,7 @@
                           <div class="col-md-6">
                             <p>Crew:
                             <br>
-                            {% for c in d['crew'][:10] %}
+                            {% for c in d['crew'] %}
                                 {{c['job']}}: {{c['name']}}
                                 <br>
                             {% endfor %}
