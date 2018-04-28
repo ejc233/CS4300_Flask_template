@@ -162,6 +162,27 @@ def search():
         ranked_lst = np.argsort(dists)
         sorted_movie_dict = [movie_id_lookup[movie_id] for movie_id in ranked_lst]
 
+
+        ########### COMPUTE A SIMILARITY SCORE ###########
+        # similarity score based solely on the non-similar movies
+        '''
+        max_dist = np.linalg.norm(np.zeros(d) - np.ones(d),ord=2)
+        np.divide(dists,.01*max_dist)
+        sim_dict = {}
+        for index in range(dists.shape[0]):
+            sim_dict[movie_id_lookup[index]] = dists[index]
+
+        sim_percentage_feature = np.power((movie_matrix - query),2)
+        row_sums = ((np.sum(sim_percentage_feature,axis=1).flatten())* np.ones((n,d)))
+        sim_percentage_feature = np.divide(sim_percentage_feature,row_sums)
+        '''
+
+        # each entry in sim_percentage_feature will be a value between 0 and 1 which represents how much 
+        # that feature contributes to the similarity score
+
+
+
+
         ########### CONSILIDATE WITH THE SIMILAR MOVIE LIST ###########
         if similar:
             scored_movie_dict = {}
@@ -174,14 +195,23 @@ def search():
                 for index,movie in enumerate(lst):
                     if movie not in scored_movie_dict:
                         scored_movie_dict[movie] = 0
-                    print("adding " + str(index) + " to movie " + movie_dict[movie]['title'])
                     scored_movie_dict[movie] += index
+
+            # compute the percentage that it's a similar movie vs. user input
+            # sim_percentage_dict = percentage influence the similar movies played in this calculation
+            sim_percentage_dict = {}
+            for index,movie in enumerate(sorted_movie_dict):
+                if genres or castCrew or keywords:
+                    sim_percentage_dict[movie] = 1 - ((scored_movie_dict[movie] - index)/scored_movie_dict[movie])
+                else:
+                    sim_percentage_dict[movie] = 1
+
+
             sorted_movie_dict = sorted(scored_movie_dict.items(), key=operator.itemgetter(1))
             sorted_movie_dict = [k for k,v in sorted_movie_dict]
 
         ########### TRANSFORM THE SORTED LIST INTO FRONT-END FORM ###########
         for movie_id in sorted_movie_dict:
-            print(str(movie_dict[movie_id]['release_date']))
             dt = datetime.datetime.strptime(str(movie_dict[movie_id]['release_date']), '%Y-%m-%d').strftime('%m-%d-%Y')
             movie_dict[movie_id]['release_date'] = dt
             data.append(movie_dict[movie_id])
