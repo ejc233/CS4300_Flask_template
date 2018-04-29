@@ -162,7 +162,7 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                     <label class="tags center">Duration (in minutes):</label>
-                    <input id="duration_time" type="text" class="form-control center" name="duration" class="form-control" placeholder="Range (e.g. 90-200) or Single Number (e.g. 90)" value="{{old_duration}}">
+                    <input id="duration_time" type="text" class="center form-control" name="duration" style="font-weight: 1; font-size: 14px" placeholder="Range (e.g. 90-200) or Single Number (e.g. 90)" value="{{old_duration}}">
                 </div>
                 <div class="form-group col-md-6 center tags">
                   <div class="form-row">
@@ -170,7 +170,7 @@
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <input name="release_start" id="input" class="form-control center form-inline" type="text" list= "year_list" class="form-control" placeholder="Start" style="width:75%" maxlength="4" value="{{old_release_start}}">
+                      <input name="release_start" id="input" class="form-control center form-inline" type="text" list= "year_list" class="form-control" placeholder="Start" style="width:75%; font-weight: 1; font-size: 14px" maxlength="4" value="{{old_release_start}}">
                     </div>
                     <div class="form-group col-md-6">
                       <input name= "release_end" id="input" class="form-control center form-inline" type="text" list= "year_list" class="form-control" placeholder="End" style="width:75%" maxlength="4" value="{{old_release_end}}">
@@ -315,6 +315,7 @@
                     <p><strong style="font-size: 20px;">{{d['title']}}</strong></p>
                     <p>{{d['release_date']}} </p>
                     <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
+                    <!-- <p class="rating_tag">{{d['rating']}}</p> -->
                   </div>
                 </div>
                 <!-- Modal pop-up -->

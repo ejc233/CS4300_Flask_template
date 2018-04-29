@@ -157,7 +157,7 @@ div.bootstrap-tagsinput:focus-within{
   padding-right: 5%;
   margin-top: 1.75%;
   margin-left: -1.5%;
-  color: rgba(255,255,255,0.8);;
+  color: rgba(255,255,255,0.8);
 }
 .tt-input {
   background-color: transparent !important;
@@ -174,9 +174,14 @@ span.twitter-typeahead .tt-suggestion:focus {
   margin-left: 3%;
   font-weight: 700;
 }
+
+.tt-query {
+  color: #000;
+}
+
 /* Hint color */
 .twitter-typeahead .tt-hint {
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.65); 
 }
 
 /* Carasoul Display */
@@ -208,6 +213,11 @@ span.twitter-typeahead .tt-suggestion:focus {
     transform: translate(-50%, -50%);
     display: none;
 }
+
+/*How to add ratings??
+.container .post_title p.rating_tag {
+  border: 1px solid white;
+}*/
 
 .post_title:hover {
   cursor: pointer;
