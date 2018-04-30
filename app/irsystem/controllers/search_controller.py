@@ -103,12 +103,12 @@ def search():
             similar_tup_lst = []
             for similar_mov in selected_movies:
                 similar_id = reverse_dict[similar_mov]
-                similar_genre = filtered_movie_dict[similar_id]['genres']
+                similar_genres = filtered_movie_dict[similar_id]['genres']
                 sim_cast = [member['name'] for member in filtered_movie_dict[similar_id]['cast']]
                 sim_crew = [member['name'] for member in filtered_movie_dict[similar_id]['crew']]
                 similar_castCrew = sim_cast + sim_crew
                 sim_release_year = user_release.parse_single(filtered_movie_dict[similar_id]['release_date'])
-                similar_tup_lst.append((similar_id,similar_genre,similar_castCrew,sim_release_year))
+                similar_tup_lst.append((similar_id,similar_genres,similar_castCrew,sim_release_year))
             filtered_movie_dict = utils.filter_similar(filtered_movie_dict,selected_movies)
             ranked_sim_lst = [utils.get_similar_ranking(tup,filtered_movie_dict) for tup in similar_tup_lst]
 
@@ -117,6 +117,20 @@ def search():
         for index,movie in enumerate(filtered_movie_dict):
             features_lst = []
             filtered_movie_dict[movie]['scores'] = dict()
+
+            if similar:
+                cumulative_score = 0.0
+                for sim_movie in selected_movies:
+                    sim_id = reverse_dict[sim_movie]
+                    genres_score = utils.get_set_overlap(movie_dict[sim_id]['genres'],filtered_movie_dict[movie]['genres'])
+                    sim_cast = [member['name'] for member in movie_dict[sim_id]['cast']]
+                    sim_crew = [member['name'] for member in movie_dict[sim_id]['crew']]
+                    cast = [member['name'] for member in filtered_movie_dict[movie]['cast']]
+                    crew = [member['name'] for member in filtered_movie_dict[movie]['crew']]
+                    cast_score = utils.get_set_overlap(sim_cast + sim_crew, cast + crew)
+                    keywords_score = utils.get_set_overlap(movie_dict[sim_id]['keywords'],filtered_movie_dict[movie]['keywords'])
+                    cumulative_score += (2.0 * genres_score + cast_score + keywords_score) / 4.0
+                filtered_movie_dict[movie]['scores']['similar'] = cumulative_score / len(selected_movies)
 
             # list of genres for movie m -> jaccard sim with query
             if genres:
@@ -183,26 +197,6 @@ def search():
         dists = np.linalg.norm(movie_matrix - query,axis=1,ord=2)
         ranked_lst = np.argsort(dists)
         sorted_movie_dict = [movie_id_lookup[movie_id] for movie_id in ranked_lst]
-
-
-        ########### COMPUTE A SIMILARITY SCORE ###########
-        # similarity score based solely on the non-similar movies
-        '''
-        max_dist = np.linalg.norm(np.zeros(d) - np.ones(d),ord=2)
-        np.divide(dists,.01*max_dist)
-        sim_dict = {}
-        for index in range(dists.shape[0]):
-            sim_dict[movie_id_lookup[index]] = dists[index]
-
-        sim_percentage_feature = np.power((movie_matrix - query),2)
-        row_sums = ((np.sum(sim_percentage_feature,axis=1).flatten())* np.ones((n,d)))
-        sim_percentage_feature = np.divide(sim_percentage_feature,row_sums)
-        '''
-
-        # each entry in sim_percentage_feature will be a value between 0 and 1 which represents how much
-        # that feature contributes to the similarity score
-
-
 
 
         ########### CONSILIDATE WITH THE SIMILAR MOVIE LIST ###########
