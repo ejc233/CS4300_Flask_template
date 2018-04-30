@@ -39,7 +39,7 @@
         </div>
         <div class="logo_band">
           <img class="logo" src= "/static/logo_white.png" alt="CinemaPop"></img>
-          <form class="global-search custom-form" style="width: 100%; margin-bottom: 5%">
+          <form class="global-search custom-form" style="width: 100%; margin-bottom: 9%">
             <div class="form-row" style="height: 10%">
               <div class="form-group col-md-6">
                 <label class="tags animated-label center">Similar Movies:</label>
@@ -104,7 +104,11 @@
                 </script>
               </div>
             </div><br><br><br><br><br><br>
+            {% if advanced %}
             <div class="advanced">
+            {% else %}
+            <div class="advanced" style="display: none">
+            {% endif %}
               <div class="form-row" style="height: 15%">
                 <div class="form-group col-md-6">
                   <label class="tags center">Cast/Crew:</label>
@@ -292,11 +296,19 @@
             <button type=button class="center advanced_button"> Advanced Search </button>
             <br>
             <div class="form-group tags center">
-              <button class="btn btn-info"> Get Recommendations </button>
+              <button id="getRec" class="btn btn-info"> Get Recommendations </button>
             </div>
           </form>
         </div>
         {% if data %}
+        <script>
+          $(document).ready(function(){
+            $('html, body').animate({
+                scrollTop: $("#myCarousel").offset().top
+            }, 1000);
+    	     });
+          console.log("here");
+        </script>
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->
           <ol class="carousel-indicators">

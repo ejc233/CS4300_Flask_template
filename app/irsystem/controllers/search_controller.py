@@ -240,6 +240,7 @@ def search():
         old_languages = xstr(languages),
         old_acclaim = xstr(acclaim),
         old_popularity = xstr(popularity),
+        advanced = (castCrew or keywords or duration or release_start or release_end or ratings or languages),
         data = data[:6],
         year_list = year_list)
 
