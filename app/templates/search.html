@@ -33,10 +33,13 @@
     <body>
         <div class="background_img"></div>
         <div class="contents">
-        <div class="prototypes"><a class="proto_link" style="margin-right: 10px;" href="http://cinemapop1.herokuapp.com/" target="_blank">Prototype 1</a><a class="proto_link" href="http://cinemapop2.herokuapp.com/" target="_blank">Prototype 2</a></div>
+        <div class="prototypes">
+            <a class="proto_link" style="margin-right: 10px;" href="http://cinemapop1.herokuapp.com/" target="_blank">Prototype 1</a>
+            <a class="proto_link" href="http://cinemapop2.herokuapp.com/" target="_blank">Prototype 2</a>
+        </div>
         <div class="logo_band">
           <img class="logo" src= "/static/logo_white.png" alt="CinemaPop"></img>
-          <form class="global-search custom-form" style="width: 100%">
+          <form class="global-search custom-form" style="width: 100%; margin-bottom: 5%">
             <div class="form-row" style="height: 10%">
               <div class="form-group col-md-6">
                 <label class="tags animated-label center">Similar Movies:</label>
@@ -408,6 +411,10 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
+      {% else %}
+        {% if old_acclaim != None %}
+          <div class="message">Sorry, your search returned no results. Please try again.</div>
+        {% endif %}
       {% endif %}
 
         <div class="footer">
