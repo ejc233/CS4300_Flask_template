@@ -301,6 +301,7 @@ strong {
   margin: auto;
   padding: 20px;
   width: 80%;
+  overflow: auto;
 }
 .modal_blur_content {
   background-color: rgba(71, 78, 99, 0.95);
@@ -365,6 +366,7 @@ div.scrollmenu a.current {
 div.content_details {
   margin-top: 1%;
   margin-left: 1%;
+  margin-bottom: 1%;
   margin-right: 4.5%;
   font-size: 13px;
 }
@@ -389,8 +391,9 @@ div.scrollmenu a.overview_details a.show_details a.search_details a.active_modal
 }
 
 canvas {
-  width: 100% !important;
-  height: 70% !important;
+  padding-top: 5px;
+  width: 555px !important;
+  height: 345px !important;
   padding-right: 10px !important;
   color: white !important;
 }

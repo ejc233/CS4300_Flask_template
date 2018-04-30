@@ -35,7 +35,7 @@ $(document).ready(function() {
       type: 'bar',
       data: barChartData,
       options: {
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         layout: {
           padding: {
                 left: 10,
@@ -47,7 +47,7 @@ $(document).ready(function() {
         legend: {
           display: false
         },
-        responsive: true,
+        responsive: false,
         title: {
           display: true,
           text: 'Similarity Scores',
@@ -153,7 +153,6 @@ $(document).ready(function() {
     $(".current").removeClass("current");
     $(".active_modal").hide(300);
     $(".active_modal").removeClass("active_modal");
-    // Display new content
     // Display new content
     $(this).addClass("current");
     $(".search_details").addClass("active_modal");
