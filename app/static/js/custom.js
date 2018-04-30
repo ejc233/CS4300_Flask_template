@@ -24,13 +24,13 @@ $(document).ready(function() {
 
     console.log(score_dict);
     var barChartData = {
-			labels: scores,
-			datasets: [{
+      labels: scores,
+      datasets: [{
         backgroundColor: 'rgb(117, 147, 206)',
         borderColor: 'rgb(135, 160, 209)',
-				borderWidth: 1,
-				data: scores_list
-			}]};
+        borderWidth: 1,
+        data: scores_list
+      }]};
 
     var myBarChart = new Chart(chart_el, {
       type: 'bar',
@@ -83,18 +83,18 @@ $(document).ready(function() {
       }
     });
     // chart = new CanvasJS.Chart(id, {
-    // 	animationEnabled: true,
-    // 	theme: "light2", // "light1", "light2", "dark1", "dark2"
-    // 	title:{
-    // 		text: "Similarity Scores"
-    // 	},
-    // 	axisY: {
-    // 		title: "Similarity (Percent)"
-    // 	},
-    // 	data: [{
-    // 		type: "column",
-    // 		dataPoints: scores_list
-    // 	}],
+    //  animationEnabled: true,
+    //  theme: "light2", // "light1", "light2", "dark1", "dark2"
+    //  title:{
+    //    text: "Similarity Scores"
+    //  },
+    //  axisY: {
+    //    title: "Similarity (Percent)"
+    //  },
+    //  data: [{
+    //    type: "column",
+    //    dataPoints: scores_list
+    //  }],
     //   axisX: {
     //     labelMaxWidth: 70,
     //     interval: 1,
