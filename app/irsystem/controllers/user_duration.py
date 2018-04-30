@@ -2,8 +2,11 @@ import scipy.stats
 
 def parse(inp):
 	if "-" in inp:
-		s = inp.split("-")
-		lst = [int(entry.strip()) for entry in s]
+		inps = inp.split("-")
+		if inps[0].isdigit() and inps[1].isdigit():
+			lst = [int(entry.strip()) for entry in inps[:2]]
+		else:
+			lst = []
 		return lst
 	return [int(inp.strip())]
 
@@ -30,6 +33,7 @@ def gaussian_score(movie_dict,mean,high_val,low_val):
 
 	# movie -> weight value between high and low
 	for movie in movie_dict:
+		print movie_to_weight[movie]
 		score_dict[movie] = movie_to_weight[movie]*(high_val + low_val) - low_val
 	return score_dict
 
