@@ -40,7 +40,7 @@ $(document).ready(function() {
           padding: {
                 left: 10,
                 right: 10,
-                top: 20,
+                top: 3,
                 bottom: 0
             }
         },
@@ -52,7 +52,8 @@ $(document).ready(function() {
           display: true,
           text: 'Similarity Score Breakdown',
           fontSize: 20,
-          fontColor: "rgb(255,255,255)"
+          fontColor: "rgb(255,255,255)",
+          padding: 5
         },
         scales: {
           yAxes: [{
