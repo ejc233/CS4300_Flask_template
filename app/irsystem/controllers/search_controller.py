@@ -20,6 +20,7 @@ for movie in movies_json:
     movie_dict[movie['id']] = json.load(open('app/static/data/movies/' + movie['id'] + '.json'))
     dt = datetime.datetime.strptime(str(movie_dict[movie['id']]['release_date']), '%Y-%m-%d').strftime('%m-%d-%Y')
     movie_dict[movie['id']]['release_date'] = dt
+    movie_dict[movie['id']]['cosine'] = json.load(open('app/static/data/cosine/' + movie['id'] + '.json'))
 reverse_dict = {y['title'].lower():x for x,y in movie_dict.iteritems()}
 
 max_tmdb_count = 16891.0
