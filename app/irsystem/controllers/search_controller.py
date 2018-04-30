@@ -86,6 +86,22 @@ def search():
             filtered_movie_dict = utils.filter_ratings(filtered_movie_dict, selected_ratings)
         if languages:
             filtered_movie_dict = utils.filter_languages(filtered_movie_dict, selected_languages)
+        # if no results will be left after the filters
+        if not filtered_movie_dict:
+            return render_template('search.html',
+            old_similar = xstr(similar),
+            old_genres = xstr(genres),
+            old_castCrew = xstr(castCrew),
+            old_keywords = xstr(keywords),
+            old_duration = xstr(duration),
+            old_release_start = xstr(release_start),
+            old_release_end = xstr(release_end),
+            old_ratings = xstr(ratings),
+            old_languages = xstr(languages),
+            old_acclaim = xstr(acclaim),
+            old_popularity = xstr(popularity),
+            data = [],
+            year_list = year_list)
         if acclaim == 'yes':
             acclaim_score_dict = utils.half_gaussian_acclaim(filtered_movie_dict, 1, 0)
 
@@ -232,7 +248,7 @@ def search():
         old_languages = xstr(languages),
         old_acclaim = xstr(acclaim),
         old_popularity = xstr(popularity),
-        data = data,
+        data = data[:6],
         year_list = year_list)
 
 def parse_lst_str(lst_str):
