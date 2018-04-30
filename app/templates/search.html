@@ -313,7 +313,7 @@
               {% for d in lst %}
                 <div class="col-md-3 container">
                   <img class="center poster" data-movie="{{ d['id'] }}" data-scores="{{ d['scores'] }}" src="static/data/posters/{{d['id']}}.jpg" style="height:400px;" alt="">
-                  <div class="post_title" data-movie="{{ d['id'] }}" display="none">
+                  <div class="post_title" data-movie="{{ d['id'] }}" data-scores="{{ d['scores'] }}" display="none">
                     <p><strong style="font-size: 20px;">{{d['title']}}</strong></p>
                     <p>{{d['release_date']}} </p>
                     <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
