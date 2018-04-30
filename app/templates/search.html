@@ -13,6 +13,8 @@
         <script src="/static/bootstrap-tagsinput/dist/bootstrap-tagsinput.js"></script>
         <script type="text/javascript" src="static/typeahead.bundle.js"></script>
         <link rel="stylesheet" href="/static/main.css">
+        <script src="/static/js/Chart.js"></script>
+        <script src="/static/js/utils.js"></script>
         <script src="/static/js/custom.js"></script>
         <style>
           body {
@@ -310,7 +312,7 @@
               <div class="row">
               {% for d in lst %}
                 <div class="col-md-3 container">
-                  <img class="center poster" data-movie="{{ d['id'] }}" src="static/data/posters/{{d['id']}}.jpg" style="height:400px;" alt="">
+                  <img class="center poster" data-movie="{{ d['id'] }}" data-scores="{{ d['scores'] }}" src="static/data/posters/{{d['id']}}.jpg" style="height:400px;" alt="">
                   <div class="post_title" data-movie="{{ d['id'] }}" display="none">
                     <p><strong style="font-size: 20px;">{{d['title']}}</strong></p>
                     <p>{{d['release_date']}} </p>
@@ -326,7 +328,7 @@
                       <div class="col-md-4" style="height:100%; width:37%">
                         <img src="static/data/posters/{{d['id']}}.jpg" alt="{{d['title']}}" style="height: 95%; width: 100%; object-fit: fill;">
                       </div>
-                      <div class="col-md-8" style="width: 60%">
+                      <div class="col-md-8" style="height:100%; width: 60%">
                         <div><strong class="mov_title">{{d['title']}}   </strong> <span class="mov_year">({{d['release_date'][-4:]}})</span></div>
                         <div class="scrollmenu">
                           <a href="#overview" class="current"><span class="glyphicon glyphicon-film" aria-hidden="true"></span>&nbsp;&nbsp;Movie Overview</a>
@@ -349,7 +351,7 @@
                             <p>IMDb Page: <a href ="http://www.imdb.com/title/{{d['id']}}">Link</a></p>
                         </div>
                         <!-- Div for show -->
-                        <div class="content_details show_details" style="display: none">
+                        <div class="content_details show_details" style="display: none;">
                         <div class="row">
                           <div class="col-md-6">
                             <p>Cast:<br>
@@ -370,7 +372,8 @@
                           </div>
                         </div>
                         </div>
-                        <div class="content_details search_details"></div>
+                        <div class="content_details search_details" style="display: none;">
+                        </div>
                       </div>
                     </div>
                   </div>

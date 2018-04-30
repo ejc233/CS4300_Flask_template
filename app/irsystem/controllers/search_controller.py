@@ -76,7 +76,7 @@ def search():
             query_dict['keywords'] = keywords
         if duration:
             duration_val = user_duration.parse(duration)
-            duration_val = duration_val[0] if len(duration_val) == 1 else (duration_val[0] + duration_val[1])/2 
+            duration_val = duration_val[0] if len(duration_val) == 1 else (duration_val[0] + duration_val[1])/2
             query_dict['runtime'] = duration_val
         if ratings:
             selected_ratings = parse_lst_str(ratings)
@@ -131,7 +131,7 @@ def search():
             if keywords:
                 features_lst.append(utils.get_set_overlap(selected_keywords, filtered_movie_dict[movie]['keywords']))
 
-            # duration & release date from movie m -> probabilistic gaussian fit around the mean 
+            # duration & release date from movie m -> probabilistic gaussian fit around the mean
             if duration and len(user_duration.parse(duration)) == 1:
                 duration_val = duration_score_dict[movie]
                 features_lst.append(duration_val)
@@ -174,7 +174,7 @@ def search():
         sim_percentage_feature = np.divide(sim_percentage_feature,row_sums)
         '''
 
-        # each entry in sim_percentage_feature will be a value between 0 and 1 which represents how much 
+        # each entry in sim_percentage_feature will be a value between 0 and 1 which represents how much
         # that feature contributes to the similarity score
 
 
@@ -211,6 +211,7 @@ def search():
         for movie_id in sorted_movie_dict:
             dt = datetime.datetime.strptime(str(filtered_movie_dict[movie_id]['release_date']), '%Y-%m-%d').strftime('%m-%d-%Y')
             filtered_movie_dict[movie_id]['release_date'] = dt
+            filtered_movie_dict[movie_id]['scores'] = {'genres': 0.8, 'similar': 0.7, 'duration': 0.95, 'cast': 0.63}
             data.append(filtered_movie_dict[movie_id])
         data = [data[i:i + 4] for i in xrange(0, len(data), 4)]
 
