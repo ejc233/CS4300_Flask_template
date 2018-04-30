@@ -220,15 +220,6 @@ def search():
                         scored_movie_dict[movie] = 0
                     scored_movie_dict[movie] += index
 
-            # compute the percentage that it's a similar movie vs. user input
-            # sim_percentage_dict = percentage influence the similar movies played in this calculation
-            # sim_percentage_dict = {}
-            # for index,movie in enumerate(sorted_movie_dict):
-            #     if genres or castCrew or keywords:
-            #         sim_percentage_dict[movie] = 1 - ((scored_movie_dict[movie] - index)/scored_movie_dict[movie])
-            #     else:
-            #         sim_percentage_dict[movie] = 1
-
             sorted_movie_dict = sorted(scored_movie_dict.items(), key=operator.itemgetter(1))
             sorted_movie_list = [k for k,v in sorted_movie_dict]
 
