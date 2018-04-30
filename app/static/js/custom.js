@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var scores = ['movies', 'genres', 'cast',
+  var scores = ['similar movies', 'genres', 'cast',
   'keywords', 'duration', 'release', 'ratings',
   'languages', 'acclaim', 'popularity'];
   $("#myCarousel").carousel({interval: false, wrap: false});
@@ -12,6 +12,7 @@ $(document).ready(function() {
 
   function addGraph(id, score_dict){
     var chart_el = document.getElementById(id).getContext('2d');
+    console.log(score_dict);
     scores_list = [];
     scores.forEach(function(d){
       if(score_dict.hasOwnProperty(d)){
@@ -51,9 +52,10 @@ $(document).ready(function() {
         title: {
           display: true,
           text: 'Similarity Score Breakdown',
-          fontSize: 20,
+          fontSize: 22,
           fontColor: "rgb(255,255,255)",
-          padding: 5
+          padding: 10,
+          fontFamily: "'Play', sans-serif"
         },
         scales: {
           yAxes: [{
@@ -61,13 +63,16 @@ $(document).ready(function() {
                 display: true,
                 labelString: 'Similarity',
                 fontColor: "white",
-                fontSize: 16
+                fontSize: 16,
+                fontFamily: "'Play', sans-serif",
+                padding: 5
               },
               ticks: {
                   fontColor: "white",
                   beginAtZero: true,
                   max: 1.0,
-                  fontSize: 14
+                  fontSize: 14,
+                  fontFamily: "'Play', sans-serif"
               },
               gridLines: {
                   display: false,
@@ -79,12 +84,15 @@ $(document).ready(function() {
                 display: true,
                 labelString: 'Input Type',
                 fontColor: "white",
-                fontSize: 16
+                fontSize: 16,
+                fontFamily: "'Play', sans-serif",
+                lineHeight: 0.8
               },
               ticks: {
                   fontColor: "white",
                   autoSkip: false,
-                  fontSize: 14
+                  fontSize: 14,
+                  fontFamily: "'Play', sans-serif"
               },
               gridLines: {
                   display: false,
@@ -94,6 +102,11 @@ $(document).ready(function() {
         },
       }
     });
+
+    var text = "This movie's similarity score: " + score_dict["overall_score"];
+
+    //Add the text
+    $(".search_details").append("<div> Hello </div>");
   }
 
   function popupModal(poster){
