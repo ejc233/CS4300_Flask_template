@@ -103,12 +103,12 @@ def search():
             similar_tup_lst = []
             for similar_mov in selected_movies:
                 similar_id = reverse_dict[similar_mov]
-                similar_genre = filtered_movie_dict[similar_id]['genres']
+                similar_genres = filtered_movie_dict[similar_id]['genres']
                 sim_cast = [member['name'] for member in filtered_movie_dict[similar_id]['cast']]
                 sim_crew = [member['name'] for member in filtered_movie_dict[similar_id]['crew']]
                 similar_castCrew = sim_cast + sim_crew
                 sim_release_year = user_release.parse_single(filtered_movie_dict[similar_id]['release_date'])
-                similar_tup_lst.append((similar_id,similar_genre,similar_castCrew,sim_release_year))
+                similar_tup_lst.append((similar_id,similar_genres,similar_castCrew,sim_release_year))
             filtered_movie_dict = utils.filter_similar(filtered_movie_dict,selected_movies)
             ranked_sim_lst = [utils.get_similar_ranking(tup,filtered_movie_dict) for tup in similar_tup_lst]
 
@@ -116,33 +116,72 @@ def search():
         movie_feature_lst,movie_id_lookup = [],{}
         for index,movie in enumerate(filtered_movie_dict):
             features_lst = []
+            filtered_movie_dict[movie]['scores'] = dict()
+
+            if similar:
+                cumulative_score = 0.0
+                for sim_movie in selected_movies:
+                    sim_id = reverse_dict[sim_movie]
+                    genres_score = utils.get_set_overlap(movie_dict[sim_id]['genres'],filtered_movie_dict[movie]['genres'])
+                    sim_cast = [member['name'] for member in movie_dict[sim_id]['cast']]
+                    sim_crew = [member['name'] for member in movie_dict[sim_id]['crew']]
+                    cast = [member['name'] for member in filtered_movie_dict[movie]['cast']]
+                    crew = [member['name'] for member in filtered_movie_dict[movie]['crew']]
+                    cast_score = utils.get_set_overlap(sim_cast + sim_crew, cast + crew)
+                    keywords_score = utils.get_set_overlap(movie_dict[sim_id]['keywords'],filtered_movie_dict[movie]['keywords'])
+                    cumulative_score += (2.0 * genres_score + cast_score + keywords_score) / 4.0
+                filtered_movie_dict[movie]['scores']['similar'] = cumulative_score / len(selected_movies)
 
             # list of genres for movie m -> jaccard sim with query
             if genres:
-                features_lst.append(utils.get_set_overlap(query_dict['genres'],filtered_movie_dict[movie]['genres']))
+                genres_score = utils.get_set_overlap(query_dict['genres'],filtered_movie_dict[movie]['genres'])
+                filtered_movie_dict[movie]['scores']['genres'] = genres_score
+                features_lst.append(genres_score)
 
             # list of cast and crew for movie m -> jaccard sim with the query
             if castCrew:
                 cast = [member['name'] for member in filtered_movie_dict[movie]['cast']]
                 crew = [member['name'] for member in filtered_movie_dict[movie]['crew']]
-                features_lst.append(utils.get_set_overlap(query_dict['castCrew'], cast + crew))
+                castCrew_score = utils.get_set_overlap(query_dict['castCrew'], cast + crew)
+                filtered_movie_dict[movie]['scores']['cast'] = castCrew_score
+                features_lst.append(castCrew_score)
 
             # keywords from query -> jaccard sim with the movie m synopsis
             if keywords:
-                features_lst.append(utils.get_set_overlap(selected_keywords, filtered_movie_dict[movie]['keywords']))
+                keywords_score = utils.get_set_overlap(selected_keywords, filtered_movie_dict[movie]['keywords'])
+                filtered_movie_dict[movie]['scores']['keywords'] = keywords_score
+                features_lst.append(keywords_score)
 
             # duration & release date from movie m -> probabilistic gaussian fit around the mean
             if duration and len(user_duration.parse(duration)) == 1:
-                duration_val = duration_score_dict[movie]
-                features_lst.append(duration_val)
+                duration_score = duration_score_dict[movie]
+                print duration_score
+                filtered_movie_dict[movie]['scores']['duration'] = duration_score
+                features_lst.append(duration_score)
+
+            if duration and len(user_duration.parse(duration)) == 2:
+                filtered_movie_dict[movie]['scores']['duration'] = 1.0
+
+            if release_start or release_end:
+                filtered_movie_dict[movie]['scores']['release'] = 1.0
 
             # acclaim -> value between 0 and 1
             if acclaim == "yes":
-                features_lst.append(acclaim_score_dict[movie])
+                acclaim_score = acclaim_score_dict[movie]
+                filtered_movie_dict[movie]['scores']['acclaim'] = acclaim_score
+                features_lst.append(acclaim_score)
 
             # popularity -> value between 0 and 1
             if popularity == "yes":
-                features_lst.append(utils.calc_popularity(filtered_movie_dict,movie,max_tmdb_count,max_imdb_count,max_meta_count))
+                popularity_score = utils.calc_popularity(filtered_movie_dict,movie,max_tmdb_count,max_imdb_count,max_meta_count)
+                filtered_movie_dict[movie]['scores']['popularity'] = popularity_score
+                features_lst.append(popularity_score)
+
+            if ratings:
+                filtered_movie_dict[movie]['scores']['ratings'] = 1.0
+
+            if languages:
+                filtered_movie_dict[movie]['scores']['languages'] = 1.0
 
             movie_feature_lst.append(features_lst)
             movie_id_lookup[index] = movie
@@ -158,26 +197,6 @@ def search():
         dists = np.linalg.norm(movie_matrix - query,axis=1,ord=2)
         ranked_lst = np.argsort(dists)
         sorted_movie_dict = [movie_id_lookup[movie_id] for movie_id in ranked_lst]
-
-
-        ########### COMPUTE A SIMILARITY SCORE ###########
-        # similarity score based solely on the non-similar movies
-        '''
-        max_dist = np.linalg.norm(np.zeros(d) - np.ones(d),ord=2)
-        np.divide(dists,.01*max_dist)
-        sim_dict = {}
-        for index in range(dists.shape[0]):
-            sim_dict[movie_id_lookup[index]] = dists[index]
-
-        sim_percentage_feature = np.power((movie_matrix - query),2)
-        row_sums = ((np.sum(sim_percentage_feature,axis=1).flatten())* np.ones((n,d)))
-        sim_percentage_feature = np.divide(sim_percentage_feature,row_sums)
-        '''
-
-        # each entry in sim_percentage_feature will be a value between 0 and 1 which represents how much
-        # that feature contributes to the similarity score
-
-
 
 
         ########### CONSILIDATE WITH THE SIMILAR MOVIE LIST ###########
@@ -211,7 +230,6 @@ def search():
         for movie_id in sorted_movie_dict:
             dt = datetime.datetime.strptime(str(filtered_movie_dict[movie_id]['release_date']), '%Y-%m-%d').strftime('%m-%d-%Y')
             filtered_movie_dict[movie_id]['release_date'] = dt
-            filtered_movie_dict[movie_id]['scores'] = {'genres': 0.8, 'similar': 0.7, 'duration': 0.95, 'cast': 0.63}
             data.append(filtered_movie_dict[movie_id])
         data = [data[i:i + 4] for i in xrange(0, len(data), 4)]
 

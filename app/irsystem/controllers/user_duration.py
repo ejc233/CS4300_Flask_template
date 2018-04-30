@@ -35,7 +35,7 @@ def gaussian_score(movie_dict,mean,high_val,low_val):
 	return score_dict
 
 
-def main(movie_dict, inp, high_val,low_val):
+def main(movie_dict, inp, high_val):
 	vals = parse(inp)
 	if len(vals) == 2:
 		return filter_hard(movie_dict,vals[0],vals[1], high_val)

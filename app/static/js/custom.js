@@ -23,19 +23,19 @@ $(document).ready(function() {
     });
 
     var barChartData = {
-			labels: scores,
-			datasets: [{
+      labels: scores,
+      datasets: [{
         backgroundColor: 'rgb(117, 147, 206)',
         borderColor: 'rgb(135, 160, 209)',
-				borderWidth: 1,
-				data: scores_list
-			}]};
+        borderWidth: 1,
+        data: scores_list
+      }]};
 
     var myBarChart = new Chart(chart_el, {
       type: 'bar',
       data: barChartData,
       options: {
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         layout: {
           padding: {
                 left: 10,
@@ -47,7 +47,7 @@ $(document).ready(function() {
         legend: {
           display: false
         },
-        responsive: true,
+        responsive: false,
         title: {
           display: true,
           text: 'Similarity Scores',
@@ -153,7 +153,6 @@ $(document).ready(function() {
     $(".current").removeClass("current");
     $(".active_modal").hide(300);
     $(".active_modal").removeClass("active_modal");
-    // Display new content
     // Display new content
     $(this).addClass("current");
     $(".search_details").addClass("active_modal");
