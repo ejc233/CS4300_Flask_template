@@ -10,14 +10,17 @@ import utils
 import scipy.stats
 import operator
 from random import *
+from copy import deepcopy
 import datetime
 
+movies_json = []
 movies_json = json.load(open('app/static/data/movies.json'))
 
 # map each movie id to the movie's information
 movie_dict = dict()
 for movie in movies_json:
     movie_dict[movie['id']] = json.load(open('app/static/data/movies/' + movie['id'] + '.json'))
+reverse_dict = {y['title'].lower():x for x,y in movie_dict.iteritems()}
 
 # build other lists from movie_dict
 max_tmdb_count = 0.0
@@ -56,14 +59,8 @@ def search():
         data = []
     else:
         data = []
-        movie_dict = dict()
+        filtered_movie_dict = deepcopy(movie_dict)
         query_dict = dict()
-
-        for movie in movies_json:
-            movie_dict[movie['id']] = json.load(open('app/static/data/movies/' + movie['id'] + '.json'))
-        # reverse lookup of title for movie_id
-        reverse_dict = {y['title'].lower():x for x,y in movie_dict.iteritems()}
-
 
         ########### QUERY DICT GENERATION ###########
         if similar:
@@ -90,49 +87,49 @@ def search():
         ########### FILTERING OF DICTIONARIES ###########
         # updates dicts with hard filters
         if duration:
-            movie_dict = user_duration.main(movie_dict,duration,0,1)
-            duration_score = boosting.gaussian_score_duration(movie_dict,query_dict['runtime'],1,0)
+            filtered_movie_dict = user_duration.main(filtered_movie_dict,duration,0,1)
+            duration_score = boosting.gaussian_score_duration(filtered_movie_dict,query_dict['runtime'],1,0)
         if release_start or release_end:
-            movie_dict = user_release.main(movie_dict,[release_start, release_end])
+            filtered_movie_dict = user_release.main(filtered_movie_dict,[release_start, release_end])
         if ratings:
-            movie_dict = utils.filter_ratings(movie_dict, selected_ratings)
+            filtered_movie_dict = utils.filter_ratings(filtered_movie_dict, selected_ratings)
         if languages:
-            movie_dict = utils.filter_languages(movie_dict, selected_languages)
+            filtered_movie_dict = utils.filter_languages(filtered_movie_dict, selected_languages)
         if acclaim == 'yes':
-            acclaim_score_dict = utils.half_gaussian_acclaim(movie_dict, 1, 0)
+            acclaim_score_dict = utils.half_gaussian_acclaim(filtered_movie_dict, 1, 0)
 
         ########### BOOST THE "QUERY MOVIE" WITH THE SIMILAR MOVIES ###########
         if similar:
             similar_tup_lst = []
             for similar_mov in selected_movies:
                 similar_id = reverse_dict[similar_mov]
-                similar_genre = movie_dict[similar_id]['genres']
-                sim_cast = [member['name'] for member in movie_dict[similar_id]['cast']]
-                sim_crew = [member['name'] for member in movie_dict[similar_id]['crew']]
+                similar_genre = filtered_movie_dict[similar_id]['genres']
+                sim_cast = [member['name'] for member in filtered_movie_dict[similar_id]['cast']]
+                sim_crew = [member['name'] for member in filtered_movie_dict[similar_id]['crew']]
                 similar_castCrew = sim_cast + sim_crew
-                sim_release_year = user_release.parse_single(movie_dict[similar_id]['release_date'])
+                sim_release_year = user_release.parse_single(filtered_movie_dict[similar_id]['release_date'])
                 similar_tup_lst.append((similar_id,similar_genre,similar_castCrew,sim_release_year))
-            movie_dict = utils.filter_similar(movie_dict,selected_movies)
-            ranked_sim_lst = [utils.get_similar_ranking(tup,movie_dict) for tup in similar_tup_lst]
+            filtered_movie_dict = utils.filter_similar(filtered_movie_dict,selected_movies)
+            ranked_sim_lst = [utils.get_similar_ranking(tup,filtered_movie_dict) for tup in similar_tup_lst]
 
         ########### VECTORIZE MOVIES GIVEN QUERY ###########
         movie_feature_lst,movie_id_lookup = [],{}
-        for index,movie in enumerate(movie_dict):
+        for index,movie in enumerate(filtered_movie_dict):
             features_lst = []
 
             # list of genres for movie m -> jaccard sim with query
             if genres:
-                features_lst.append(utils.get_set_overlap(query_dict['genres'],movie_dict[movie]['genres']))
+                features_lst.append(utils.get_set_overlap(query_dict['genres'],filtered_movie_dict[movie]['genres']))
 
             # list of cast and crew for movie m -> jaccard sim with the query
             if castCrew:
-                cast = [member['name'] for member in movie_dict[movie]['cast']]
-                crew = [member['name'] for member in movie_dict[movie]['crew']]
+                cast = [member['name'] for member in filtered_movie_dict[movie]['cast']]
+                crew = [member['name'] for member in filtered_movie_dict[movie]['crew']]
                 features_lst.append(utils.get_set_overlap(query_dict['castCrew'], cast + crew))
 
             # keywords from query -> jaccard sim with the movie m synopsis
             if keywords:
-                features_lst.append(utils.get_set_overlap(selected_keywords, movie_dict[movie]['keywords']))
+                features_lst.append(utils.get_set_overlap(selected_keywords, filtered_movie_dict[movie]['keywords']))
 
             # duration & release date from movie m -> probabilistic gaussian fit around the mean 
             if duration and len(user_duration.parse(duration)) == 1:
@@ -145,7 +142,7 @@ def search():
 
             # popularity -> value between 0 and 1
             if popularity == "yes":
-                features_lst.append(utils.calc_popularity(movie_dict,movie,max_tmdb_count,max_imdb_count,max_meta_count))
+                features_lst.append(utils.calc_popularity(filtered_movie_dict,movie,max_tmdb_count,max_imdb_count,max_meta_count))
 
             movie_feature_lst.append(features_lst)
             movie_id_lookup[index] = movie
@@ -212,9 +209,9 @@ def search():
 
         ########### TRANSFORM THE SORTED LIST INTO FRONT-END FORM ###########
         for movie_id in sorted_movie_dict:
-            dt = datetime.datetime.strptime(str(movie_dict[movie_id]['release_date']), '%Y-%m-%d').strftime('%m-%d-%Y')
-            movie_dict[movie_id]['release_date'] = dt
-            data.append(movie_dict[movie_id])
+            dt = datetime.datetime.strptime(str(filtered_movie_dict[movie_id]['release_date']), '%Y-%m-%d').strftime('%m-%d-%Y')
+            filtered_movie_dict[movie_id]['release_date'] = dt
+            data.append(filtered_movie_dict[movie_id])
         data = [data[i:i + 4] for i in xrange(0, len(data), 4)]
 
     return render_template('search.html',
