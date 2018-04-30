@@ -50,7 +50,7 @@ $(document).ready(function() {
         responsive: true,
         title: {
           display: true,
-          text: 'Similarity Scores',
+          text: 'Similarity Score Breakdown',
           fontSize: 20,
           fontColor: "rgb(255,255,255)"
         },
@@ -141,33 +141,33 @@ $(document).ready(function() {
   $("a[href='#overview']").click(function () {
     // Remove old content
     $(".current").removeClass("current");
-    $(".active_modal").hide(300);
+    $(".active_modal").stop().hide(300);
     $(".active_modal").removeClass("active_modal");
     // Display new content
     $(this).addClass("current");
     $(".overview_details").addClass("active_modal");
-    $(".overview_details").show(300);
+    $(".overview_details").stop().show(300);
   });
 
   $("a[href='#show']").click(function () {
     // Remove old content
     $(".current").removeClass("current");
-    $(".active_modal").hide(300);
+    $(".active_modal").stop().hide(300);
     $(".active_modal").removeClass("active_modal");
     // Display new content
     $(this).addClass("current");
     $(".show_details").addClass("active_modal");
-    $(".show_details").show(300);
+    $(".show_details").stop().show(300);
   });
 
   $("a[href='#search']").click(function () {
     // Remove old content
     $(".current").removeClass("current");
-    $(".active_modal").hide(300);
+    $(".active_modal").stop().hide(300);
     $(".active_modal").removeClass("active_modal");
     // Display new content
     $(this).addClass("current");
     $(".search_details").addClass("active_modal");
-    $(".search_details").show(300);
+    $(".search_details").stop().show(300);
   });
 });
