@@ -64,7 +64,7 @@ $(document).ready(function() {
               ticks: {
                   fontColor: "white",
                   beginAtZero: true,
-                  max: 1.0,
+                  max: 100,
                   fontSize: 14
               },
               gridLines: {
