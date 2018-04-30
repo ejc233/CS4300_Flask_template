@@ -230,7 +230,7 @@ def search():
 
         ########### TRANSFORM THE SORTED LIST INTO FRONT-END FORM ###########
         for movie_id in sorted_movie_list[:24]:
-            filtered_movie_dict['overall_score'] = overall_score[movie_id]
+            filtered_movie_dict[movie_id]['scores']['overall_score'] = overall_score[movie_id]
             data.append(filtered_movie_dict[movie_id])
         data = [data[i:i + 4] for i in xrange(0, len(data), 4)]
 
