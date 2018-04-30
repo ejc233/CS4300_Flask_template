@@ -10,7 +10,6 @@ import utils
 import scipy.stats
 import operator
 from random import *
-from copy import deepcopy
 import datetime
 
 movies_json = json.load(open('app/static/data/movies.json'))
@@ -19,6 +18,8 @@ movies_json = json.load(open('app/static/data/movies.json'))
 movie_dict = dict()
 for movie in movies_json:
     movie_dict[movie['id']] = json.load(open('app/static/data/movies/' + movie['id'] + '.json'))
+    dt = datetime.datetime.strptime(str(movie_dict[movie['id']]['release_date']), '%Y-%m-%d').strftime('%m-%d-%Y')
+    movie_dict[movie['id']]['release_date'] = dt
 reverse_dict = {y['title'].lower():x for x,y in movie_dict.iteritems()}
 
 max_tmdb_count = 16891.0
@@ -49,7 +50,7 @@ def search():
         data = []
     else:
         data = []
-        filtered_movie_dict = deepcopy(movie_dict)
+        filtered_movie_dict = dict(movie_dict)
         query_dict = dict()
 
         ########### QUERY DICT GENERATION ###########
@@ -93,11 +94,11 @@ def search():
             similar_tup_lst = []
             for similar_mov in selected_movies:
                 similar_id = reverse_dict[similar_mov]
-                similar_genres = filtered_movie_dict[similar_id]['genres']
-                sim_cast = [member['name'] for member in filtered_movie_dict[similar_id]['cast']]
-                sim_crew = [member['name'] for member in filtered_movie_dict[similar_id]['crew']]
+                similar_genres = movie_dict[similar_id]['genres']
+                sim_cast = [member['name'] for member in movie_dict[similar_id]['cast']]
+                sim_crew = [member['name'] for member in movie_dict[similar_id]['crew']]
                 similar_castCrew = sim_cast + sim_crew
-                sim_release_year = user_release.parse_single(filtered_movie_dict[similar_id]['release_date'])
+                sim_release_year = user_release.parse_single(movie_dict[similar_id]['release_date'])
                 similar_tup_lst.append((similar_id,similar_genres,similar_castCrew,sim_release_year))
             filtered_movie_dict = utils.filter_similar(filtered_movie_dict,selected_movies)
             ranked_sim_lst = [utils.get_similar_ranking(tup,filtered_movie_dict) for tup in similar_tup_lst]
@@ -194,7 +195,7 @@ def search():
 
             # if similar movies is the only user input which is filled out, don't consider the sorted_movie_list
             if genres or castCrew or keywords:
-                for index,movie in enumerate(sorted_movie_dict):
+                for index,movie in enumerate(sorted_movie_list):
                     scored_movie_dict[movie] = index
             for lst in ranked_sim_lst:
                 for index,movie in enumerate(lst):
@@ -204,20 +205,18 @@ def search():
 
             # compute the percentage that it's a similar movie vs. user input
             # sim_percentage_dict = percentage influence the similar movies played in this calculation
-            sim_percentage_dict = {}
-            for index,movie in enumerate(sorted_movie_dict):
-                if genres or castCrew or keywords:
-                    sim_percentage_dict[movie] = 1 - ((scored_movie_dict[movie] - index)/scored_movie_dict[movie])
-                else:
-                    sim_percentage_dict[movie] = 1
+            # sim_percentage_dict = {}
+            # for index,movie in enumerate(sorted_movie_dict):
+            #     if genres or castCrew or keywords:
+            #         sim_percentage_dict[movie] = 1 - ((scored_movie_dict[movie] - index)/scored_movie_dict[movie])
+            #     else:
+            #         sim_percentage_dict[movie] = 1
 
             sorted_movie_dict = sorted(scored_movie_dict.items(), key=operator.itemgetter(1))
             sorted_movie_list = [k for k,v in sorted_movie_dict]
 
         ########### TRANSFORM THE SORTED LIST INTO FRONT-END FORM ###########
         for movie_id in sorted_movie_list[:24]:
-            dt = datetime.datetime.strptime(str(filtered_movie_dict[movie_id]['release_date']), '%Y-%m-%d').strftime('%m-%d-%Y')
-            filtered_movie_dict[movie_id]['release_date'] = dt
             data.append(filtered_movie_dict[movie_id])
         data = [data[i:i + 4] for i in xrange(0, len(data), 4)]
 

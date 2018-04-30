@@ -15,31 +15,29 @@ def parse(inp):
 	return [int(inp[0][:4].strip())]
 
 def parse_single(inp):
-	return int(inp[:4].strip())
+	return int(inp[-4:].strip())
 
 def filter_hard(movie_dict,low_bound, high_bound,):
 	rtn_movie = {}
 	for movie in movie_dict:
-		if int(movie_dict[movie]['release_date'][:4]) >= low_bound and int(movie_dict[movie]['release_date'][:4]) <= high_bound:
+		if int(movie_dict[movie]['release_date'][-4:]) >= low_bound and int(movie_dict[movie]['release_date'][-4:]) <= high_bound:
 			rtn_movie[movie] = movie_dict[movie]
 	return rtn_movie
 
 def gaussian_release_score(movie_dict,mean,high_val,low_val):
     score_dict = {}
-    mod_movie_dict = {}
-
-    for movie in movie_dict:
-        mod_movie_dict[movie]['release_date'] = int(movie_dict[movie]['release_date'][:4])
+    movie_to_weight = {}
 
     dist = scipy.stats.norm(mean,8)
-    movie_to_weight = {k:dist.pdf(v['release_date']) for k,v in mod_movie_dict.iteritems()}
-    max_val,min_val = max(movie_to_weight.values()), min(movie_to_weight.values())
+    for movie in movie_dict:
+        movie_to_weight[movie] = dist.pdf(int(movie_dict[movie]['release_date'][-4:]))
 
     # movie -> weight value between 0 and 1
+    max_val,min_val = max(movie_to_weight.values()), min(movie_to_weight.values())
     movie_to_weight = {k:((v - min_val)/(max_val - min_val)) for k,v in movie_to_weight.iteritems()}
 
     # movie -> weight value between high and low
-    for movie in mod_movie_dict:
+    for movie in movie_to_weight:
         score_dict[movie] = (movie_to_weight[movie]*(high_val + low_val) - low_val)
     return score_dict
 
