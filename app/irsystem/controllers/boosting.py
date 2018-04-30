@@ -71,9 +71,6 @@ def knn_algo(mod_movie_mat,movie_lookup):
 ########### HELPER FUNCTIONS ###########
 def gaussian_score_duration(movie_dict,mean,high_val,low_val):
     score_dict = {}
-    for movie in movie_dict:
-        if movie_dict[movie]['runtime'] is None:
-            movie_dict[movie]['runtime'] = 0
 
     dist = scipy.stats.norm(mean,10)
     movie_to_weight = {k:dist.pdf(v['runtime']) for k,v in movie_dict.iteritems()}

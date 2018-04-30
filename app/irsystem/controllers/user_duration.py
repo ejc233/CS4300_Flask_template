@@ -34,8 +34,9 @@ def gaussian_score(movie_dict,mean,high_val,low_val):
 		score_dict[movie] = movie_to_weight[movie]*(high_val + low_val) - low_val
 	return score_dict
 
+
 def main(movie_dict, inp, high_val,low_val):
 	vals = parse(inp)
 	if len(vals) == 2:
 		return filter_hard(movie_dict,vals[0],vals[1], high_val)
-	return movie_dict,gaussian_score(movie_dict,vals[0],high_val,low_val)
+	return movie_dict

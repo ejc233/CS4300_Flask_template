@@ -39,7 +39,6 @@ def gaussian_release_score(movie_dict,mean,high_val,low_val):
         if mod_movie_dict[movie]['release_date'] is None:
             mod_movie_dict[movie]['release_date'] = int("0000")
         else:
-            print mod_movie_dict[movie]['release_date']
             mod_movie_dict[movie]['release_date'] = int(mod_movie_dict[movie]['release_date'][:4])
     dist = scipy.stats.norm(mean,8)
     movie_to_weight = {k:dist.pdf(v['release_date']) for k,v in mod_movie_dict.iteritems()}
@@ -56,8 +55,7 @@ def gaussian_release_score(movie_dict,mean,high_val,low_val):
 
 
 
-
-def main(movie_dict, inp, high_val,low_val):
+def main(movie_dict, inp):
 	vals = parse(inp)
 	if len(vals) == 2:
 		return filter_hard(movie_dict,vals[0],vals[1])
