@@ -1,13 +1,117 @@
 $(document).ready(function() {
+  var scores = ['similar', 'genres', 'cast',
+  'keywords', 'duration', 'release', 'ratings',
+  'languages', 'acclaim', 'popularity'];
   $("#myCarousel").carousel({interval: false, wrap: false});
 
   $(".modal").map(function () {
     $(this).detach().appendTo($('body'));
   })
 
+  var chart;
+
+  function addGraph(id, score_dict){
+    var chart_el = document.getElementById(id).getContext('2d');
+    scores_list = [];
+    scores.forEach(function(d){
+      if(score_dict.hasOwnProperty(d)){
+        scores_list.push(score_dict[d]);
+      }
+      else{
+        scores_list.push(0);
+      }
+    });
+
+    console.log(score_dict);
+    var barChartData = {
+			labels: scores,
+			datasets: [{
+        backgroundColor: 'rgb(117, 147, 206)',
+        borderColor: 'rgb(135, 160, 209)',
+				borderWidth: 1,
+				data: scores_list
+			}]};
+
+    var myBarChart = new Chart(chart_el, {
+      type: 'bar',
+      data: barChartData,
+      options: {
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+                left: 10,
+                right: 10,
+                top: 0,
+                bottom: 0
+            }
+        },
+        legend: {
+          display: false
+        },
+        responsive: true,
+        title: {
+          display: true,
+          text: 'Similarity Scores',
+          fontSize: 18,
+          fontColor: "rgb(255,255,255)"
+        },
+        scales: {
+          yAxes: [{
+              ticks: {
+                  fontColor: "white",
+                  beginAtZero: true,
+                  max: 1.0,
+                  fontSize: 14
+              },
+              gridLines: {
+                  display: false,
+                  color: "white"
+              }
+          }],
+          xAxes: [{
+              ticks: {
+                  fontColor: "white",
+                  autoSkip: false,
+                  fontSize: 14
+              },
+              gridLines: {
+                  display: false,
+                  color: "white"
+              }
+          }]
+        },
+      }
+    });
+    // chart = new CanvasJS.Chart(id, {
+    // 	animationEnabled: true,
+    // 	theme: "light2", // "light1", "light2", "dark1", "dark2"
+    // 	title:{
+    // 		text: "Similarity Scores"
+    // 	},
+    // 	axisY: {
+    // 		title: "Similarity (Percent)"
+    // 	},
+    // 	data: [{
+    // 		type: "column",
+    // 		dataPoints: scores_list
+    // 	}],
+    //   axisX: {
+    //     labelMaxWidth: 70,
+    //     interval: 1,
+    //     labelWrap: true
+    //   }
+    // });
+    // chart.render();
+  }
+
   $(".poster").click(function(){
     var id = this.getAttribute("data-movie");
+    var scores = (this.getAttribute("data-scores")).replace(/'/g, '"');
     var mod = $('body').find("#"+id);
+    var e = $("<canvas></canvas>")
+    var chart_div = mod.find(".search_details").append(e);
+    e.attr('id', id+"_chart");
+    addGraph(id+"_chart", JSON.parse(scores));
     mod.fadeIn(425);
     $(".contents").addClass("blur_overlay");
   });
@@ -15,6 +119,7 @@ $(document).ready(function() {
   $(".post_title").click(function(){
     var id = this.getAttribute("data-movie");
     var mod = $('body').find("#"+id);
+    console.log(mod);
     mod.fadeIn(425);
     $(".contents").addClass("blur_overlay");
   });
@@ -68,8 +173,9 @@ $(document).ready(function() {
     $(".active_modal").hide(300);
     $(".active_modal").removeClass("active_modal");
     // Display new content
+    // Display new content
     $(this).addClass("current");
-    // $().addClass("active"); //for later
-    // $(".overview_details").css("display","inline-block");
+    $(".search_details").addClass("active_modal");
+    $(".search_details").show(300);
   });
 });

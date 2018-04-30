@@ -181,7 +181,7 @@ span.twitter-typeahead .tt-suggestion:focus {
 
 /* Hint color */
 .twitter-typeahead .tt-hint {
-  color: rgba(255,255,255,0.65); 
+  color: rgba(255,255,255,0.65);
 }
 
 /* Carasoul Display */
@@ -386,4 +386,11 @@ div.scrollmenu a.overview_details a.show_details a.search_details a.active_modal
   -o-filter: blur(3px);
   -ms-filter: blur(3px);
   filter: blur(3px);
+}
+
+canvas {
+  width: 100% !important;
+  height: 70% !important;
+  padding-right: 10px !important;
+  color: white !important;
 }
