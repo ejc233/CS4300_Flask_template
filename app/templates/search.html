@@ -338,18 +338,18 @@
                         <div class="content_details overview_details active_modal" style="color: #d0d9e5;">
                             <div class="row">
                               <div class="col-md-4">
-                                <p><strong class="heading2">Duration:</strong> {{d['runtime']}} min</p>
+                                <p><strong class="heading2">Duration:</strong><br> {{d['runtime']}} min</p>
                               </div>
                               <div class="col-md-8">
-                                <p><strong class="heading2">Original Language:</strong> {{d['original_language']}}</p>
+                                <p><strong class="heading2">Original Language:</strong><br> {{d['original_language']}}</p>
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-md-4">
-                                <p><strong class="heading2">Rating:</strong> {{d['rating']}}</p>
+                                <p><strong class="heading2">Rating:</strong><br> {{d['rating']}}</p>
                               </div>
                               <div class="col-md-8">
-                                <p><strong class="heading2">Genres:</strong>
+                                <p><strong class="heading2">Genres:</strong><br>
                                   {% for g in d['genres'][:-1] %}
                                       {{g}},
                                   {% endfor %}
@@ -361,7 +361,7 @@
                             <p><strong class="heading">Synopsis</strong><br> {{d['summary']}}</p>
                             <br>
                             <p><strong class="heading2">TMDb User Score:</strong>  {{d['tmdb_score_value']}}/10.0</p>
-                            <p><strong class="heading2">IMDb Page:</strong> <a href ="http://www.imdb.com/title/{{d['id']}}" style="color: #9aa6b7;">Link</a></p>
+                            <p><strong class="heading2">IMDb Page:</strong> <a href ="http://www.imdb.com/title/{{d['id']}}" style="color: rgba(121, 190, 247,0.85);">Link</a></p>
                         </div>
                         <!-- Div for show -->
                         <div class="content_details show_details" style="display: none;color: #d0d9e5;">
@@ -369,7 +369,7 @@
                           <div class="col-md-6">
                             <p><strong class="heading">Cast</strong><br>
                             {% for c in d['cast'] %}
-                                <strong class="heading2">{{c['name']}}</strong> as <strong class="heading2">{{c['character']}}</strong>
+                                <span style="font-weight: 200" class="heading2">{{c['name']}}</span> as <span style="font-weight: 200" class="heading2">{{c['character']}}</span>
                                 <br>
                             {% endfor %}
                             </p>
@@ -378,7 +378,7 @@
                             <p><strong class="heading">Crew</strong>
                             <br>
                             {% for c in d['crew'] %}
-                                <strong class="heading2">{{c['job']}}:</strong> {{c['name']}}
+                                <span style="font-weight: 200" class="heading2">{{c['job']}}:</span> {{c['name']}}
                                 <br>
                             {% endfor %}
                             </p>
