@@ -204,27 +204,33 @@ def search():
         dists = np.linalg.norm(movie_matrix - query,axis=1,ord=2)
         ranked_lst = np.argsort(dists)
         sorted_movie_list = [movie_id_lookup[movie_id] for movie_id in ranked_lst]
+        sorted_movie_dict = {m:i for i,m in enumerate(sorted_movie_list,1)}
 
 
         ########### CONSILIDATE WITH THE SIMILAR MOVIE LIST ###########
+        # if similar movies is the only user input which is filled out, don't consider the sorted_movie_list
         if similar:
-            scored_movie_dict = {}
-
-            # if similar movies is the only user input which is filled out, don't consider the sorted_movie_list
-            if genres or castCrew or keywords:
-                for index,movie in enumerate(sorted_movie_list):
-                    scored_movie_dict[movie] = index
+            if not (genres or castCrew or keywords):
+                sorted_movie_dict = {}
             for lst in ranked_sim_lst:
-                for index,movie in enumerate(lst):
-                    if movie not in scored_movie_dict:
-                        scored_movie_dict[movie] = 0
-                    scored_movie_dict[movie] += index
+                for index,movie in enumerate(lst,1):
+                    if movie not in sorted_movie_dict:
+                        sorted_movie_dict[movie] = 0
+                    sorted_movie_dict[movie] += index 
 
-            sorted_movie_dict = sorted(scored_movie_dict.items(), key=operator.itemgetter(1))
-            sorted_movie_list = [k for k,v in sorted_movie_dict]
+        # compute the overall similarity score...
+        overall_score = {}
+        denom = len(sorted_movie_dict)*len(ranked_sim_lst) if similar else len(sorted_movie_dict)
+        for movie in sorted_movie_dict:
+            overall_score[movie] = abs(math.log((float(sorted_movie_dict[movie])/denom)))
+        overall_score = utils.normalize_score(overall_score,denom)
+
+        sorted_movie_tup_lst = sorted(sorted_movie_dict.items(), key=operator.itemgetter(1))
+        sorted_movie_list = [k for k,v in sorted_movie_tup_lst]
 
         ########### TRANSFORM THE SORTED LIST INTO FRONT-END FORM ###########
         for movie_id in sorted_movie_list[:24]:
+            filtered_movie_dict[movie_id]['scores']['overall_score'] = round(overall_score[movie_id], 2)
             data.append(filtered_movie_dict[movie_id])
         data = [data[i:i + 4] for i in xrange(0, len(data), 4)]
 
@@ -240,6 +246,7 @@ def search():
         old_languages = xstr(languages),
         old_acclaim = xstr(acclaim),
         old_popularity = xstr(popularity),
+        advanced = (castCrew or keywords or duration or release_start or release_end or ratings or languages),
         data = data[:6],
         year_list = year_list)
 

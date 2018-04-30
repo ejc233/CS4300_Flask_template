@@ -6,9 +6,7 @@ $(document).ready(function() {
 
   $(".modal").map(function () {
     $(this).detach().appendTo($('body'));
-  })
-
-  var chart;
+  });
 
   function addGraph(id, score_dict){
     var chart_el = document.getElementById(id).getContext('2d');
