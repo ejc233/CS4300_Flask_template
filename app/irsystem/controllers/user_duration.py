@@ -18,6 +18,9 @@ def filter_hard(movie_dict,low_bound, high_bound, high_val):
 def gaussian_score(movie_dict,mean,high_val,low_val):
 	score_dict = {}
 
+	if mean > 224:
+		mean = 224
+
 	dist = scipy.stats.norm(mean,10)
 	movie_to_weight = {k:dist.pdf(v['runtime']) for k,v in movie_dict.iteritems()}
 	max_val,min_val = max(movie_to_weight.values()), min(movie_to_weight.values())
