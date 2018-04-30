@@ -59,6 +59,7 @@ h3 {font-family: 'Rajdhani', sans-serif;
 
 .logo_band {
   width: 100%;
+  margin-top: 0px;
 }
 
 .logo {
@@ -376,7 +377,7 @@ div.scrollmenu a.overview_details a.show_details a.search_details a.active_modal
 
 /* Background blur */
 .background_img {
-  background-image: url("/static/film_background_3.png");
+  background-image: url("/static/theatre_background.jpg");
   position: fixed;
   left: 0;
   right: 0;
@@ -385,11 +386,11 @@ div.scrollmenu a.overview_details a.show_details a.search_details a.active_modal
   background-attachment: fixed;
   background-size: cover;
   z-index: -100;
-  -webkit-filter: blur(3px);
-  -moz-filter: blur(3px);
-  -o-filter: blur(3px);
-  -ms-filter: blur(3px);
-  filter: blur(3px);
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+  filter: blur(1px);
 }
 
 canvas {
