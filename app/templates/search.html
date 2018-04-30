@@ -412,7 +412,9 @@
           </a>
         </div>
       {% else %}
-        <div class="message">Sorry, your search returned no results. Please try again.</div>
+        {% if old_acclaim != None %}
+          <div class="message">Sorry, your search returned no results. Please try again.</div>
+        {% endif %}
       {% endif %}
 
         <div class="footer">
