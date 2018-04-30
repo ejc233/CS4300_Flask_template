@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var scores = ['similar', 'genres', 'cast',
+  var scores = ['movies', 'genres', 'cast',
   'keywords', 'duration', 'release', 'ratings',
   'languages', 'acclaim', 'popularity'];
   $("#myCarousel").carousel({interval: false, wrap: false});
@@ -35,27 +35,33 @@ $(document).ready(function() {
       type: 'bar',
       data: barChartData,
       options: {
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         layout: {
           padding: {
                 left: 10,
                 right: 10,
-                top: 0,
+                top: 20,
                 bottom: 0
             }
         },
         legend: {
           display: false
         },
-        responsive: false,
+        responsive: true,
         title: {
           display: true,
           text: 'Similarity Scores',
-          fontSize: 18,
+          fontSize: 20,
           fontColor: "rgb(255,255,255)"
         },
         scales: {
           yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Similarity',
+                fontColor: "white",
+                fontSize: 16
+              },
               ticks: {
                   fontColor: "white",
                   beginAtZero: true,
@@ -68,6 +74,12 @@ $(document).ready(function() {
               }
           }],
           xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Input Type',
+                fontColor: "white",
+                fontSize: 16
+              },
               ticks: {
                   fontColor: "white",
                   autoSkip: false,
