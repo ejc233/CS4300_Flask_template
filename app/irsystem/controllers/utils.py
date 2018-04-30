@@ -30,6 +30,16 @@ def filter_similar(movie_dict, similar_movies):
             rtn_movie[movie] = movie_dict[movie]
     return rtn_movie
 
+# normalize the logarithmic scores...
+def normalize_score(overall_score,denom):
+    best_score = abs(math.log(2.0/denom))
+    for movie in overall_score:
+        print("here is your best_score " + str(best_score))
+        print("overall score " + str(overall_score[movie]))
+        overall_score[movie] = 1 - (best_score - overall_score[movie])/best_score
+        print("final score " + str(overall_score[movie]))
+    return overall_score
+
 def calc_popularity(movie_dict,movie,max_tmdb_count,max_imdb_count,max_meta_count):
     tmdb_count = movie_dict[movie]['tmdb_score_count']
     if tmdb_count == 0:
