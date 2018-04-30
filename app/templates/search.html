@@ -336,36 +336,50 @@
                           <a href="#search"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;&nbsp;Similarity Score</a>
                         </div>
                         <!-- Div for overview -->
-                        <div class="content_details overview_details active_modal">
-                            <p>Genres:
-                            {% for g in d['genres'][:-1] %}
-                                {{g}},
-                            {% endfor %}
-                            {{d['genres'][-1]}}
-                            </p>
-                            <p>Duration: {{d['runtime']}} min</p>
-                            <p>TMDb User Score: {{d['tmdb_score_value']}}/10.0</p>
-                            <p>Synopsis: {{d['summary']}}</p>
-                            <p>Rating: {{d['rating']}}</p>
-                            <p>Original Language: {{d['original_language']}}</p>
-                            <p>IMDb Page: <a href ="http://www.imdb.com/title/{{d['id']}}">Link</a></p>
+                        <div class="content_details overview_details active_modal" style="color: #d0d9e5;">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <p><strong class="heading2">Duration:</strong> {{d['runtime']}} min</p>
+                              </div>
+                              <div class="col-md-8">
+                                <p><strong class="heading2">Original Language:</strong> {{d['original_language']}}</p>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-4">
+                                <p><strong class="heading2">Rating:</strong> {{d['rating']}}</p>
+                              </div>
+                              <div class="col-md-8">
+                                <p><strong class="heading2">Genres:</strong>
+                                  {% for g in d['genres'][:-1] %}
+                                      {{g}},
+                                  {% endfor %}
+                                  {{d['genres'][-1]}}
+                                </p>
+                              </div>
+                            </div>
+                            <br>
+                            <p><strong class="heading">Synopsis</strong><br> {{d['summary']}}</p>
+                            <br>
+                            <p><strong class="heading2">TMDb User Score:</strong>  {{d['tmdb_score_value']}}/10.0</p>
+                            <p><strong class="heading2">IMDb Page:</strong> <a href ="http://www.imdb.com/title/{{d['id']}}" style="color: #9aa6b7;">Link</a></p>
                         </div>
                         <!-- Div for show -->
-                        <div class="content_details show_details" style="display: none;">
+                        <div class="content_details show_details" style="display: none;color: #d0d9e5;">
                         <div class="row">
                           <div class="col-md-6">
-                            <p>Cast:<br>
+                            <p><strong class="heading">Cast</strong><br>
                             {% for c in d['cast'] %}
-                                {{c['name']}} as {{c['character']}}
+                                <strong class="heading2">{{c['name']}}</strong> as <strong class="heading2">{{c['character']}}</strong>
                                 <br>
                             {% endfor %}
                             </p>
                           </div>
                           <div class="col-md-6">
-                            <p>Crew:
+                            <p><strong class="heading">Crew</strong>
                             <br>
                             {% for c in d['crew'] %}
-                                {{c['job']}}: {{c['name']}}
+                                <strong class="heading2">{{c['job']}}:</strong> {{c['name']}}
                                 <br>
                             {% endfor %}
                             </p>

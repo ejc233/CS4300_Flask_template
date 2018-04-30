@@ -394,3 +394,13 @@ canvas {
   padding-right: 10px !important;
   color: white !important;
 }
+
+.heading {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.heading2 {
+  color: white;
+}
