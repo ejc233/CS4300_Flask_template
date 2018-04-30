@@ -87,8 +87,8 @@ def search():
         ########### FILTERING OF DICTIONARIES ###########
         # updates dicts with hard filters
         if duration:
-            filtered_movie_dict = user_duration.main(filtered_movie_dict,duration,0,1)
-            duration_score = boosting.gaussian_score_duration(filtered_movie_dict,query_dict['runtime'],1,0)
+            filtered_movie_dict = user_duration.main(filtered_movie_dict,duration,1)
+            duration_score_dict = boosting.gaussian_score_duration(filtered_movie_dict,query_dict['runtime'],1,0)
         if release_start or release_end:
             filtered_movie_dict = user_release.main(filtered_movie_dict,[release_start, release_end])
         if ratings:
@@ -133,7 +133,7 @@ def search():
 
             # duration & release date from movie m -> probabilistic gaussian fit around the mean 
             if duration and len(user_duration.parse(duration)) == 1:
-                duration_val = duration_score[movie]
+                duration_val = duration_score_dict[movie]
                 features_lst.append(duration_val)
 
             # acclaim -> value between 0 and 1
