@@ -204,7 +204,7 @@ def search():
         dists = np.linalg.norm(movie_matrix - query,axis=1,ord=2)
         ranked_lst = np.argsort(dists)
         sorted_movie_list = [movie_id_lookup[movie_id] for movie_id in ranked_lst]
-        sorted_movie_dict = {m:i for i,m in enumerate(sorted_movie_list)}
+        sorted_movie_dict = {m:i for i,m in enumerate(sorted_movie_list,1)}
 
 
         ########### CONSILIDATE WITH THE SIMILAR MOVIE LIST ###########
@@ -213,7 +213,7 @@ def search():
             if not (genres or castCrew or keywords):
                 sorted_movie_dict = {}
             for lst in ranked_sim_lst:
-                for index,movie in enumerate(lst):
+                for index,movie in enumerate(lst,1):
                     if movie not in sorted_movie_dict:
                         sorted_movie_dict[movie] = 0
                     sorted_movie_dict[movie] += index 
@@ -222,8 +222,6 @@ def search():
         overall_score = {}
         denom = len(sorted_movie_dict)*len(ranked_sim_lst) if similar else len(sorted_movie_dict)
         for movie in sorted_movie_dict:
-            # just to regularize in case we get a 0 index + 0 indev value...
-            sorted_movie_dict[movie] = 1 if sorted_movie_dict[movie] == 0 else sorted_movie_dict[movie]
             overall_score[movie] = abs(math.log((float(sorted_movie_dict[movie])/denom)))
         overall_score = utils.normalize_score(overall_score,denom)
 
