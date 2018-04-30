@@ -17,10 +17,6 @@ def filter_hard(movie_dict,low_bound, high_bound, high_val):
 # gaussian weighted appropriately: update the score_dict
 def gaussian_score(movie_dict,mean,high_val,low_val):
 	score_dict = {}
-	# if the movie runtime is a nonetype....
-	for movie in movie_dict:
-		if movie_dict[movie]['runtime'] is None:
-			movie_dict[movie]['runtime'] = 0
 
 	dist = scipy.stats.norm(mean,10)
 	movie_to_weight = {k:dist.pdf(v['runtime']) for k,v in movie_dict.iteritems()}
