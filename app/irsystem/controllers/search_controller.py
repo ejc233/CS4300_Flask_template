@@ -20,7 +20,7 @@ for movie in movies_json:
     movie_dict[movie['id']] = json.load(open('app/static/data/movies/' + movie['id'] + '.json'))
     dt = datetime.datetime.strptime(str(movie_dict[movie['id']]['release_date']), '%Y-%m-%d').strftime('%m-%d-%Y')
     movie_dict[movie['id']]['release_date'] = dt
-    movie_dict[movie['id']]['cosine'] = json.load(open('app/static/data/cosine/' + movie['id'] + '.json'))
+    # movie_dict[movie['id']]['cosine'] = json.load(open('app/static/data/cosine/' + movie['id'] + '.json'))
 reverse_dict = {y['title'].lower():x for x,y in movie_dict.iteritems()}
 
 max_tmdb_count = 16891.0
@@ -138,7 +138,7 @@ def search():
                     cast_score = utils.get_set_overlap(sim_cast + sim_crew, cast + crew)
                     keywords_score = utils.get_set_overlap(movie_dict[sim_id]['keywords'],filtered_movie_dict[movie]['keywords'])
                     cumulative_score += (2.0 * genres_score + cast_score + keywords_score) / 4.0
-                filtered_movie_dict[movie]['scores']['similar'] = round(cumulative_score / len(selected_movies), 2)
+                filtered_movie_dict[movie]['scores']['movies'] = round(cumulative_score / len(selected_movies), 2)
 
             # list of genres for movie m -> jaccard sim with query
             if genres:
@@ -219,15 +219,6 @@ def search():
                     if movie not in scored_movie_dict:
                         scored_movie_dict[movie] = 0
                     scored_movie_dict[movie] += index
-
-            # compute the percentage that it's a similar movie vs. user input
-            # sim_percentage_dict = percentage influence the similar movies played in this calculation
-            # sim_percentage_dict = {}
-            # for index,movie in enumerate(sorted_movie_dict):
-            #     if genres or castCrew or keywords:
-            #         sim_percentage_dict[movie] = 1 - ((scored_movie_dict[movie] - index)/scored_movie_dict[movie])
-            #     else:
-            #         sim_percentage_dict[movie] = 1
 
             sorted_movie_dict = sorted(scored_movie_dict.items(), key=operator.itemgetter(1))
             sorted_movie_list = [k for k,v in sorted_movie_dict]

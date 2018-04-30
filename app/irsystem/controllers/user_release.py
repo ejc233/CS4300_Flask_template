@@ -28,7 +28,7 @@ def gaussian_release_score(movie_dict,mean,high_val,low_val):
     score_dict = {}
     movie_to_weight = {}
 
-    dist = scipy.stats.norm(mean,8)
+    dist = scipy.stats.norm(mean,16)
     for movie in movie_dict:
         movie_to_weight[movie] = dist.pdf(int(movie_dict[movie]['release_date'][-4:]))
 
