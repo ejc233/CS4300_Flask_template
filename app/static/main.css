@@ -86,11 +86,12 @@ h3 {font-family: 'Rajdhani', sans-serif;
 /* footer */
 .footer {
   height: 30px;
-  background-color: #000000;
+  background-color: rgba(255, 255, 255, 0.1);
   text-align: center;
   font-size: 20px;
   color: #ffffff;
   margin-top: 5%;
+  margin-bottom: 0%;
 }
 
 /* form control + bootstrap-tagsinput CSS */
@@ -406,4 +407,24 @@ canvas {
 
 .heading2 {
   color: white;
+}
+
+.prototypes {
+  width: 100%;
+  text-align: right;
+  font-size: 15px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.proto_link {
+  color: #edf4ff;
+}
+
+.proto_link:hover {
+  color: #bbc0c9;
+}
+
+.proto_link:visited {
+  color: #bbc0c9;
 }
