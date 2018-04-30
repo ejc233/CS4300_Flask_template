@@ -101,10 +101,10 @@ $(document).ready(function() {
       }
     });
 
-    var text = "This movie's similarity score: " + score_dict["overall_score"];
+    var text = "<div style='color: #d0d9e5;'> <strong class='heading2'>Movie's similarity score: </strong>" + score_dict["overall_score"] + "</div>";
 
     //Add the text
-    $(".search_details").append("<div> Hello </div>");
+    $(".search_details").append(text);
   }
 
   function popupModal(poster){
