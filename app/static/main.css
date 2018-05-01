@@ -390,11 +390,16 @@ div.scrollmenu a.overview_details a.show_details a.search_details a.active_modal
 }
 
 canvas {
-  padding-top: 5px;
   width: 555px !important;
   height: 345px !important;
-  padding-right: 10px !important;
+  padding-top: 0px;
+  padding-right: 35px !important;
   color: white !important;
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 0.5%;
+  background-color: rgba(255,255,255,0.1);
 }
 
 .heading {

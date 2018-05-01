@@ -197,7 +197,7 @@
               </div>
               <div class="form-row" style="height: 24%">
                 <div class="form-group col-md-6">
-                    <label class="tags center">Ratings:</label>
+                    <label class="tags center">MPAA Ratings:</label>
                     <input id="ratings_list" type="text" data-role="tagsinput" name="ratings" placeholder="e.g. PG-13, PG, etc." value="{{old_ratings}}">
                      <script>
                       var ratings = new Bloodhound({
@@ -254,7 +254,7 @@
                 </div>
               </div>
               <div class="form-row">
-                <label class="tags center">Do user scores matter to you?</label>
+                <label class="tags center">Do user ratings matter to you?</label>
                 {% if old_acclaim == 'no': %}
                   <div class="form-check tags center" style="height: 10px;">
                       <input class="tags form-check-input" type="radio" name="acclaim" value="yes"> Yes<br>
@@ -332,7 +332,7 @@
                   <div class="post_title" data-movie="{{ d['id'] }}" data-scores="{{ d['scores'] }}" display="none">
                     <p><strong style="font-size: 20px;">{{d['title']}}</strong></p>
                     <p>{{d['release_date']}} </p>
-                    <p>User Score: {{d['tmdb_score_value']}}/10.0</p>
+                    <p>User Rating: {{d['tmdb_score_value']}}/10.0</p>
                     <!-- <p class="rating_tag">{{d['rating']}}</p> -->
                   </div>
                 </div>
@@ -340,7 +340,7 @@
                 <div id="{{ d['id'] }}" class="modal">
                   <div class="modal-content">
                     <div class="row">
-                      <div class="col-md-4" style="height:100%; width:37%">
+                      <div class="col-md-4" style="height:98%; width:37%">
                         <img src="static/data/posters/{{d['id']}}.jpg" alt="{{d['title']}}" style="height: 95%; width: 100%; object-fit: fill;">
                       </div>
                       <div class="col-md-8" style="height:100%; width: 60%">
@@ -376,7 +376,7 @@
                             <br>
                             <p><strong class="heading">Synopsis</strong><br> {{d['summary']}}</p>
                             <br>
-                            <p><strong class="heading2">TMDb User Score:</strong>  {{d['tmdb_score_value']}}/10.0</p>
+                            <p><strong class="heading2">TMDb User Rating:</strong>  {{d['tmdb_score_value']}}/10.0</p>
                             <p><strong class="heading2">IMDb Page:</strong> <a href ="http://www.imdb.com/title/{{d['id']}}" style="color: rgba(121, 190, 247,0.85);">Link</a></p>
                         </div>
                         <!-- Div for show -->

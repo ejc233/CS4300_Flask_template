@@ -10,7 +10,6 @@ $(document).ready(function() {
 
   function addGraph(id, score_dict){
     var chart_el = document.getElementById(id).getContext('2d');
-    console.log(score_dict);
     scores_list = [];
     scores.forEach(function(d){
       if(score_dict.hasOwnProperty(d)){
@@ -34,19 +33,19 @@ $(document).ready(function() {
       type: 'bar',
       data: barChartData,
       options: {
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         layout: {
           padding: {
                 left: 10,
                 right: 10,
                 top: 3,
-                bottom: 0
+                bottom: 3
             }
         },
         legend: {
           display: false
         },
-        responsive: true,
+        responsive: false,
         title: {
           display: true,
           text: 'Similarity Score Breakdown',
@@ -68,9 +67,9 @@ $(document).ready(function() {
               ticks: {
                   fontColor: "white",
                   beginAtZero: true,
-                  max: 1.0,
-                  fontSize: 14,
-                  fontFamily: "'Play', sans-serif"
+                  fontFamily: "'Play', sans-serif",
+                  max: 100,
+                  fontSize: 14
               },
               gridLines: {
                   display: false,
@@ -101,7 +100,7 @@ $(document).ready(function() {
       }
     });
 
-    var text = "<div style='color: #d0d9e5;'> <strong class='heading2'>Movie's similarity score: </strong>" + score_dict["overall_score"] + "</div>";
+    var text = "<div style='color: #d0d9e5;'> <strong class='heading2'>Movie's similarity score: </strong>" + score_dict["overall_score"] + "%<br><strong class='heading2'>Your search inputs: </strong><br>" + score_dict["old_inputs"]+"</div>";
 
     //Add the text
     $(".search_details").append(text);
