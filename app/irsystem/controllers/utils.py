@@ -97,7 +97,7 @@ def get_similar_ranking(sim_movie_tup, movie_dict):
         features_lst.append(get_set_overlap(genres,movie_dict[movie]['genres']))
 
         # release year matters for a similar movie 
-        features_lst.append(release_score_dict[movie])
+        features_lst.append(0.5 * release_score_dict[movie])
 
         cast = [member['name'] for member in movie_dict[movie]['cast']]
         crew = [member['name'] for member in movie_dict[movie]['crew']]
