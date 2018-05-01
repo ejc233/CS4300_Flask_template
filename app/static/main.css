@@ -390,9 +390,8 @@ div.scrollmenu a.overview_details a.show_details a.search_details a.active_modal
 }
 
 canvas {
-  width: auto !important;
-  max-width: 800px;
-  height: 50% !important;
+  width: 555px !important;
+  height: 345px !important;
   padding-top: 0px;
   padding-right: 35px !important;
   color: white !important;
