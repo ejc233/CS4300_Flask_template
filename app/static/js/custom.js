@@ -35,6 +35,7 @@ $(document).ready(function() {
       type: 'bar',
       data: barChartData,
       options: {
+        devicePixelRatio: 3,
         maintainAspectRatio: true,
         layout: {
           padding: {
@@ -47,7 +48,7 @@ $(document).ready(function() {
         legend: {
           display: false
         },
-        responsive: true,
+        responsive: false,
         title: {
           display: true,
           text: 'Similarity Score Breakdown',
@@ -73,8 +74,7 @@ $(document).ready(function() {
                   beginAtZero: true,
                   fontFamily: "'Play', sans-serif",
                   max: 100,
-                  fontSize: 14,
-                  stepSize: 10
+                  fontSize: 14
               },
               gridLines: {
                   display: false,
@@ -108,8 +108,8 @@ $(document).ready(function() {
       }
     });
 
-    var text = "<div id='canvas_details' class='canvas_details'> <strong class='heading2'>Movie's similarity score to your search: </strong><br>" 
-                + score_dict["overall_score"] + "%<br><br><strong class='heading2'>Your search inputs: </strong><br>" 
+    var text = "<div id='canvas_details' class='canvas_details'> <strong class='heading2'>Movie's similarity score to your search: </strong><br>"
+                + score_dict["overall_score"] + "%<br><br><strong class='heading2'>Your search inputs: </strong><br>"
                 + score_dict["old_inputs"]+"</div>";
     var text2 = "<div id='canvas_details2' class='canvas_details' style='float: right'><strong class='heading2'>Plot explanation:<br></strong>"
                 +"This bar graph visualizes the similarity of each attribute of this recommended movie to each input attribute in your search."
