@@ -58,30 +58,30 @@ def search():
         ########### QUERY DICT GENERATION ###########
         if similar:
             selected_movies = parse_lst_str(similar)
-            similar = similar.replace('"', '')
-            similar = similar.replace("'", "")
-            old_inputs += '<strong>Similar Movies: </strong>' + similar + "<br>"
+            old_similar = similar.replace('"', '')
+            old_similar = old_similar.replace("'", "")
+            old_inputs += '<strong>Similar Movies: </strong>' + old_similar + "<br>"
         if genres:
             selected_genres = parse_lst_str(genres)
             query_dict['genres'] = selected_genres
             old_inputs += '<strong>Genres: </strong>' + genres + "<br>"
         if castCrew:
             selected_crew = parse_lst_str(castCrew)
-            castCrew = castCrew.replace('"', '')
-            castCrew = castCrew.replace("'", "")
+            old_castCrew = castCrew.replace('"', '')
+            old_castCrew = old_castCrew.replace("'", "")
             query_dict['castCrew'] = selected_crew
-            old_inputs += '<strong>Cast/Crew: </strong>' + castCrew + "<br>"
+            old_inputs += '<strong>Cast/Crew: </strong>' + old_castCrew + "<br>"
         if keywords:
             selected_keywords = parse_lst_str(keywords)
-            keywords = castCrew.replace('"', '')
-            keywords = castCrew.replace("'", "")
+            old_keywords = keywords.replace('"', '')
+            old_keywords = old_keywords.replace("'", "")
             query_dict['keywords'] = keywords
-            old_inputs += '<strong>Keywords: </strong>' + keywords + "<br>"
+            old_inputs += '<strong>Keywords: </strong>' + old_keywords + "<br>"
         if duration:
             duration_val = user_duration.parse(duration)
             duration_val = duration_val[0] if len(duration_val) == 1 else (duration_val[0] + duration_val[1])/2
             query_dict['runtime'] = duration_val
-            old_inputs += '<strong>Duration: </strong>' + duration + "min<br>"
+            old_inputs += '<strong>Duration: </strong>' + duration + " min<br>"
         if release_start or release_end:
             years = user_release.parse([release_start, release_end])
             if len(years) > 1:
