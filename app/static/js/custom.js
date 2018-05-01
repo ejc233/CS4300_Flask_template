@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var scores = ['movies', 'genres', 'cast',
+  var scores = ['similar movies', 'genres', 'cast',
   'keywords', 'duration', 'release', 'ratings',
   'languages', 'acclaim', 'popularity'];
   $("#myCarousel").carousel({interval: false, wrap: false});
@@ -33,25 +33,26 @@ $(document).ready(function() {
       type: 'bar',
       data: barChartData,
       options: {
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         layout: {
           padding: {
                 left: 10,
                 right: 10,
                 top: 3,
-                bottom: 0
+                bottom: 3
             }
         },
         legend: {
           display: false
         },
-        responsive: true,
+        responsive: false,
         title: {
           display: true,
           text: 'Similarity Score Breakdown',
-          fontSize: 20,
+          fontSize: 22,
           fontColor: "rgb(255,255,255)",
-          padding: 5
+          padding: 10,
+          fontFamily: "'Play', sans-serif"
         },
         scales: {
           yAxes: [{
@@ -59,11 +60,14 @@ $(document).ready(function() {
                 display: true,
                 labelString: 'Similarity (%)',
                 fontColor: "white",
-                fontSize: 16
+                fontSize: 16,
+                fontFamily: "'Play', sans-serif",
+                padding: 5
               },
               ticks: {
                   fontColor: "white",
                   beginAtZero: true,
+                  fontFamily: "'Play', sans-serif",
                   max: 100,
                   fontSize: 14
               },
@@ -77,12 +81,15 @@ $(document).ready(function() {
                 display: true,
                 labelString: 'Input Type',
                 fontColor: "white",
-                fontSize: 16
+                fontSize: 16,
+                fontFamily: "'Play', sans-serif",
+                lineHeight: 0.8
               },
               ticks: {
                   fontColor: "white",
                   autoSkip: false,
-                  fontSize: 14
+                  fontSize: 14,
+                  fontFamily: "'Play', sans-serif"
               },
               gridLines: {
                   display: false,
@@ -92,6 +99,14 @@ $(document).ready(function() {
         },
       }
     });
+
+    var text = "<div style='color: #d0d9e5;'> <strong class='heading2'>This movie's similarity score to your search: </strong><br>" 
+                + score_dict["overall_score"] + "%<br><br><strong class='heading2'>Your search inputs: </strong><br>" 
+                + score_dict["old_inputs"]+"</div>";
+
+    //Add the text
+    var mod = $('body').find("#"+id);
+    mod.find(".search_details").append(text);
   }
 
   function popupModal(poster){
@@ -101,6 +116,7 @@ $(document).ready(function() {
     var e = $("<canvas></canvas>")
     var chart_div = mod.find(".search_details").append(e);
     e.attr('id', id+"_chart");
+    console.log(scores);
     addGraph(id+"_chart", JSON.parse(scores));
     mod.fadeIn(425);
     $(".contents").addClass("blur_overlay");
