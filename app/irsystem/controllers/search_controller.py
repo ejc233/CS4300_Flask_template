@@ -20,7 +20,7 @@ for movie in movies_json:
     movie_dict[movie['id']] = json.load(open('app/static/data/movies/' + movie['id'] + '.json'))
     dt = datetime.datetime.strptime(str(movie_dict[movie['id']]['release_date']), '%Y-%m-%d').strftime('%m-%d-%Y')
     movie_dict[movie['id']]['release_date'] = dt
-    # movie_dict[movie['id']]['cosine'] = json.load(open('app/static/data/cosine/' + movie['id'] + '.json'))
+    movie_dict[movie['id']]['cosine'] = json.load(open('app/static/data/cosine/' + movie['id'] + '.json'))
 reverse_dict = {y['title'].lower():x for x,y in movie_dict.iteritems()}
 
 max_tmdb_count = 16891.0
@@ -229,7 +229,7 @@ def search():
                 for index,movie in enumerate(lst,1):
                     if movie not in sorted_movie_dict:
                         sorted_movie_dict[movie] = 0
-                    sorted_movie_dict[movie] += index 
+                    sorted_movie_dict[movie] += index
 
         # compute the overall similarity score...
         overall_score = {}
@@ -247,7 +247,6 @@ def search():
             filtered_movie_dict[movie_id]['scores']['old_inputs'] = old_inputs.encode('ascii','ignore')
             data.append(filtered_movie_dict[movie_id])
 
-        print old_inputs
         data = [data[i:i + 4] for i in xrange(0, len(data), 4)]
 
     return render_template('search.html',
