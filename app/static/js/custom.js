@@ -8,7 +8,7 @@ $(document).ready(function() {
     $(this).detach().appendTo($('body'));
   });
 
-  function addGraph(id, score_dict){
+  function addGraph(id, score_dict, elt){
     var chart_el = document.getElementById(id).getContext('2d');
     scores_list = [];
     scores.forEach(function(d){
@@ -33,7 +33,7 @@ $(document).ready(function() {
       type: 'bar',
       data: barChartData,
       options: {
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         layout: {
           padding: {
                 left: 10,
@@ -45,7 +45,7 @@ $(document).ready(function() {
         legend: {
           display: false
         },
-        responsive: false,
+        responsive: true,
         title: {
           display: true,
           text: 'Similarity Score Breakdown',
@@ -100,13 +100,12 @@ $(document).ready(function() {
       }
     });
 
-    var text = "<div style='color: #d0d9e5;'> <strong class='heading2'>This movie's similarity score to your search: </strong><br>" 
-                + score_dict["overall_score"] + "%<br><br><strong class='heading2'>Your search inputs: </strong><br>" 
+    var text = "<div id='canvas_details' style='color: #d0d9e5;'> <strong class='heading2'>This movie's similarity score to your search: </strong><br>"
+                + score_dict["overall_score"] + "%<br><br><strong class='heading2'>Your search inputs: </strong><br>"
                 + score_dict["old_inputs"]+"</div>";
 
     //Add the text
-    var mod = $('body').find("#"+id);
-    mod.find(".search_details").append(text);
+    var mod = $('body').find("#"+elt).find(".search_details").append(text);
   }
 
   function popupModal(poster){
@@ -116,8 +115,7 @@ $(document).ready(function() {
     var e = $("<canvas></canvas>")
     var chart_div = mod.find(".search_details").append(e);
     e.attr('id', id+"_chart");
-    console.log(scores);
-    addGraph(id+"_chart", JSON.parse(scores));
+    addGraph(id+"_chart", JSON.parse(scores), id);
     mod.fadeIn(425);
     $(".contents").addClass("blur_overlay");
   }
@@ -136,6 +134,7 @@ $(document).ready(function() {
         var canv = $(event.target).find("canvas");
         canv.remove();
         $(".contents").removeClass("blur_overlay");
+        $(event.target).find("#canvas_details").remove();
         //Remove whatever settings you left off on
         $(".current").removeClass("current");
         $(".active_modal").css("display","none");
