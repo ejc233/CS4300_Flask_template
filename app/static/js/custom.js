@@ -33,7 +33,7 @@ $(document).ready(function() {
       type: 'bar',
       data: barChartData,
       options: {
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         layout: {
           padding: {
                 left: 10,
@@ -45,7 +45,7 @@ $(document).ready(function() {
         legend: {
           display: false
         },
-        responsive: false,
+        responsive: true,
         title: {
           display: true,
           text: 'Similarity Score Breakdown',
@@ -103,11 +103,13 @@ $(document).ready(function() {
     var text = "<div id='canvas_details' class='canvas_details'> <strong class='heading2'>This movie's similarity score to your search: </strong><br>" 
                 + score_dict["overall_score"] + "%<br><br><strong class='heading2'>Your search inputs: </strong><br>" 
                 + score_dict["old_inputs"]+"</div>";
-    var text2 = "<div id='canvas_details2' class='canvas_details'>Score explanation</div>";
+    var text2 = "<div id='canvas_details2' class='canvas_details' style='float: right'><strong class='heading2'>Plot explanation:<br></strong>"
+                +"This plot visualizes the similarity of this movie to each type of input in your search. Hover over each bar to see how similar this"
+                +" movie is to your specific input!"+"</div>";
 
     //Add the text
     var mod = $('body').find("#"+elt).find(".search_details").append(text);
-    var mod = $('body').find("#"+elt).find(".search_details").append(text);
+    var mod = $('body').find("#"+elt).find(".search_details").append(text2);
   }
 
   function popupModal(poster){
