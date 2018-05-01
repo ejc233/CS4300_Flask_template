@@ -108,12 +108,17 @@ $(document).ready(function() {
       }
     });
 
-    var text = "<div id='canvas_details' style='color: #d0d9e5;'> <strong class='heading2'>This movie's similarity score to your search: </strong><br>"
-                + score_dict["overall_score"] + "%<br><br><strong class='heading2'>Your search inputs: </strong><br>"
+    var text = "<div id='canvas_details' class='canvas_details'> <strong class='heading2'>Movie's similarity score to your search: </strong><br>" 
+                + score_dict["overall_score"] + "%<br><br><strong class='heading2'>Your search inputs: </strong><br>" 
                 + score_dict["old_inputs"]+"</div>";
+    var text2 = "<div id='canvas_details2' class='canvas_details' style='float: right'><strong class='heading2'>Plot explanation:<br></strong>"
+                +"This bar graph visualizes the similarity of each attribute of this recommended movie to each input attribute in your search."
+                + " Acclaim and popularity represent how "
+                " Hover over each bar to see how similar this movie is to your inputs!</div>";
 
     //Add the text
     var mod = $('body').find("#"+elt).find(".search_details").append(text);
+    var mod = $('body').find("#"+elt).find(".search_details").append(text2);
   }
 
   function popupModal(poster){
@@ -144,6 +149,7 @@ $(document).ready(function() {
         canv.remove();
         $(".contents").removeClass("blur_overlay");
         $(event.target).find("#canvas_details").remove();
+        $(event.target).find("#canvas_details2").remove();
         //Remove whatever settings you left off on
         $(".current").removeClass("current");
         $(".active_modal").css("display","none");
