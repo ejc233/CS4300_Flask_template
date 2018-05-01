@@ -57,7 +57,7 @@ $(document).ready(function() {
           yAxes: [{
               scaleLabel: {
                 display: true,
-                labelString: 'Similarity',
+                labelString: 'Similarity (%)',
                 fontColor: "white",
                 fontSize: 16
               },
