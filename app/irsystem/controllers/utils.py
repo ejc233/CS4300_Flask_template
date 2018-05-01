@@ -37,7 +37,7 @@ def normalize_score(overall_score,denom):
     #     print("here is your best_score " + str(best_score))
     #     print("overall score " + str(overall_score[movie]))
         overall_score[movie] = (overall_score[movie])/(best_score+1)
-        print("final score " + str(overall_score[movie]))
+        # print("final score " + str(overall_score[movie]))
     return overall_score
 
 def calc_popularity(movie_dict,movie,max_tmdb_count,max_imdb_count,max_meta_count):
@@ -105,10 +105,10 @@ def get_similar_ranking(sim_movie_tup, movie_dict):
 
         features_lst.append(acclaim_score_dict[movie])
 
-        # if sim_movie in movie_dict[movie]['cosine']:
-        #     features_lst.append(movie_dict[movie]['cosine'][sim_movie])
-        # else:
-        #     features_lst.append(0.0)
+        if sim_movie in movie_dict[movie]['cosine']:
+            features_lst.append(movie_dict[movie]['cosine'][sim_movie])
+        else:
+            features_lst.append(0.0)
 
         movie_feature_lst.append(features_lst)
         movie_id_lookup[index] = movie
