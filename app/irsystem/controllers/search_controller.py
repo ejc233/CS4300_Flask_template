@@ -138,7 +138,8 @@ def search():
                     cast_score = utils.get_set_overlap(sim_cast + sim_crew, cast + crew)
                     keywords_score = utils.get_set_overlap(movie_dict[sim_id]['keywords'],filtered_movie_dict[movie]['keywords'])
                     cumulative_score += (2.0 * genres_score + cast_score + keywords_score) / 4.0
-                filtered_movie_dict[movie]['scores']['movies'] = round(cumulative_score / len(selected_movies), 2) * 100
+                average_score = cumulative_score / len(selected_movies)
+                filtered_movie_dict[movie]['scores']['movies'] = math.ceil(round(average_score, 2) * 100)
 
             # list of genres for movie m -> jaccard sim with query
             if genres:
