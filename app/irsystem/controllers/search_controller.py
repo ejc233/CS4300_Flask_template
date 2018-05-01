@@ -151,12 +151,12 @@ def search():
                     keywords_score = utils.get_set_overlap(movie_dict[sim_id]['keywords'],filtered_movie_dict[movie]['keywords'])
                     cumulative_score += (2.0 * genres_score + cast_score + keywords_score) / 4.0
                 average_score = cumulative_score / len(selected_movies)
-                filtered_movie_dict[movie]['scores']['similar movies'] = math.ceil(round(average_score, 2) * 100)
+                filtered_movie_dict[movie]['scores']['similar movies'] = math.floor(round(average_score, 2) * 100)
 
             # list of genres for movie m -> jaccard sim with query
             if genres:
                 genres_score = utils.get_set_overlap(query_dict['genres'],filtered_movie_dict[movie]['genres'])
-                filtered_movie_dict[movie]['scores']['genres'] = round(genres_score, 2) * 100
+                filtered_movie_dict[movie]['scores']['genres'] = math.floor(round(genres_score, 2) * 100)
                 features_lst.append(genres_score)
 
             # list of cast and crew for movie m -> jaccard sim with the query
@@ -164,19 +164,19 @@ def search():
                 cast = [member['name'] for member in filtered_movie_dict[movie]['cast']]
                 crew = [member['name'] for member in filtered_movie_dict[movie]['crew']]
                 castCrew_score = utils.get_set_overlap(query_dict['castCrew'], cast + crew)
-                filtered_movie_dict[movie]['scores']['cast'] = round(castCrew_score, 2) * 100
+                filtered_movie_dict[movie]['scores']['cast'] = math.floor(round(castCrew_score, 2) * 100)
                 features_lst.append(castCrew_score)
 
             # keywords from query -> jaccard sim with the movie m synopsis
             if keywords:
                 keywords_score = utils.get_set_overlap(selected_keywords, filtered_movie_dict[movie]['keywords'])
-                filtered_movie_dict[movie]['scores']['keywords'] = round(keywords_score, 2) * 100
+                filtered_movie_dict[movie]['scores']['keywords'] = math.floor(round(keywords_score, 2) * 100)
                 features_lst.append(keywords_score)
 
             # duration & release date from movie m -> probabilistic gaussian fit around the mean
             if duration and len(user_duration.parse(duration)) == 1:
                 duration_score = duration_score_dict[movie]
-                filtered_movie_dict[movie]['scores']['duration'] = round(duration_score, 2) * 100
+                filtered_movie_dict[movie]['scores']['duration'] = math.floor(round(duration_score, 2) * 100)
                 features_lst.append(duration_score)
 
             if duration and len(user_duration.parse(duration)) == 2:
@@ -194,7 +194,7 @@ def search():
             # popularity -> value between 0 and 1
             if popularity == "yes":
                 popularity_score = utils.calc_popularity(filtered_movie_dict,movie,max_tmdb_count,max_imdb_count,max_meta_count)
-                filtered_movie_dict[movie]['scores']['popularity'] = round(popularity_score, 2) * 100
+                filtered_movie_dict[movie]['scores']['popularity'] = math.floor(round(popularity_score, 2) * 100)
                 features_lst.append(popularity_score)
 
             if ratings:
@@ -243,7 +243,7 @@ def search():
 
         ########### TRANSFORM THE SORTED LIST INTO FRONT-END FORM ###########
         for movie_id in sorted_movie_list[:24]:
-            filtered_movie_dict[movie_id]['scores']['overall_score'] = round(overall_score[movie_id], 2) * 100
+            filtered_movie_dict[movie_id]['scores']['overall_score'] = math.floor(round(overall_score[movie_id], 2) * 100)
             filtered_movie_dict[movie_id]['scores']['old_inputs'] = old_inputs.encode('ascii','ignore')
             data.append(filtered_movie_dict[movie_id])
 
