@@ -8,6 +8,8 @@ $(document).ready(function() {
     $(this).detach().appendTo($('body'));
   });
 
+  var myBarChart;
+
   function addGraph(id, score_dict, elt){
     var chart_el = document.getElementById(id).getContext('2d');
     scores_list = [];
@@ -29,10 +31,11 @@ $(document).ready(function() {
         data: scores_list
       }]};
 
-    var myBarChart = new Chart(chart_el, {
+    myBarChart = new Chart(chart_el, {
       type: 'bar',
       data: barChartData,
       options: {
+        devicePixelRatio: 3,
         maintainAspectRatio: true,
         layout: {
           padding: {
@@ -62,7 +65,9 @@ $(document).ready(function() {
                 fontColor: "white",
                 fontSize: 16,
                 fontFamily: "'Play', sans-serif",
-                padding: 5
+                padding: {
+                  top: 5
+                }
               },
               ticks: {
                   fontColor: "white",
@@ -83,7 +88,10 @@ $(document).ready(function() {
                 fontColor: "white",
                 fontSize: 16,
                 fontFamily: "'Play', sans-serif",
-                lineHeight: 0.8
+                lineHeight: 3.0,
+                padding: {
+                  top: 0
+                }
               },
               ticks: {
                   fontColor: "white",
@@ -137,6 +145,7 @@ $(document).ready(function() {
   window.onclick = function(event) {
     if (event.target.className == "modal") {
         $(event.target).fadeOut(400);
+        myBarChart.destroy();
         var canv = $(event.target).find("canvas");
         canv.remove();
         $(".contents").removeClass("blur_overlay");
