@@ -100,13 +100,12 @@ $(document).ready(function() {
       }
     });
 
-    var text = "<div style='color: #d0d9e5;'> <strong class='heading2'>This movie's similarity score to your search: </strong><br>" 
+    var text = "<div id='canvas_details' style='color: #d0d9e5;'> <strong class='heading2'>This movie's similarity score to your search: </strong><br>" 
                 + score_dict["overall_score"] + "%<br><br><strong class='heading2'>Your search inputs: </strong><br>" 
                 + score_dict["old_inputs"]+"</div>";
 
     //Add the text
-    var mod = $('body').find("#"+elt);
-    mod.find(".search_details").append(text);
+    var mod = $('body').find("#"+elt).find(".search_details").append(text);
   }
 
   function popupModal(poster){
@@ -135,6 +134,7 @@ $(document).ready(function() {
         var canv = $(event.target).find("canvas");
         canv.remove();
         $(".contents").removeClass("blur_overlay");
+        $(event.target).find("#canvas_details").remove();
         //Remove whatever settings you left off on
         $(".current").removeClass("current");
         $(".active_modal").css("display","none");
