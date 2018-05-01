@@ -3,12 +3,15 @@ import scipy.stats
 def parse(inp):
 	if "-" in inp:
 		inps = inp.split("-")
-		if inps[0].isdigit() and inps[1].isdigit():
+		if len(inps) == 2 and inps[0].strip().isdigit() and inps[1].strip().isdigit():
 			lst = [int(entry.strip()) for entry in inps[:2]]
 		else:
 			lst = []
 		return lst
-	return [int(inp.strip())]
+	if inp.strip().isdigit():
+		return [int(inp.strip())]
+	else:
+		return []
 
 def filter_hard(movie_dict,low_bound, high_bound, high_val):
 	rtn_movie = {}

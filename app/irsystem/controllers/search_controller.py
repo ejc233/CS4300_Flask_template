@@ -58,6 +58,8 @@ def search():
         ########### QUERY DICT GENERATION ###########
         if similar:
             selected_movies = parse_lst_str(similar)
+            similar = similar.replace('"', '')
+            similar = similar.replace("'", "")
             old_inputs += '<strong>Similar Movies: </strong>' + similar + "<br>"
         if genres:
             selected_genres = parse_lst_str(genres)
@@ -65,23 +67,35 @@ def search():
             old_inputs += '<strong>Genres: </strong>' + genres + "<br>"
         if castCrew:
             selected_crew = parse_lst_str(castCrew)
+            castCrew = castCrew.replace('"', '')
+            castCrew = castCrew.replace("'", "")
             query_dict['castCrew'] = selected_crew
             old_inputs += '<strong>Cast/Crew: </strong>' + castCrew + "<br>"
         if keywords:
             selected_keywords = parse_lst_str(keywords)
+            keywords = castCrew.replace('"', '')
+            keywords = castCrew.replace("'", "")
             query_dict['keywords'] = keywords
             old_inputs += '<strong>Keywords: </strong>' + keywords + "<br>"
         if duration:
             duration_val = user_duration.parse(duration)
             duration_val = duration_val[0] if len(duration_val) == 1 else (duration_val[0] + duration_val[1])/2
             query_dict['runtime'] = duration_val
-            old_inputs += '<strong>Duration: </strong>' + duration + "<br>"
+            old_inputs += '<strong>Duration: </strong>' + duration + "min<br>"
+        if release_start or release_end:
+            years = user_release.parse([release_start, release_end])
+            if len(years) > 1:
+                old_inputs += '<strong>Release Years: </strong>' + str(years[0]) + "-" + str(years[1]) + "<br>"
         if ratings:
             selected_ratings = parse_lst_str(ratings)
             old_inputs += '<strong>Ratings: </strong>' + ratings + "<br>"
         if languages:
             selected_languages = parse_lst_str(languages)
             old_inputs += '<strong>Languages: </strong>' + languages + "<br>"
+        if acclaim == 'yes':
+            old_inputs += '<strong>Acclaim: </strong>Yes<br>'
+        if popularity == 'yes':
+            old_inputs += '<strong>Popularity: </strong>Yes<br>'
 
 
         ########### FILTERING OF DICTIONARIES ###########
@@ -113,10 +127,8 @@ def search():
             year_list = year_list)
         if acclaim == 'yes':
             acclaim_score_dict = utils.half_gaussian_acclaim(filtered_movie_dict, 1, 0)
-            old_inputs += '<strong>Acclaim: </strong>Yes<br>'
         if popularity == 'yes':
             acclaim_score_dict = utils.half_gaussian_acclaim(filtered_movie_dict, 1, 0)
-            old_inputs += '<strong>Popularity: </strong>Yes<br>'
 
         ########### BOOST THE "QUERY MOVIE" WITH THE SIMILAR MOVIES ###########
         if similar:

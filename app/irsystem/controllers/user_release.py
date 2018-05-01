@@ -1,17 +1,16 @@
 import scipy.stats
 
 def parse(inp):
-	print inp
 	if len(inp) == 1:
-		if inp[0].isdigit():
-			return [int(inp[0][:4].strip())]
+		if inp[0].strip().isdigit():
+			return [int(inp[0].strip()[:4])]
 		else:
 			return []
 	if not inp[0]:
 		inp[0] = '1900'
 	if not inp[1]:
 		inp[1] = '2018'
-	if inp[0] < inp[1] and (inp[0].isdigit() and inp[1].isdigit()):
+	if inp[0] < inp[1] and (inp[0].strip().isdigit() and inp[1].strip().isdigit()):
 		lst = [int(entry[:4].strip()) for entry in inp]
 		if lst[0] > 2018 or lst[1] < 1900:
 			lst = []
