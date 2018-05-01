@@ -187,8 +187,8 @@ def search():
 
             # acclaim -> value between 0 and 1
             if acclaim == "yes":
-                acclaim_score = acclaim_score_dict[movie]
-                filtered_movie_dict[movie]['scores']['acclaim'] = round(acclaim_score, 2) * 100
+                acclaim_score = acclaim_score_dict[movie] / 0.14
+                filtered_movie_dict[movie]['scores']['acclaim'] = math.floor(round(acclaim_score, 2) * 100)
                 features_lst.append(acclaim_score)
 
             # popularity -> value between 0 and 1
