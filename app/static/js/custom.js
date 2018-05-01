@@ -58,7 +58,7 @@ $(document).ready(function() {
           yAxes: [{
               scaleLabel: {
                 display: true,
-                labelString: 'Similarity (%)',
+                labelString: 'Match (%)',
                 fontColor: "white",
                 fontSize: 16,
                 fontFamily: "'Play', sans-serif",
@@ -100,13 +100,14 @@ $(document).ready(function() {
       }
     });
 
-    var text = "<div id='canvas_details' class='canvas_details'> <strong class='heading2'>Movie's similarity score to your search: </strong><br>" 
-                + score_dict["overall_score"] + "%<br><br><strong class='heading2'>Your search inputs: </strong><br>" 
-                + score_dict["old_inputs"]+"</div>";
+    var text = "<div id='canvas_details' class='canvas_details'><strong class='heading2'>Your search inputs: </strong><br>" 
+                + score_dict["old_inputs"] 
+                + "<br><strong class='heading2'>Movie's similarity score to your search: </strong><br>" 
+                + score_dict["overall_score"] + "%</div>";
     var text2 = "<div id='canvas_details2' class='canvas_details' style='float: right'><strong class='heading2'>Plot explanation:<br></strong>"
-                +"This bar graph visualizes the similarity of each attribute of this recommended movie to each input attribute in your search."
-                + " Acclaim and popularity represent how "
-                " Hover over each bar to see how similar this movie is to your inputs!</div>";
+                + "This bar graph visualizes how well each attribute of this recommended movie matches each input attribute in your search."
+                + " The acclaim and popularity scores represent what percentile the movie is in for that category."
+                + " Hover over each bar to see how well this movie matches your inputs!</div>";
 
     //Add the text
     var mod = $('body').find("#"+elt).find(".search_details").append(text);
