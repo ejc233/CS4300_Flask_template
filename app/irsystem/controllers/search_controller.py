@@ -51,29 +51,37 @@ def search():
         data = []
     else:
         data = []
+        old_inputs = ''
         filtered_movie_dict = dict(movie_dict)
         query_dict = dict()
 
         ########### QUERY DICT GENERATION ###########
         if similar:
             selected_movies = parse_lst_str(similar)
+            old_inputs += 'Similar Movies: ' + similar + "<br>"
         if genres:
             selected_genres = parse_lst_str(genres)
             query_dict['genres'] = selected_genres
+            old_inputs += 'Genres: ' + genres + "<br>"
         if castCrew:
             selected_crew = parse_lst_str(castCrew)
             query_dict['castCrew'] = selected_crew
+            old_inputs += 'Cast/Crew: ' + castCrew + "<br>"
         if keywords:
             selected_keywords = parse_lst_str(keywords)
             query_dict['keywords'] = keywords
+            old_inputs += 'Keywords: ' + keywords + "<br>"
         if duration:
             duration_val = user_duration.parse(duration)
             duration_val = duration_val[0] if len(duration_val) == 1 else (duration_val[0] + duration_val[1])/2
             query_dict['runtime'] = duration_val
+            old_inputs += 'Duration: ' + duration + "<br>"
         if ratings:
             selected_ratings = parse_lst_str(ratings)
+            old_inputs += 'Ratings: ' + ratings + "<br>"
         if languages:
             selected_languages = parse_lst_str(languages)
+            old_inputs += 'Languages: ' + languages + "<br>"
 
 
         ########### FILTERING OF DICTIONARIES ###########
@@ -105,6 +113,10 @@ def search():
             year_list = year_list)
         if acclaim == 'yes':
             acclaim_score_dict = utils.half_gaussian_acclaim(filtered_movie_dict, 1, 0)
+            old_inputs += 'Acclaim: Yes<br>'
+        if popularity == 'yes':
+            acclaim_score_dict = utils.half_gaussian_acclaim(filtered_movie_dict, 1, 0)
+            old_inputs += 'Popularity: Yes<br>'
 
         ########### BOOST THE "QUERY MOVIE" WITH THE SIMILAR MOVIES ###########
         if similar:
@@ -138,7 +150,8 @@ def search():
                     cast_score = utils.get_set_overlap(sim_cast + sim_crew, cast + crew)
                     keywords_score = utils.get_set_overlap(movie_dict[sim_id]['keywords'],filtered_movie_dict[movie]['keywords'])
                     cumulative_score += (2.0 * genres_score + cast_score + keywords_score) / 4.0
-                filtered_movie_dict[movie]['scores']['movies'] = round(cumulative_score / len(selected_movies), 2) * 100
+                average_score = cumulative_score / len(selected_movies)
+                filtered_movie_dict[movie]['scores']['movies'] = math.ceil(round(average_score, 2) * 100)
 
             # list of genres for movie m -> jaccard sim with query
             if genres:
@@ -231,7 +244,10 @@ def search():
         ########### TRANSFORM THE SORTED LIST INTO FRONT-END FORM ###########
         for movie_id in sorted_movie_list[:24]:
             filtered_movie_dict[movie_id]['scores']['overall_score'] = round(overall_score[movie_id], 2) * 100
+            filtered_movie_dict[movie_id]['scores']['old_inputs'] = old_inputs
             data.append(filtered_movie_dict[movie_id])
+
+        print old_inputs
         data = [data[i:i + 4] for i in xrange(0, len(data), 4)]
 
     return render_template('search.html',

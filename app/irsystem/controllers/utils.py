@@ -32,12 +32,12 @@ def filter_similar(movie_dict, similar_movies):
 
 # normalize the logarithmic scores...
 def normalize_score(overall_score,denom):
-    best_score = abs(math.log(2.0/denom))
+    best_score = abs(math.log(1.0/denom))
     for movie in overall_score:
     #     print("here is your best_score " + str(best_score))
     #     print("overall score " + str(overall_score[movie]))
-        overall_score[movie] = 1 - (best_score - overall_score[movie])/best_score
-        # print("final score " + str(overall_score[movie]))
+        overall_score[movie] = (overall_score[movie])/(best_score+1)
+        print("final score " + str(overall_score[movie]))
     return overall_score
 
 def calc_popularity(movie_dict,movie,max_tmdb_count,max_imdb_count,max_meta_count):
@@ -70,7 +70,10 @@ def half_gaussian_acclaim(movie_dict, high_val, low_val):
     # gaussian with mean 10, stdev 6 => half gaussian w/ mean 10, stdev 3
     dist = scipy.stats.norm(10,2.5)
     movie_to_weight = {k:dist.pdf(v['tmdb_score_value']) for k,v in movie_dict.iteritems()}
-    max_val,min_val = max(movie_to_weight.values()), min(movie_to_weight.values())
+    # max_val,min_val = max(movie_to_weight.values()), min(movie_to_weight.values())
+    # make acclaim less impactful: map all values between 0 and 1 rather than having 
+    # the highest acclaim have a value of 1
+    max_val,min_val = 1,0
 
     # movie -> weight value between 0 and 1
     movie_to_weight = {k:((v - min_val)/(max_val - min_val)) for k,v in movie_to_weight.iteritems()}
