@@ -440,3 +440,10 @@ canvas {
   text-align: center;
   color: white;
 }
+
+div.canvas_details{
+  color: #d0d9e5; 
+  margin-bottom: 3%; 
+  width: 50%; 
+  display: inline-block;
+}
