@@ -33,7 +33,7 @@ $(document).ready(function() {
       type: 'bar',
       data: barChartData,
       options: {
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         layout: {
           padding: {
                 left: 10,
@@ -45,7 +45,7 @@ $(document).ready(function() {
         legend: {
           display: false
         },
-        responsive: true,
+        responsive: false,
         title: {
           display: true,
           text: 'Similarity Score Breakdown',
