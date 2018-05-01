@@ -81,7 +81,7 @@ def search():
             old_inputs += '<strong>Ratings: </strong>' + ratings + "<br>"
         if languages:
             selected_languages = parse_lst_str(languages)
-            old_inputs += '<strong class="heading">Languages: </strong>' + languages + "<br>"
+            old_inputs += '<strong>Languages: </strong>' + languages + "<br>"
 
 
         ########### FILTERING OF DICTIONARIES ###########
