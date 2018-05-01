@@ -8,7 +8,7 @@ $(document).ready(function() {
     $(this).detach().appendTo($('body'));
   });
 
-  function addGraph(id, score_dict){
+  function addGraph(id, score_dict, elt){
     var chart_el = document.getElementById(id).getContext('2d');
     scores_list = [];
     scores.forEach(function(d){
@@ -105,7 +105,7 @@ $(document).ready(function() {
                 + score_dict["old_inputs"]+"</div>";
 
     //Add the text
-    var mod = $('body').find("#"+id);
+    var mod = $('body').find("#"+elt);
     mod.find(".search_details").append(text);
   }
 
@@ -116,8 +116,7 @@ $(document).ready(function() {
     var e = $("<canvas></canvas>")
     var chart_div = mod.find(".search_details").append(e);
     e.attr('id', id+"_chart");
-    console.log(scores);
-    addGraph(id+"_chart", JSON.parse(scores));
+    addGraph(id+"_chart", JSON.parse(scores), id);
     mod.fadeIn(425);
     $(".contents").addClass("blur_overlay");
   }
