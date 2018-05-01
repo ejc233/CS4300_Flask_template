@@ -58,30 +58,30 @@ def search():
         ########### QUERY DICT GENERATION ###########
         if similar:
             selected_movies = parse_lst_str(similar)
-            old_inputs += 'Similar Movies: ' + similar + "<br>"
+            old_inputs += '<strong>Similar Movies: </strong>' + similar + "<br>"
         if genres:
             selected_genres = parse_lst_str(genres)
             query_dict['genres'] = selected_genres
-            old_inputs += 'Genres: ' + genres + "<br>"
+            old_inputs += '<strong>Genres: </strong>' + genres + "<br>"
         if castCrew:
             selected_crew = parse_lst_str(castCrew)
             query_dict['castCrew'] = selected_crew
-            old_inputs += 'Cast/Crew: ' + castCrew + "<br>"
+            old_inputs += '<strong>Cast/Crew: </strong>' + castCrew + "<br>"
         if keywords:
             selected_keywords = parse_lst_str(keywords)
             query_dict['keywords'] = keywords
-            old_inputs += 'Keywords: ' + keywords + "<br>"
+            old_inputs += '<strong>Keywords: </strong>' + keywords + "<br>"
         if duration:
             duration_val = user_duration.parse(duration)
             duration_val = duration_val[0] if len(duration_val) == 1 else (duration_val[0] + duration_val[1])/2
             query_dict['runtime'] = duration_val
-            old_inputs += 'Duration: ' + duration + "<br>"
+            old_inputs += '<strong>Duration: </strong>' + duration + "<br>"
         if ratings:
             selected_ratings = parse_lst_str(ratings)
-            old_inputs += 'Ratings: ' + ratings + "<br>"
+            old_inputs += '<strong>Ratings: </strong>' + ratings + "<br>"
         if languages:
             selected_languages = parse_lst_str(languages)
-            old_inputs += 'Languages: ' + languages + "<br>"
+            old_inputs += '<strong class="heading">Languages: </strong>' + languages + "<br>"
 
 
         ########### FILTERING OF DICTIONARIES ###########
@@ -113,10 +113,10 @@ def search():
             year_list = year_list)
         if acclaim == 'yes':
             acclaim_score_dict = utils.half_gaussian_acclaim(filtered_movie_dict, 1, 0)
-            old_inputs += 'Acclaim: Yes<br>'
+            old_inputs += '<strong>Acclaim: </strong>Yes<br>'
         if popularity == 'yes':
             acclaim_score_dict = utils.half_gaussian_acclaim(filtered_movie_dict, 1, 0)
-            old_inputs += 'Popularity: Yes<br>'
+            old_inputs += '<strong>Popularity: </strong>Yes<br>'
 
         ########### BOOST THE "QUERY MOVIE" WITH THE SIMILAR MOVIES ###########
         if similar:
@@ -151,7 +151,7 @@ def search():
                     keywords_score = utils.get_set_overlap(movie_dict[sim_id]['keywords'],filtered_movie_dict[movie]['keywords'])
                     cumulative_score += (2.0 * genres_score + cast_score + keywords_score) / 4.0
                 average_score = cumulative_score / len(selected_movies)
-                filtered_movie_dict[movie]['scores']['movies'] = math.ceil(round(average_score, 2) * 100)
+                filtered_movie_dict[movie]['scores']['similar movies'] = math.ceil(round(average_score, 2) * 100)
 
             # list of genres for movie m -> jaccard sim with query
             if genres:
@@ -244,7 +244,7 @@ def search():
         ########### TRANSFORM THE SORTED LIST INTO FRONT-END FORM ###########
         for movie_id in sorted_movie_list[:24]:
             filtered_movie_dict[movie_id]['scores']['overall_score'] = round(overall_score[movie_id], 2) * 100
-            filtered_movie_dict[movie_id]['scores']['old_inputs'] = old_inputs
+            filtered_movie_dict[movie_id]['scores']['old_inputs'] = old_inputs.encode('ascii','ignore')
             data.append(filtered_movie_dict[movie_id])
 
         print old_inputs

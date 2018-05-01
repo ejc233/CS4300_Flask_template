@@ -100,10 +100,13 @@ $(document).ready(function() {
       }
     });
 
-    var text = "<div style='color: #d0d9e5;'> <strong class='heading2'>Movie's similarity score: </strong>" + score_dict["overall_score"] + "%<br><strong class='heading2'>Your search inputs: </strong><br>" + score_dict["old_inputs"]+"</div>";
+    var text = "<div style='color: #d0d9e5;'> <strong class='heading2'>This movie's similarity score to your search: </strong><br>" 
+                + score_dict["overall_score"] + "%<br><br><strong class='heading2'>Your search inputs: </strong><br>" 
+                + score_dict["old_inputs"]+"</div>";
 
     //Add the text
-    $(".search_details").append(text);
+    var mod = $('body').find("#"+id);
+    mod.find(".search_details").append(text);
   }
 
   function popupModal(poster){
@@ -113,6 +116,7 @@ $(document).ready(function() {
     var e = $("<canvas></canvas>")
     var chart_div = mod.find(".search_details").append(e);
     e.attr('id', id+"_chart");
+    console.log(scores);
     addGraph(id+"_chart", JSON.parse(scores));
     mod.fadeIn(425);
     $(".contents").addClass("blur_overlay");
