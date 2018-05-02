@@ -103,7 +103,10 @@ def get_similar_ranking(sim_movie_tup, movie_dict):
         features_lst.append(acclaim_score_dict[movie])
 
         if sim_movie in movie_dict[movie]['cosine']:
-            features_lst.append(movie_dict[movie]['cosine'][sim_movie])
+            if movie_dict[movie]['cosine'][sim_movie] > 1.0:
+                features_lst.append(1.0)
+            else:
+                features_lst.append(movie_dict[movie]['cosine'][sim_movie])
         else:
             features_lst.append(0.0)
 
