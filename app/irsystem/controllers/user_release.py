@@ -7,18 +7,17 @@ def parse(inp):
 		else:
 			return []
 	if not inp[0]:
-		inp[0] = '1900'
+		inp[0] = '1927'
 	if not inp[1]:
 		inp[1] = '2018'
-	if inp[0] < inp[1] and (inp[0].strip().isdigit() and inp[1].strip().isdigit()):
+	if inp[0] <= inp[1] and (inp[0].strip().isdigit() and inp[1].strip().isdigit()):
 		lst = [int(entry[:4].strip()) for entry in inp]
 		if lst[0] > 2018 or lst[1] < 1900:
-			lst = []
+			return []
 		else:
-			lst = [int(entry[:4].strip()) for entry in inp]
+			return [int(entry[:4].strip()) for entry in inp]
 	else:
-		lst = []
-	return lst
+		return []
 
 def parse_single(inp):
 	return int(inp[-4:].strip())
@@ -40,7 +39,8 @@ def gaussian_release_score(movie_dict,mean,high_val,low_val):
 
     # movie -> weight value between 0 and 1
     max_val,min_val = max(movie_to_weight.values()), min(movie_to_weight.values())
-    movie_to_weight = {k:((v - min_val)/(max_val - min_val)) for k,v in movie_to_weight.iteritems()}
+    if min_val < max_val:
+    	movie_to_weight = {k:((v - min_val)/(max_val - min_val)) for k,v in movie_to_weight.iteritems()}
 
     # movie -> weight value between high and low
     for movie in movie_to_weight:

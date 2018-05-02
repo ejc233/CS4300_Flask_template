@@ -70,6 +70,9 @@ def knn_algo(mod_movie_mat,movie_lookup):
 
 ########### HELPER FUNCTIONS ###########
 def gaussian_score_duration(movie_dict,mean,high_val,low_val):
+    if not movie_dict:
+        return {}
+
     score_dict = {}
 
     if mean > 224:

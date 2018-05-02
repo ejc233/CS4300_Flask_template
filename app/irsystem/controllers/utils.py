@@ -63,10 +63,7 @@ def calc_popularity(movie_dict,movie,max_tmdb_count,max_imdb_count,max_meta_coun
 # penalize lower acclaim values more than a simple linear function
 def half_gaussian_acclaim(movie_dict, high_val, low_val):
     rtn_dict = {}
-    for movie in movie_dict:
-        if movie_dict[movie]['tmdb_score_value'] is None:
-            movie_dict[movie]['tmdb_score_value'] = 0
-
+    
     # gaussian with mean 10, stdev 6 => half gaussian w/ mean 10, stdev 3
     dist = scipy.stats.norm(10,2.5)
     movie_to_weight = {k:dist.pdf(v['tmdb_score_value']) for k,v in movie_dict.iteritems()}

@@ -28,7 +28,7 @@ max_imdb_count = 1938672.0
 max_meta_count = 56.0
 
 # get list of years
-year_list = range(1900, 2019)
+year_list = range(1927, 2019)
 
 @irsystem.route('/', methods=['GET'])
 def search():
@@ -127,9 +127,7 @@ def search():
             year_list = year_list)
         if acclaim == 'yes':
             acclaim_score_dict = utils.half_gaussian_acclaim(filtered_movie_dict, 1, 0)
-        if popularity == 'yes':
-            acclaim_score_dict = utils.half_gaussian_acclaim(filtered_movie_dict, 1, 0)
-
+        
         ########### BOOST THE "QUERY MOVIE" WITH THE SIMILAR MOVIES ###########
         if similar:
             similar_tup_lst = []

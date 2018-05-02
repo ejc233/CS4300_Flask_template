@@ -4,10 +4,9 @@ def parse(inp):
 	if "-" in inp:
 		inps = inp.split("-")
 		if len(inps) == 2 and inps[0].strip().isdigit() and inps[1].strip().isdigit():
-			lst = [int(entry.strip()) for entry in inps[:2]]
+			return [int(entry.strip()) for entry in inps[:2]]
 		else:
-			lst = []
-		return lst
+			return []
 	if inp.strip().isdigit():
 		return [int(inp.strip())]
 	else:
@@ -36,13 +35,14 @@ def gaussian_score(movie_dict,mean,high_val,low_val):
 
 	# movie -> weight value between high and low
 	for movie in movie_dict:
-		print movie_to_weight[movie]
 		score_dict[movie] = movie_to_weight[movie]*(high_val + low_val) - low_val
 	return score_dict
 
 
 def main(movie_dict, inp, high_val):
 	vals = parse(inp)
+	if vals == []:
+		return {}
 	if len(vals) == 2:
 		return filter_hard(movie_dict,vals[0],vals[1], high_val)
 	return movie_dict
