@@ -31,7 +31,8 @@ def gaussian_score(movie_dict,mean,high_val,low_val):
 	max_val,min_val = max(movie_to_weight.values()), min(movie_to_weight.values())
 
 	# movie -> weight value between 0 and 1
-	movie_to_weight = {k:((v - min_val)/(max_val - min_val)) for k,v in movie_to_weight.iteritems()}
+	if min_val < max_val:
+    	movie_to_weight = {k:((v - min_val)/(max_val - min_val)) for k,v in movie_to_weight.iteritems()}
 
 	# movie -> weight value between high and low
 	for movie in movie_dict:
