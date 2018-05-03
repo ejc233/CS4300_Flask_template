@@ -258,6 +258,8 @@ def search():
             data.append(filtered_movie_dict[movie_id])
 
         data = [data[i:i + 4] for i in xrange(0, len(data), 4)]
+        print similar
+        # print xstr(similar)
 
     return render_template('search.html',
         old_similar = xstr(similar),
@@ -278,7 +280,6 @@ def search():
 def parse_lst_str(lst_str):
     parsed = []
     if lst_str:
-        lst_str = lst_str.encode('ascii', 'ignore')
         if ';' in lst_str:
             parsed = lst_str.split(";")
         else:
@@ -289,4 +290,4 @@ def parse_lst_str(lst_str):
 
 # set string to empty string if string is None type
 def xstr(s):
-    return '' if s is None else str(s)
+    return '' if s is None else s
