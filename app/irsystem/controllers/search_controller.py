@@ -258,8 +258,6 @@ def search():
             data.append(filtered_movie_dict[movie_id])
 
         data = [data[i:i + 4] for i in xrange(0, len(data), 4)]
-        print similar
-        # print xstr(similar)
 
     return render_template('search.html',
         old_similar = xstr(similar),
