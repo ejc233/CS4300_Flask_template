@@ -42,7 +42,7 @@
         <div class="logo_band">
           <img class="logo" src= "/static/logo_white.png" alt="CinemaPop"></img>
           <form class="global-search custom-form" style="width: 100%; margin-bottom: 9%">
-            <div class="form-row" style="height: 10%">
+            <div class="form-row" style="height: 12%">
               <div class="form-group col-md-6">
                 <label class="tags animated-label center">Similar Movies:</label>
                 <input id="similar_movies" data-role="tagsinput" type="text" name="similar" placeholder="e.g. Black Panther, Star Wars, etc." style="width:75%" value="{{old_similar}}">
@@ -111,7 +111,7 @@
             {% else %}
             <div class="advanced" style="display: none">
             {% endif %}
-              <div class="form-row" style="height: 20%">
+              <div class="form-row cast_crew">
                 <div class="form-group col-md-6">
                   <label class="tags center">Cast/Crew:</label>
                   <input id="cast_crew" type="text" name="castCrew" placeholder="e.g. Name 1, Name 2, etc." value="{{old_castCrew}}" data-role="tagsinput">
@@ -171,7 +171,7 @@
                 </div>
               </div>
               <br>
-              <div class="form-row" style="height: 15%">
+              <div class="form-row duration_row">
                 <div class="form-group col-md-6">
                     <label class="tags center">Duration (in minutes):</label>
                     <input id="duration_time" type="text" class="center form-control" name="duration" style="font-weight: 1; font-size: 14px" placeholder="Range (e.g. 90-200) or Single Number (e.g. 90)" value="{{old_duration}}">
@@ -197,7 +197,7 @@
                     {% endif %}
                 </datalist>
               </div>
-              <div class="form-row" style="height: 24%">
+              <div class="form-row last_row">
                 <div class="form-group col-md-6">
                     <label class="tags center">MPAA Ratings:</label>
                     <input id="ratings_list" type="text" data-role="tagsinput" name="ratings" placeholder="e.g. PG-13, PG, etc." value="{{old_ratings}}">
@@ -309,7 +309,6 @@
                 scrollTop: $("#myCarousel").offset().top
             }, 1000);
     	     });
-          console.log("here");
         </script>
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->

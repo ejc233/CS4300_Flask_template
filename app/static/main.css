@@ -441,3 +441,29 @@ div.canvas_details{
   width: 50%;
   display: inline-block;
 }
+
+.cast_crew {
+  height: 15%;
+}
+
+.duration_row {
+  height: 15%;
+}
+
+.last_row {
+  height: 25%;
+}
+
+@media (max-width: 991px){
+  .cast_crew {
+    height: 20%;
+  }
+
+  .duration_row {
+    height: 30%;
+  }
+
+  .last_row {
+    height: 30%;
+  }
+}

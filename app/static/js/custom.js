@@ -108,9 +108,9 @@ $(document).ready(function() {
       }
     });
 
-    var text = "<div id='canvas_details' class='canvas_details'><strong class='heading2'>Your search inputs: </strong><br>" 
-                + score_dict["old_inputs"] 
-                + "<br><strong class='heading2'>Movie's similarity score to your search: </strong><br>" 
+    var text = "<div id='canvas_details' class='canvas_details'><strong class='heading2'>Your search inputs: </strong><br>"
+                + score_dict["old_inputs"]
+                + "<br><strong class='heading2'>Movie's similarity score to your search: </strong><br>"
                 + score_dict["overall_score"] + "%</div>";
     var text2 = "<div id='canvas_details2' class='canvas_details' style='float: right'><strong class='heading2'>Plot explanation:<br></strong>"
                 + "This bar graph visualizes how well each attribute of this recommended movie matches each input attribute in your search."
