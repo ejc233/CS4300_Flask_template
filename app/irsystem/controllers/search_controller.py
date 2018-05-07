@@ -127,7 +127,7 @@ def search():
             year_list = year_list)
         if acclaim == 'yes':
             acclaim_score_dict = utils.half_gaussian_acclaim(filtered_movie_dict, 1, 0)
-        
+
         ########### BOOST THE "QUERY MOVIE" WITH THE SIMILAR MOVIES ###########
         if similar:
             similar_tup_lst = []
@@ -290,8 +290,4 @@ def parse_lst_str(lst_str):
 
 # set string to empty string if string is None type
 def xstr(s):
-<<<<<<< HEAD
-    return '' if s is None else str(s)
-=======
     return '' if s is None else s
->>>>>>> dfafe5ac6092b0b9d30a609742afabd7175538ae
