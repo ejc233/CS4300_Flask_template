@@ -126,7 +126,7 @@ $(document).ready(function() {
     var id = poster.getAttribute("data-movie");
     var scores = (poster.getAttribute("data-scores")).replace(/'/g, '"');
     var mod = $('body').find("#"+id);
-    var e = $("<canvas></canvas>")
+    var e = $("<canvas></canvas>");
     var chart_div = mod.find(".search_details").append(e);
     e.attr('id', id+"_chart");
     addGraph(id+"_chart", JSON.parse(scores), id);

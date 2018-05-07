@@ -1,1 +1,44 @@
-[{"name": "APPROVED"}, {"name": "G"}, {"name": "GP"}, {"name": "M"}, {"name": "M/PG"}, {"name": "NC-17"}, {"name": "NOT RATED"}, {"name": "PASSED"}, {"name": "PG"}, {"name": "PG-13"}, {"name": "R"}, {"name": "TV-14"}, {"name": "TV-MA"}, {"name": "UNRATED"}]
+[
+	{
+		"name": "APPROVED"
+	},
+	{
+		"name": "G"
+	},
+	{
+		"name": "GP"
+	},
+	{
+		"name": "M"
+	},
+	{
+		"name": "M/PG"
+	},
+	{
+		"name": "NC-17"
+	},
+	{
+		"name": "NOT RATED"
+	},
+	{
+		"name": "PASSED"
+	},
+	{
+		"name": "PG"
+	},
+	{
+		"name": "PG-13"
+	},
+	{
+		"name": "R"
+	},
+	{
+		"name": "TV-14"
+	},
+	{
+		"name": "TV-MA"
+	},
+	{
+		"name": "UNRATED"
+	}
+]

@@ -216,11 +216,6 @@ span.twitter-typeahead .tt-suggestion:focus {
     display: none;
 }
 
-/*How to add ratings??
-.container .post_title p.rating_tag {
-  border: 1px solid white;
-}*/
-
 .post_title:hover {
   cursor: pointer;
 }
@@ -257,7 +252,7 @@ span.glyphicon {
 }
 
 .carousel-indicators li {
-  border: 1px solid rgba(255,255,255, 1.0);
+  border: 1px solid rgba(255,255,255, 0.8);
 }
 
 .container:hover img {
@@ -298,12 +293,12 @@ strong {
 
 /* Modal Content */
 .modal-content {
-  /*background: linear-gradient(to bottom, rgba(0,0,0,0.0.3), rgba(71,78,99,1));*/
   background-color: rgba(71, 78, 99, 0.95);
   color: white;
   margin: auto;
   padding: 20px;
   width: 80%;
+  height: 100%;
   overflow: auto;
 }
 .modal_blur_content {
@@ -398,7 +393,6 @@ canvas {
   border: 1px solid rgba(255,255,255,0.1);
   margin-top: 2%;
   margin-bottom: 2%;
- /* margin-left: 2%;*/
   display: block;
   margin-left: auto;
   margin-right: auto;

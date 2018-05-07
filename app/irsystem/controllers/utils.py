@@ -63,10 +63,7 @@ def calc_popularity(movie_dict,movie,max_tmdb_count,max_imdb_count,max_meta_coun
 # penalize lower acclaim values more than a simple linear function
 def half_gaussian_acclaim(movie_dict, high_val, low_val):
     rtn_dict = {}
-    for movie in movie_dict:
-        if movie_dict[movie]['tmdb_score_value'] is None:
-            movie_dict[movie]['tmdb_score_value'] = 0
-
+    
     # gaussian with mean 10, stdev 6 => half gaussian w/ mean 10, stdev 3
     dist = scipy.stats.norm(10,2.5)
     movie_to_weight = {k:dist.pdf(v['tmdb_score_value']) for k,v in movie_dict.iteritems()}
@@ -84,7 +81,7 @@ def half_gaussian_acclaim(movie_dict, high_val, low_val):
     return rtn_dict
 
 def get_similar_ranking(sim_movie_tup, movie_dict):
-    sim_movie, genres, castCrew,release_year = sim_movie_tup
+    sim_movie, genres, castCrew,release_year,sim_rating,sim_lang = sim_movie_tup
     movie_feature_lst,movie_id_lookup = [],{}
 
     release_score_dict = user_release.gaussian_release_score(movie_dict,release_year,0,1)
@@ -97,7 +94,25 @@ def get_similar_ranking(sim_movie_tup, movie_dict):
         features_lst.append(get_set_overlap(genres,movie_dict[movie]['genres']))
 
         # release year matters for a similar movie 
-        features_lst.append(release_score_dict[movie])
+        features_lst.append(0.5 * release_score_dict[movie])
+
+        # rating matters for a similar movie: improvement upon final submission
+        if sim_rating.lower() == movie_dict[movie]['rating'].lower():
+            features_lst.append(0.5)
+        elif sim_rating.lower() == 'pg' and movie_dict[movie]['rating'].lower() == 'g':
+            features_lst.append(0.3)
+        elif sim_rating.lower() == 'pg' and movie_dict[movie]['rating'].lower() == 'pg-13':
+            features_lst.append(0.3)
+        elif sim_rating.lower() == 'g' and movie_dict[movie]['rating'].lower() == 'pg':
+            features_lst.append(0.3)
+        else:
+            features_lst.append(0)
+
+        # language matters for a similar movie: improvement upon final submission
+        if sim_lang.lower() == movie_dict[movie]['original_language'].lower():
+            features_lst.append(0.5)
+        else:
+            features_lst.append(0)
 
         cast = [member['name'] for member in movie_dict[movie]['cast']]
         crew = [member['name'] for member in movie_dict[movie]['crew']]
@@ -106,7 +121,10 @@ def get_similar_ranking(sim_movie_tup, movie_dict):
         features_lst.append(acclaim_score_dict[movie])
 
         if sim_movie in movie_dict[movie]['cosine']:
-            features_lst.append(movie_dict[movie]['cosine'][sim_movie])
+            if movie_dict[movie]['cosine'][sim_movie] > 1.0:
+                features_lst.append(1.0)
+            else:
+                features_lst.append(movie_dict[movie]['cosine'][sim_movie])
         else:
             features_lst.append(0.0)
 
