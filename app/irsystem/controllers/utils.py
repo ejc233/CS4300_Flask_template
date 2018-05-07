@@ -81,7 +81,7 @@ def half_gaussian_acclaim(movie_dict, high_val, low_val):
     return rtn_dict
 
 def get_similar_ranking(sim_movie_tup, movie_dict):
-    sim_movie, genres, castCrew,release_year = sim_movie_tup
+    sim_movie, genres, castCrew,release_year,sim_rating,sim_lang = sim_movie_tup
     movie_feature_lst,movie_id_lookup = [],{}
 
     release_score_dict = user_release.gaussian_release_score(movie_dict,release_year,0,1)
@@ -95,6 +95,24 @@ def get_similar_ranking(sim_movie_tup, movie_dict):
 
         # release year matters for a similar movie 
         features_lst.append(0.5 * release_score_dict[movie])
+
+        # rating matters for a similar movie: improvement upon final submission
+        if sim_rating.lower() == movie_dict[movie]['rating'].lower():
+            features_lst.append(0.5)
+        elif sim_rating.lower() == 'pg' and movie_dict[movie]['rating'].lower() == 'g':
+            features_lst.append(0.3)
+        elif sim_rating.lower() == 'pg' and movie_dict[movie]['rating'].lower() == 'pg-13':
+            features_lst.append(0.3)
+        elif sim_rating.lower() == 'g' and movie_dict[movie]['rating'].lower() == 'pg':
+            features_lst.append(0.3)
+        else:
+            features_lst.append(0)
+
+        # language matters for a similar movie: improvement upon final submission
+        if sim_lang.lower() == movie_dict[movie]['original_language'].lower():
+            features_lst.append(0.5)
+        else:
+            features_lst.append(0)
 
         cast = [member['name'] for member in movie_dict[movie]['cast']]
         crew = [member['name'] for member in movie_dict[movie]['crew']]

@@ -134,11 +134,13 @@ def search():
             for similar_mov in selected_movies:
                 similar_id = reverse_dict[similar_mov]
                 similar_genres = movie_dict[similar_id]['genres']
+                sim_rating = movie_dict[similar_id]['rating']
+                sim_lang = movie_dict[similar_id]['original_language']
                 sim_cast = [member['name'] for member in movie_dict[similar_id]['cast']]
                 sim_crew = [member['name'] for member in movie_dict[similar_id]['crew']]
                 similar_castCrew = sim_cast + sim_crew
                 sim_release_year = user_release.parse_single(movie_dict[similar_id]['release_date'])
-                similar_tup_lst.append((similar_id,similar_genres,similar_castCrew,sim_release_year))
+                similar_tup_lst.append((similar_id,similar_genres,similar_castCrew,sim_release_year,sim_rating,sim_lang))
             filtered_movie_dict = utils.filter_similar(filtered_movie_dict,selected_movies)
             ranked_sim_lst = [utils.get_similar_ranking(tup,filtered_movie_dict) for tup in similar_tup_lst]
 
