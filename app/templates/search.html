@@ -66,7 +66,7 @@
                             minLength: 1
                         },
                         confirmKeys: [13, 44], //keys user can use to submit tag - comma, add 188 for enter
-                        maxTags: 5, //limit the number of tags
+                        maxTags: 3, //limit the number of tags
                         freeInput: false, //don't allow the user to submit free text
                         delimiter: ';'
                     });
@@ -342,7 +342,7 @@
                 <div id="{{ d['id'] }}" class="modal">
                   <div class="modal-content">
                     <div class="row">
-                      <div class="col-md-4" style="height:510px; width:350px">
+                      <div class="col-md-4" style="margin-top: 0.5%; margin-bottom: 0.5%; height:510px; width:350px">
                         <img src="static/data/posters/{{d['id']}}.jpg" alt="{{d['title']}}" style="height: 95%; width: 100%; object-fit: fill;">
                       </div>
                       <div class="col-md-8" style="height:100%; width: 60%">
@@ -385,7 +385,7 @@
                         <div class="content_details show_details" style="display: none;color: #d0d9e5;">
                         <div class="row">
                           <div class="col-md-6">
-                            <p><strong class="heading">Cast</strong><br>
+                            <p style="margin-bottom: 15px"><strong class="heading">Cast</strong><br>
                             {% for c in d['cast'] %}
                                 <span style="font-weight: 200" class="heading2">{{c['name']}}</span> as <span style="font-weight: 200" class="heading2">{{c['character']}}</span>
                                 <br>
@@ -393,7 +393,7 @@
                             </p>
                           </div>
                           <div class="col-md-6">
-                            <p><strong class="heading">Crew</strong>
+                            <p style="margin-bottom: 20px"><strong class="heading">Crew</strong>
                             <br>
                             {% for c in d['crew'] %}
                                 <span style="font-weight: 200" class="heading2">{{c['job']}}:</span> {{c['name']}}
